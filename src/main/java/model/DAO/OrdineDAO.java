@@ -1,0 +1,193 @@
+package model.DAO;
+
+import model.beans.Ordine;
+
+import javax.naming.*;
+import javax.sql.*;
+import java.sql.*;
+import java.util.*;
+
+public class OrdineDAO implements DaoInterface<Ordine, Integer> {
+
+    private static final String TABLE_NAME = "Ordine";
+    private static final DataSource ds;
+
+    // Recupero il DataSource tramite JNDI (stesso stile del progetto di esempio)
+    static {
+        try {
+            Context ctx = new InitialContext();
+            ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/ecommerce");
+        } catch (NamingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Ordine doRetrieveByKey(Integer pk) throws SQLException {
+        // Recupero un ordine tramite la sua chiave primaria
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE ID_Ordine=?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, pk);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return extractOrdine(rs); // mappo il ResultSet nel bean Ordine
+            }
+        }
+        return null; // se non trovo nulla ritorno null
+    }
+    
+ // Metodo che salva un ordine e ritorna la chiave generata (ID_Ordine)
+ // Mi serve per creare l'ordine e poi inserire i dettagli collegati
+ public int doSaveAndReturnKey(Ordine o) throws SQLException {
+
+     String query = "INSERT INTO " + TABLE_NAME +
+             " (ID_Utente, ID_Amministratore, Data_Ordine, Stato_Avanzamento, Importo_Totale) " +
+             "VALUES (?, ?, ?, ?, ?)";
+
+     // Variabile dove salvo la chiave generata dal DB
+     int generatedKey = -1;
+
+     // Chiedo al PreparedStatement di restituire le chiavi generate
+     try (Connection conn = ds.getConnection();
+          PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+         // Setto i parametri dell'ordine
+         ps.setInt(1, o.getIdUtente());
+         ps.setObject(2, o.getIdAmministratore()); // può essere null
+         ps.setDate(3, java.sql.Date.valueOf(o.getDataOrdine()));
+         ps.setString(4, o.getStatoAvanzamento());
+         ps.setBigDecimal(5, o.getImportoTotale());
+
+         // Eseguo l'INSERT
+         ps.executeUpdate();
+
+         // Recupero la chiave generata (ID_Ordine)
+         ResultSet rs = ps.getGeneratedKeys();
+         if (rs.next()) {
+             generatedKey = rs.getInt(1);
+         }
+     }
+
+     return generatedKey; // ritorno l'ID dell'ordine appena creato
+ }
+
+
+    @Override
+    public Collection<Ordine> doRetrieveAll(String order) throws SQLException {
+        // Recupero tutti gli ordini, con eventuale ordinamento
+        String query = "SELECT * FROM " + TABLE_NAME;
+
+        if (order != null && !order.isEmpty()) {
+            query += " ORDER BY " + order;
+        }
+
+        Collection<Ordine> lista = new ArrayList<>();
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(extractOrdine(rs)); // aggiungo ogni ordine alla lista
+            }
+        }
+        return lista;
+    }
+ // Recupero tutti gli ordini effettuati da un certo utente
+ // Lo uso per mostrare lo storico ordini nella pagina dedicata
+ public Collection<Ordine> doRetrieveByUser(int idUtente) throws SQLException {
+
+     String query = "SELECT * FROM " + TABLE_NAME + " WHERE ID_Utente=? ORDER BY Data_Ordine DESC";
+
+     Collection<Ordine> lista = new ArrayList<>();
+
+     try (Connection conn = ds.getConnection();
+          PreparedStatement ps = conn.prepareStatement(query)) {
+
+         // Setto l'ID dell'utente
+         ps.setInt(1, idUtente);
+
+         ResultSet rs = ps.executeQuery();
+
+         // Aggiungo ogni ordine trovato alla lista
+         while (rs.next()) {
+             lista.add(extractOrdine(rs));
+         }
+     }
+
+     return lista;
+ }
+
+
+    @Override
+    public void doSave(Ordine o) throws SQLException {
+        // Inserisco un nuovo ordine nel database
+        String query = "INSERT INTO " + TABLE_NAME +
+                " (ID_Utente, ID_Amministratore, Data_Ordine, Stato_Avanzamento, Importo_Totale) " +
+                "VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, o.getIdUtente());
+            ps.setObject(2, o.getIdAmministratore()); // può essere null
+            ps.setDate(3, java.sql.Date.valueOf(o.getDataOrdine())); // LocalDate → SQL Date
+            ps.setString(4, o.getStatoAvanzamento());
+            ps.setBigDecimal(5, o.getImportoTotale());
+
+            ps.executeUpdate(); // eseguo l'INSERT
+        }
+    }
+
+    @Override
+    public void doUpdate(Ordine o) throws SQLException {
+        // Aggiorno un ordine esistente
+        String query = "UPDATE " + TABLE_NAME +
+                " SET ID_Utente=?, ID_Amministratore=?, Data_Ordine=?, Stato_Avanzamento=?, Importo_Totale=? " +
+                "WHERE ID_Ordine=?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, o.getIdUtente());
+            ps.setObject(2, o.getIdAmministratore());
+            ps.setDate(3, java.sql.Date.valueOf(o.getDataOrdine()));
+            ps.setString(4, o.getStatoAvanzamento());
+            ps.setBigDecimal(5, o.getImportoTotale());
+            ps.setInt(6, o.getIdOrdine());
+
+            ps.executeUpdate(); // eseguo l'UPDATE
+        }
+    }
+
+    @Override
+    public boolean doDelete(Integer pk) throws SQLException {
+        // Elimino un ordine tramite ID
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE ID_Ordine=?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, pk);
+            return ps.executeUpdate() > 0; // true se almeno una riga è stata eliminata
+        }
+    }
+
+    // Metodo di utilità per convertire una riga del ResultSet in un oggetto Ordine
+    private Ordine extractOrdine(ResultSet rs) throws SQLException {
+        Ordine o = new Ordine();
+
+        o.setIdOrdine(rs.getInt("ID_Ordine"));
+        o.setIdUtente(rs.getInt("ID_Utente"));
+        o.setIdAmministratore((Integer) rs.getObject("ID_Amministratore"));
+        o.setDataOrdine(rs.getDate("Data_Ordine").toLocalDate()); // SQL Date → LocalDate
+        o.setStatoAvanzamento(rs.getString("Stato_Avanzamento"));
+        o.setImportoTotale(rs.getBigDecimal("Importo_Totale"));
+
+        return o;
+    }
+}
