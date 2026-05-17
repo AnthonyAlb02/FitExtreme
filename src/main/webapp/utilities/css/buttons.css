@@ -1,0 +1,38 @@
+.btn {
+	padding: 10px 18px;
+	border-radius: 6px;
+	border: none;
+	cursor: pointer;
+	font-weight: 500;
+	transition: 0.2s;
+}
+
+/* BOTTONI PRINCIPALI */
+.btn-primary {
+	background-color: #FFC266; /* Colore primario */
+	color: #111111;
+}
+
+.btn-primary:hover {
+	background-color: #e6ad59;
+}
+
+/* BOTTONI SECONDARI */
+.btn-secondary {
+	background-color: #8C5A2B;
+	color: #FFFFFF;
+}
+
+.btn-secondary:hover {
+	background-color: #734a24;
+}
+
+/* BOTTONI DANGER */
+.btn-danger {
+	background-color: #D9534F;
+	color: white;
+}
+
+.btn-danger:hover {
+	background-color: #c9302c;
+}

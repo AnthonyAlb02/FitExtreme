@@ -1,0 +1,176 @@
+/* ===========================
+   FASCIA SUPERIORE (STILE DECATHLON)
+=========================== */
+.footer-top {
+	background: #FFC266; /* primario */
+	color: #111111;
+	padding: 25px 0;
+	display: flex;
+	justify-content: center;
+	gap: 60px;
+	flex-wrap: wrap;
+	text-align: center;
+}
+
+.footer-feature h4 {
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.footer-feature p {
+	font-size: 13px;
+	color: #333333;
+	margin-top: 3px;
+}
+
+/* ===========================
+   FOOTER PRINCIPALE
+=========================== */
+.footer {
+	background: #8C5A2B; /* secondario */
+	color: #FFFFFF;
+	padding: 50px 0 25px 0;
+	margin-top: 60px;
+	border-top: 4px solid #FFC266;
+}
+
+/* GRID A COLONNE */
+.footer-grid {
+	width: min(90%, 1200px);
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 40px 60px;
+}
+
+/* ===========================
+   TITOLI COLONNE
+=========================== */
+.footer-col h3 {
+	font-size: 26px;
+	margin-bottom: 12px;
+	color: #FFC266;
+}
+
+.footer-col h4 {
+	font-size: 18px;
+	margin-bottom: 15px;
+	color: #FFDFA8;
+}
+
+/* ===========================
+   TESTO COLONNE
+=========================== */
+.footer-col p {
+	color: #F5F5F5;
+	max-width: 260px;
+	line-height: 1.5;
+	font-size: 15px;
+	margin-top: 5px;
+}
+
+/* ===========================
+   LISTE E LINK
+=========================== */
+.footer-col ul {
+	list-style: none;
+}
+
+.footer-col ul li {
+	margin-bottom: 8px;
+}
+
+.footer-col a {
+	color: #FFFFFF;
+	font-size: 15px;
+	font-weight: 500;
+	letter-spacing: 0.2px;
+	transition: 0.2s ease;
+	display: inline-block;
+}
+
+.footer-col a:hover {
+	color: #FFC266;
+	padding-left: 3px;
+}
+
+/* ===========================
+   CONTATTI CON ICONE (DEFINITIVO)
+=========================== */
+.contact-list li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	line-height: 1.4;
+}
+
+/* ICONA SVG — BLOCCATA E NON SCALABILE */
+.icon {
+	width: 16px !important;
+	height: 16px !important;
+	min-width: 16px !important;
+	min-height: 16px !important;
+	max-width: 16px !important;
+	max-height: 16px !important;
+	color: #FFC266;
+	flex-shrink: 0;
+	display: inline-block;
+	pointer-events: none; /* evita click sull'icona */
+}
+
+/* LINK CONTATTI */
+.contact-list a {
+	color: #FFFFFF;
+	font-size: 15px;
+	font-weight: 500;
+	letter-spacing: 0.2px;
+	transition: 0.2s ease;
+	display: inline-block;
+}
+
+.contact-list a:hover {
+	color: #FFC266;
+	padding-left: 3px;
+}
+
+/* ===========================
+   BOTTOM BAR
+=========================== */
+.footer-bottom {
+	text-align: center;
+	margin-top: 40px;
+	padding-top: 20px;
+	border-top: 1px solid rgba(255, 255, 255, 0.25);
+	font-size: 14px;
+	color: #F5F5F5;
+}
+/* BLOCCO TOTALE SVG NEL FOOTER */
+.footer svg, .footer .icon {
+	width: 16px !important;
+	height: 16px !important;
+	min-width: 16px !important;
+	min-height: 16px !important;
+	max-width: 16px !important;
+	max-height: 16px !important;
+	flex-shrink: 0 !important;
+	display: inline-block !important;
+	stroke-width: 2 !important;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media ( max-width : 768px) {
+	.footer-top {
+		gap: 30px;
+	}
+	.footer-grid {
+		gap: 30px;
+	}
+	.footer-col h3 {
+		font-size: 22px;
+	}
+	.footer-col h4 {
+		font-size: 16px;
+	}
+}

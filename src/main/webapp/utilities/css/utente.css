@@ -1,0 +1,22 @@
+.profile-box {
+	width: 500px;
+	margin: 40px auto;
+	background: #FFFFFF;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-box h2 {
+	text-align: center;
+	margin-bottom: 20px;
+	color: #111111;
+}
+
+.profile-box input {
+	width: 100%;
+	padding: 12px;
+	margin-bottom: 15px;
+	border-radius: 6px;
+	border: 1px solid #CCC;
+}

@@ -1,0 +1,97 @@
+.payment-container {
+	max-width: 1100px;
+	margin: 40px auto;
+	padding: 20px;
+}
+
+.payment-container h1 {
+	text-align: center;
+	font-size: 32px;
+	font-weight: 700;
+	margin-bottom: 30px;
+}
+
+.payment-box {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 30px;
+}
+
+/* RIEPILOGO */
+.payment-summary {
+	background: #fff;
+	padding: 20px;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.payment-summary h2 {
+	margin-bottom: 20px;
+}
+
+.summary-row {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+	font-size: 18px;
+}
+
+.totale {
+	font-weight: 700;
+	color: #FFC266;
+}
+
+/* FORM PAGAMENTO */
+.payment-form {
+	background: #fff;
+	padding: 20px;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.payment-form h2 {
+	margin-bottom: 10px;
+}
+
+.sandbox-info {
+	font-size: 14px;
+	color: #777;
+	margin-bottom: 20px;
+}
+
+.payment-form label {
+	font-weight: 600;
+	margin-top: 10px;
+	display: block;
+}
+
+.payment-form input {
+	width: 100%;
+	padding: 10px;
+	border: 2px solid #e6e6e6;
+	border-radius: 8px;
+	margin-top: 5px;
+	transition: 0.25s;
+}
+
+.payment-form input:focus {
+	border-color: #FFC266;
+	box-shadow: 0 0 0 3px rgba(255, 194, 102, 0.35);
+	outline: none;
+}
+
+.row {
+	display: flex;
+	gap: 20px;
+}
+
+.btn-primary:hover {
+	background: #e6a957;
+}
+
+/* RESPONSIVE */
+@media ( max-width : 768px) {
+	.payment-box {
+		grid-template-columns: 1fr;
+	}
+}

@@ -1,0 +1,270 @@
+/* =========================
+   CART CONTAINER
+   ========================= */
+.cart-container {
+	width: 90%;
+	margin: 40px auto;
+	background: white;
+	border-radius: 12px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+	padding: 30px;
+}
+
+/* =========================
+   TABELLA
+   ========================= */
+.cart-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 30px;
+}
+
+.cart-table th {
+	text-align: left;
+	padding: 16px 12px;
+	background: #f8f8f8;
+	font-weight: 600;
+	color: #333;
+	border-bottom: 2px solid #e0e0e0;
+	height: 70px;
+	vertical-align: middle;
+}
+
+.cart-table td {
+	padding: 20px 12px;
+	border-bottom: 1px solid #f0f0f0;
+	vertical-align: middle;
+}
+
+/* CORREZIONE: Forza il centro nella colonna Quantità (3a colonna) */
+.cart-table td:nth-child(3) {
+	text-align: center !important;
+}
+
+/* =========================
+   PRODOTTO
+   ========================= */
+.cart-product {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+.cart-img {
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	border-radius: 8px;
+	flex-shrink: 0;
+}
+
+.cart-product-info h3 {
+	margin: 0 0 5px 0;
+	font-size: 16px;
+	color: #333;
+	font-weight: 600;
+}
+
+.cart-product-info p {
+	margin: 0;
+	font-size: 14px;
+	color: #666;
+}
+
+/* =========================
+   PREZZO
+   ========================= */
+.cart-price {
+	font-weight: 600;
+	color: #333;
+	font-size: 16px;
+}
+
+/* =========================
+   QUANTITÀ (CORRETTA)
+   ========================= */
+.qty-controls {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.qty-btn {
+	width: 32px;
+	height: 32px;
+	background: #f0f0f0;
+	border: none;
+	cursor: pointer;
+	border-radius: 6px;
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+	transition: all 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1; /* Assicura che + e - siano centrati verticalmente */
+	padding: 0; /* Rimuove padding per evitare spostamenti */
+}
+
+.qty-btn:hover {
+	background: #e0e0e0;
+	transform: scale(1.05);
+}
+
+.qty-number {
+	font-weight: bold;
+	min-width: 30px;
+	text-align: center;
+	font-size: 16px;
+	/* Allinea il numero all'altezza esatta dei bottoni */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 32px;
+}
+
+/* =========================
+   SUBTOTALE
+   ========================= */
+.cart-subtotal {
+	font-weight: 600;
+	color: #333;
+	font-size: 16px;
+}
+
+/* =========================
+   RIMUOVI
+   ========================= */
+.remove-btn {
+	background: none;
+	border: none;
+	font-size: 20px;
+	cursor: pointer;
+	color: #ff4444;
+	padding: 8px;
+	border-radius: 6px;
+	transition: all 0.2s;
+	opacity: 0.7;
+}
+
+.remove-btn:hover {
+	opacity: 1;
+	background: #fff0f0;
+	transform: scale(1.1);
+}
+
+/* =========================
+   TOTALE + ACQUISTA
+   ========================= */
+.cart-summary {
+	margin-top: 30px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 30px;
+	padding-top: 20px;
+	border-top: 2px solid #f0f0f0;
+}
+
+.cart-total-text {
+	font-size: 24px;
+	font-weight: 700;
+	color: #333;
+}
+
+.cart-total-text span {
+	color: #FF6B35;
+	font-size: 28px;
+}
+
+/* BOTTONE ACQUISTA */
+.btn-acquista {
+	padding: 14px 32px;
+	background: linear-gradient(135deg, #FFC266 0%, #FFB347 100%);
+	color: #111 !important;
+	font-weight: 700;
+	border-radius: 10px;
+	text-decoration: none;
+	font-size: 16px;
+	transition: all 0.3s;
+	display: inline-block; /* Fondamentale per la visibilità */
+	border: none;
+	cursor: pointer;
+	box-shadow: 0 4px 12px rgba(255, 194, 102, 0.3);
+	opacity: 1; /* Visibilità garantita */
+}
+
+.btn-acquista:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 20px rgba(255, 194, 102, 0.4);
+	background: linear-gradient(135deg, #FFB347 0%, #FFA500 100%);
+}
+
+.btn-acquista:active {
+	transform: translateY(-1px);
+}
+
+/* EMPTY CART */
+.cart-empty {
+	text-align: center;
+	padding: 60px 20px;
+}
+
+.cart-empty i {
+	font-size: 80px;
+	color: #ddd;
+	margin-bottom: 20px;
+}
+
+.cart-empty h2 {
+	font-size: 24px;
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.cart-empty p {
+	color: #666;
+	margin-bottom: 30px;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media ( max-width : 768px) {
+	.cart-container {
+		width: 95%;
+		padding: 20px;
+	}
+	.cart-table th, .cart-table td {
+		padding: 12px 8px;
+	}
+	.cart-img {
+		width: 60px;
+		height: 60px;
+	}
+	.cart-summary {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 20px;
+	}
+	.cart-total-text {
+		text-align: center;
+	}
+	.btn-acquista {
+		text-align: center;
+	}
+	.cart-table td {
+		height: 70px; /* stessa altezza dell’immagine */
+		vertical-align: middle;
+	}
+
+	/* Allinea perfettamente i bottoni */
+	.qty-controls {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+	}
+}

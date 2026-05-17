@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+.checkout-container {
+	max-width: 1100px;
+	margin: 40px auto;
+	padding: 20px;
+}
+
+.checkout-container h1 {
+	text-align: center;
+	margin-bottom: 30px;
+	font-size: 32px;
+	font-weight: 700;
+}
+
+.empty-cart {
+	text-align: center;
+	font-size: 18px;
+	margin-bottom: 20px;
+}
+
+.checkout-grid {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 30px;
+}
+
+/* PRODOTTI */
+.checkout-products {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.checkout-item {
+	display: flex;
+	gap: 20px;
+	background: #fff;
+	padding: 15px;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-img {
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+	border-radius: 10px;
+}
+
+.checkout-info h3 {
+	font-size: 18px;
+	margin-bottom: 6px;
+}
+
+.checkout-info .price {
+	font-size: 18px;
+	font-weight: 700;
+	color: #FFC266;
+}
+
+/* RIEPILOGO */
+.checkout-summary {
+	background: #fff;
+	padding: 20px;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-summary h2 {
+	margin-bottom: 20px;
+	font-size: 22px;
+}
+
+.summary-row, .summary-total {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 12px;
+}
+
+.summary-total {
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.btn-primary {
+	display: inline-block;
+	background: #FFC266;
+	color: #111;
+	padding: 10px 18px;
+	border-radius: 8px;
+	font-weight: 700;
+	text-decoration: none;
+	transition: 0.25s;
+}
+
+.btn-primary:hover {
+	background: #e6a957;
+}
+
+.btn-large {
+	width: 100%;
+	text-align: center;
+	padding: 14px;
+	margin-top: 20px;
+}
+
+/* RESPONSIVE */
+@media ( max-width : 768px) {
+	.checkout-grid {
+		grid-template-columns: 1fr;
+	}
+}
