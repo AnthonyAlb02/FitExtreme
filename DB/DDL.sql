@@ -47,7 +47,7 @@ CREATE TABLE Articolo (
     Prezzo_Listino DECIMAL(10,2) NOT NULL,
     Qta_Disponibile INT NOT NULL,
     ID_Categoria INT,
-    Immagine VARCHAR(255),   -- ⭐ AGGIUNTA
+    Immagine VARCHAR(255),  
 
     FOREIGN KEY (ID_Categoria) REFERENCES Categoria(ID_Categoria)
         ON DELETE SET NULL
@@ -55,29 +55,9 @@ CREATE TABLE Articolo (
 );
 
 
--- TABELLA TAGLIA 
-
-CREATE TABLE Taglia (
-    ID_Taglia INT AUTO_INCREMENT PRIMARY KEY,
-    Nome_Taglia VARCHAR(10) NOT NULL UNIQUE
-);
 
 
--- TABELLA ARTICOLO_TAGLIA 
--
-CREATE TABLE Articolo_Taglia (
-    ID_Articolo INT NOT NULL,
-    ID_Taglia INT NOT NULL,
-    Quantita INT NOT NULL,
 
-    PRIMARY KEY (ID_Articolo, ID_Taglia),
-
-    FOREIGN KEY (ID_Articolo) REFERENCES Articolo(ID_Articolo)
-        ON DELETE CASCADE,
-
-    FOREIGN KEY (ID_Taglia) REFERENCES Taglia(ID_Taglia)
-        ON DELETE CASCADE
-);
 
 
 -- TABELLA RECENSIONE

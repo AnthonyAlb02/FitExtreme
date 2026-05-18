@@ -1,7 +1,5 @@
 # FitExtreme
 
-# FitExtreme
-
 FitExtreme è una piattaforma e‑commerce dedicata al mondo del fitness, pensata per offrire un'esperienza semplice, veloce e intuitiva a tutti gli utenti che cercano integratori, attrezzatura sportiva, abbigliamento tecnico e prodotti per il benessere.
 
 ## 🚀 Funzionalità principali

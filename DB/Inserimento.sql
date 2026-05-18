@@ -86,6 +86,13 @@ VALUES
 (1, 1, 5, 'Ottima qualità, molto comoda!', CURDATE()),
 (2, 4, 4, 'Buoni guanti, presi per palestra.', CURDATE()),
 (1, 9, 5, 'Tappetino perfetto per yoga.', CURDATE());
+(2, 1, 4, 'Maglietta molto comoda, veste bene. Consigliata!', CURDATE()),
+(1, 2, 5, 'Pantaloncini leggerissimi, perfetti per correre.', CURDATE()),
+(2, 3, 3, 'Felpa buona ma un po’ calda. Qualità comunque ottima.', CURDATE()),
+(1, 4, 4, 'Guanti resistenti, ottima presa sui pesi.', CURDATE()),
+(2, 7, 5, 'Manubri solidi, impugnatura perfetta. Ottimo acquisto.', CURDATE()),
+(1, 8, 5, 'Set elastici completo, rapporto qualità/prezzo top.', CURDATE()),
+(2, 9, 4, 'Tappetino comodo e antiscivolo, perfetto per stretching.', CURDATE());
 
 
 -- ORDINI

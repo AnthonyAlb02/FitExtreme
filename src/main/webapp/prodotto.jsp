@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="model.beans.Articolo, java.util.*"%>
-
+<%@ page import="model.beans.Recensione" %>
+<%@ page import="model.beans.Utente" %>
 <%
     Articolo p = (Articolo) request.getAttribute("prodotto");
     List<Articolo> tutti = (List<Articolo>) request.getAttribute("tuttiProdotti");
@@ -125,6 +126,59 @@
 
 		</div>
 	</section>
+	<!-- SEZIONE RECENSIONI -->
+<section class="reviews-section">
+    <h3>Recensioni</h3>
+
+    <%
+        List<Recensione> recensioni = (List<Recensione>) request.getAttribute("recensioni");
+        Utente utenteLoggato = (Utente) session.getAttribute("utente");
+    %>
+
+    <!-- LISTA RECENSIONI -->
+    <div class="reviews-list">
+        <% if (recensioni == null || recensioni.isEmpty()) { %>
+            <p class="placeholder">Nessuna recensione disponibile.</p>
+        <% } else { %>
+            <% for (Recensione r : recensioni) { %>
+                <div class="review-card">
+                    <div class="review-rating">Voto: <%= r.getVoto() %>/5 ⭐</div>
+                    <p class="review-comment"><%= r.getCommento() %></p>
+                    <small class="review-date"><%= r.getDataRecensione() %></small>
+                </div>
+            <% } %>
+        <% } %>
+    </div>
+
+    <!-- FORM RECENSIONE (solo utenti loggati) -->
+    <% if (utenteLoggato != null) { %>
+        <div class="review-form">
+            <h4>Lascia una recensione</h4>
+
+            <form action="<%= request.getContextPath() %>/addReview" method="post">
+                <input type="hidden" name="idArticolo" value="<%= p.getIdArticolo() %>">
+
+                <label for="voto">Voto:</label>
+                <select name="voto" id="voto" required>
+                    <option value="1">1 ⭐</option>
+                    <option value="2">2 ⭐⭐</option>
+                    <option value="3">3 ⭐⭐⭐</option>
+                    <option value="4">4 ⭐⭐⭐⭐</option>
+                    <option value="5">5 ⭐⭐⭐⭐⭐</option>
+                </select>
+
+                <label for="commento">Commento:</label>
+                <textarea name="commento" id="commento" required></textarea>
+
+                <button type="submit" class="btn-add-cart">Invia recensione</button>
+            </form>
+        </div>
+    <% } else { %>
+        <p class="login-warning">Effettua il login per lasciare una recensione.</p>
+    <% } %>
+
+</section>
+	
 
 	<!-- FOOTER -->
 	<jsp:include page="/footer.jsp" />

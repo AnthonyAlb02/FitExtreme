@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.beans.Articolo;
 import model.DAO.ArticoloDAO;
+import model.DAO.RecensioneDAO;  
+import java.util.List;            
+import model.beans.Recensione;    
 
 @WebServlet("/prodotto")
 public class prodottoServlet extends HttpServlet {
@@ -45,7 +48,12 @@ public class prodottoServlet extends HttpServlet {
                 return;
             }
 
-            // ✅ PASSO 1 — QUI!
+            // ⭐⭐⭐ AGGIUNTA RECENSIONI (UNICA COSA CHE MANCAVA)
+            RecensioneDAO rdao = new RecensioneDAO();
+            List<Recensione> recensioni = rdao.doRetrieveByArticolo(idProdotto);
+            request.setAttribute("recensioni", recensioni);
+
+            // ⭐ PASSO 1 — QUI!
             // Passiamo alla JSP la lista completa dei prodotti
             request.setAttribute("tuttiProdotti", articoloDAO.doRetrieveAll(null));
 
