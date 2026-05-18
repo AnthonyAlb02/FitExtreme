@@ -31,7 +31,7 @@ FitExtreme è una piattaforma e‑commerce dedicata al mondo del fitness, pensat
 
 1. Clona il repository:
    ```bash
-   git clone https://github.com/tuo-utente/FitExtreme.git
+   git clone https://github.com/username/FitExtreme.git
 
 ---
 
@@ -62,18 +62,12 @@ FitExtreme è un e‑commerce fitness sviluppato come **Dynamic Web Project** in
 
 ## 🗄️ Database
 
-- Nome DB: `fitExtreme`
-- File SQL incluso: `FitExtreme.sql`
-- Tabelle principali:
-  - `users`
-  - `products`
-  - `categories`
-  - `orders`
-  - `order_items`
+- Nome DB: `ecommerce`
+- File SQL incluso: `DDL.sql`
+
 
 ## ⚙️ Configurazione JDBC
 
-Modifica il file `DBConnection.java`:
 
 ```java
 private static final String URL = "jdbc:mysql://localhost:3306/ecommerce";
