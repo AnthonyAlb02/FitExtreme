@@ -13,7 +13,6 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
     private static final String TABLE_NAME = "Ordine";
     private static final DataSource ds;
 
-    // Recupero il DataSource tramite JNDI (stesso stile del progetto di esempio)
     static {
         try {
             Context ctx = new InitialContext();
@@ -22,6 +21,8 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
             throw new RuntimeException(e);
         }
     }
+
+    // 🔥 Recupera ordini filtrati per data (se presente) e ordinati dal più recente
     public List<Ordine> doRetrieveByUserAndDate(int idUtente, LocalDate data) throws SQLException {
 
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE ID_Utente=?";
@@ -30,7 +31,8 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
             query += " AND DATE(Data_Ordine) = ?";
         }
 
-        query += " ORDER BY Data_Ordine DESC";
+        // ⭐ Ordina dal più recente al meno recente
+        query += " ORDER BY ID_Ordine DESC";
 
         List<Ordine> lista = new ArrayList<>();
 
@@ -53,10 +55,8 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         return lista;
     }
 
-
     @Override
     public Ordine doRetrieveByKey(Integer pk) throws SQLException {
-        // Recupero un ordine tramite la sua chiave primaria
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE ID_Ordine=?";
 
         try (Connection conn = ds.getConnection();
@@ -66,69 +66,52 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return extractOrdine(rs); // mappo il ResultSet nel bean Ordine
+                return extractOrdine(rs);
             }
         }
-        return null; // se non trovo nulla ritorno null
+        return null;
     }
-    
- // Metodo che salva un ordine e ritorna la chiave generata (ID_Ordine)
- // Mi serve per creare l'ordine e poi inserire i dettagli collegati
- public int doSaveAndReturnKey(Ordine o) throws SQLException {
 
-     String query = "INSERT INTO " + TABLE_NAME +
-             " (ID_Utente, ID_Amministratore, Data_Ordine, Stato_Avanzamento, Importo_Totale) " +
-             "VALUES (?, ?, ?, ?, ?)";
+    // 🔥 Salva ordine e ritorna ID generato
+    public int doSaveAndReturnKey(Ordine o) throws SQLException {
 
-     // Variabile dove salvo la chiave generata dal DB
-     int generatedKey = -1;
+        String query = "INSERT INTO " + TABLE_NAME +
+                " (ID_Utente, ID_Amministratore, Data_Ordine, Stato_Avanzamento, Importo_Totale) " +
+                "VALUES (?, ?, ?, ?, ?)";
 
-     // Chiedo al PreparedStatement di restituire le chiavi generate
-     try (Connection conn = ds.getConnection();
-          PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        int generatedKey = -1;
 
-         // Setto i parametri dell'ordine
-         ps.setInt(1, o.getIdUtente());
-         ps.setObject(2, o.getIdAmministratore()); // può essere null
-         ps.setDate(3, java.sql.Date.valueOf(o.getDataOrdine()));
-         ps.setString(4, o.getStatoAvanzamento());
-         ps.setBigDecimal(5, o.getImportoTotale());
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-         // Eseguo l'INSERT
-         ps.executeUpdate();
+            ps.setInt(1, o.getIdUtente());
+            ps.setObject(2, o.getIdAmministratore());
+            ps.setDate(3, java.sql.Date.valueOf(o.getDataOrdine()));
+            ps.setString(4, o.getStatoAvanzamento());
+            ps.setBigDecimal(5, o.getImportoTotale());
 
-         // Recupero la chiave generata (ID_Ordine)
-         ResultSet rs = ps.getGeneratedKeys();
-         if (rs.next()) {
-             generatedKey = rs.getInt(1);
-         }
-     }
+            ps.executeUpdate();
 
-     return generatedKey; // ritorno l'ID dell'ordine appena creato
- }
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                generatedKey = rs.getInt(1);
+            }
+        }
 
+        return generatedKey;
+    }
 
     @Override
     public Collection<Ordine> doRetrieveAll(String order) throws SQLException {
-        // Recupero tutti gli ordini, con eventuale ordinamento
-        String query = "SELECT * FROM " + TABLE_NAME;
-        switch (order) {
-        case "data_asc":
-            query += " ORDER BY Data_Ordine ASC";
-            break;
-        case "data_desc":
-            query += " ORDER BY Data_Ordine DESC";
-            break;
-        case "importo_asc":
-            query += " ORDER BY Importo_Totale ASC";
-            break;
-        case "importo_desc":
-            query += " ORDER BY Importo_Totale DESC";
-            break;
-        default:
-            break;
-    }
 
+        String query = "SELECT * FROM " + TABLE_NAME;
+
+        switch (order) {
+            case "data_asc": query += " ORDER BY Data_Ordine ASC"; break;
+            case "data_desc": query += " ORDER BY Data_Ordine DESC"; break;
+            case "importo_asc": query += " ORDER BY Importo_Totale ASC"; break;
+            case "importo_desc": query += " ORDER BY Importo_Totale DESC"; break;
+        }
 
         Collection<Ordine> lista = new ArrayList<>();
 
@@ -137,41 +120,37 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                lista.add(extractOrdine(rs)); // aggiungo ogni ordine alla lista
+                lista.add(extractOrdine(rs));
             }
         }
         return lista;
     }
- // Recupero tutti gli ordini effettuati da un certo utente
- // Lo uso per mostrare lo storico ordini nella pagina dedicata
- public Collection<Ordine> doRetrieveByUser(int idUtente) throws SQLException {
 
-     String query = "SELECT * FROM " + TABLE_NAME + " WHERE ID_Utente=? ORDER BY Data_Ordine DESC";
+    // ⭐ Metodo usato dalla pagina "ordini.jsp"
+    //    → ORA ordina correttamente dal più recente
+    public List<Ordine> doRetrieveByUser(int idUtente) throws SQLException {
 
-     Collection<Ordine> lista = new ArrayList<>();
+        String query = "SELECT * FROM Ordine WHERE ID_Utente=? ORDER BY ID_Ordine DESC";
 
-     try (Connection conn = ds.getConnection();
-          PreparedStatement ps = conn.prepareStatement(query)) {
+        List<Ordine> lista = new ArrayList<>();
 
-         // Setto l'ID dell'utente
-         ps.setInt(1, idUtente);
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
 
-         ResultSet rs = ps.executeQuery();
+            ps.setInt(1, idUtente);
+            ResultSet rs = ps.executeQuery();
 
-         // Aggiungo ogni ordine trovato alla lista
-         while (rs.next()) {
-             lista.add(extractOrdine(rs));
-         }
-     }
+            while (rs.next()) {
+                lista.add(extractOrdine(rs));
+            }
+        }
 
-     return lista;
- }
- 
-
+        return lista;
+    }
 
     @Override
     public void doSave(Ordine o) throws SQLException {
-        // Inserisco un nuovo ordine nel database
+
         String query = "INSERT INTO " + TABLE_NAME +
                 " (ID_Utente, ID_Amministratore, Data_Ordine, Stato_Avanzamento, Importo_Totale) " +
                 "VALUES (?, ?, ?, ?, ?)";
@@ -180,18 +159,18 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
              PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setInt(1, o.getIdUtente());
-            ps.setObject(2, o.getIdAmministratore()); // può essere null
-            ps.setDate(3, java.sql.Date.valueOf(o.getDataOrdine())); // LocalDate → SQL Date
+            ps.setObject(2, o.getIdAmministratore());
+            ps.setDate(3, java.sql.Date.valueOf(o.getDataOrdine()));
             ps.setString(4, o.getStatoAvanzamento());
             ps.setBigDecimal(5, o.getImportoTotale());
 
-            ps.executeUpdate(); // eseguo l'INSERT
+            ps.executeUpdate();
         }
     }
 
     @Override
     public void doUpdate(Ordine o) throws SQLException {
-        // Aggiorno un ordine esistente
+
         String query = "UPDATE " + TABLE_NAME +
                 " SET ID_Utente=?, ID_Amministratore=?, Data_Ordine=?, Stato_Avanzamento=?, Importo_Totale=? " +
                 "WHERE ID_Ordine=?";
@@ -206,31 +185,30 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
             ps.setBigDecimal(5, o.getImportoTotale());
             ps.setInt(6, o.getIdOrdine());
 
-            ps.executeUpdate(); // eseguo l'UPDATE
+            ps.executeUpdate();
         }
     }
 
     @Override
     public boolean doDelete(Integer pk) throws SQLException {
-        // Elimino un ordine tramite ID
+
         String query = "DELETE FROM " + TABLE_NAME + " WHERE ID_Ordine=?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setInt(1, pk);
-            return ps.executeUpdate() > 0; // true se almeno una riga è stata eliminata
+            return ps.executeUpdate() > 0;
         }
     }
 
-    // Metodo di utilità per convertire una riga del ResultSet in un oggetto Ordine
     private Ordine extractOrdine(ResultSet rs) throws SQLException {
         Ordine o = new Ordine();
 
         o.setIdOrdine(rs.getInt("ID_Ordine"));
         o.setIdUtente(rs.getInt("ID_Utente"));
         o.setIdAmministratore((Integer) rs.getObject("ID_Amministratore"));
-        o.setDataOrdine(rs.getDate("Data_Ordine").toLocalDate()); // SQL Date → LocalDate
+        o.setDataOrdine(rs.getDate("Data_Ordine").toLocalDate());
         o.setStatoAvanzamento(rs.getString("Stato_Avanzamento"));
         o.setImportoTotale(rs.getBigDecimal("Importo_Totale"));
 

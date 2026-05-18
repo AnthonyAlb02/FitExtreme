@@ -11,8 +11,9 @@ public class DettaglioOrdine {
     private BigDecimal prezzoAcquisto;
     private BigDecimal subtotale;
 
-    // ➕ Campo NON presente nel DB, utile per ricevuta e JSP
+    // ➕ Campi NON presenti nel DB, utili per JSP e ricevute
     private String nomeArticolo;
+    private String immagine;   // ⭐ NUOVO CAMPO
 
     public DettaglioOrdine() {}
 
@@ -45,6 +46,10 @@ public class DettaglioOrdine {
     public String getNomeArticolo() { return nomeArticolo; }
     public void setNomeArticolo(String nomeArticolo) { this.nomeArticolo = nomeArticolo; }
 
+    // ⭐ Getter/Setter per immagine articolo
+    public String getImmagine() { return immagine; }
+    public void setImmagine(String immagine) { this.immagine = immagine; }
+
     @Override
     public String toString() {
         return "DettaglioOrdine{" +
@@ -53,6 +58,7 @@ public class DettaglioOrdine {
                 ", idArticolo=" + idArticolo +
                 ", quantita=" + quantita +
                 ", nomeArticolo='" + nomeArticolo + '\'' +
+                ", immagine='" + immagine + '\'' +
                 '}';
     }
 }

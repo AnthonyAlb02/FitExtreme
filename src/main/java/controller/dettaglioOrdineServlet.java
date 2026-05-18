@@ -39,7 +39,7 @@ public class dettaglioOrdineServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Indico la JSP che mostrerà il dettaglio dell'ordine
-        dispatcher = getServletContext().getRequestDispatcher("/jsp/ordine/dettaglioOrdine.jsp");
+        dispatcher = getServletContext().getRequestDispatcher("/dettaglioOrdine.jsp");
 
         // Recupero l'ID dell'ordine passato come parametro
         String idParam = request.getParameter("id");

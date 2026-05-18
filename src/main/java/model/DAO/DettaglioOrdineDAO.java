@@ -17,7 +17,6 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
     private static final String TABLE_NAME = "Dettaglio_Ordine";
     private static DataSource ds;
 
-    // 🔥 DataSource corretto
     static {
         try {
             Context ctx = new InitialContext();
@@ -50,30 +49,14 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
 
         if (order != null && !order.isEmpty()) {
             switch (order) {
-                case "quantita_asc":
-                    query += " ORDER BY Quantita ASC";
-                    break;
-                case "quantita_desc":
-                    query += " ORDER BY Quantita DESC";
-                    break;
-                case "prezzo_asc":
-                    query += " ORDER BY Prezzo_Acquisto ASC";
-                    break;
-                case "prezzo_desc":
-                    query += " ORDER BY Prezzo_Acquisto DESC";
-                    break;
-                case "subtotale_asc":
-                    query += " ORDER BY Subtotale ASC";
-                    break;
-                case "subtotale_desc":
-                    query += " ORDER BY Subtotale DESC";
-                    break;
-                default:
-                    
-                    break;
+                case "quantita_asc": query += " ORDER BY Quantita ASC"; break;
+                case "quantita_desc": query += " ORDER BY Quantita DESC"; break;
+                case "prezzo_asc": query += " ORDER BY Prezzo_Acquisto ASC"; break;
+                case "prezzo_desc": query += " ORDER BY Prezzo_Acquisto DESC"; break;
+                case "subtotale_asc": query += " ORDER BY Subtotale ASC"; break;
+                case "subtotale_desc": query += " ORDER BY Subtotale DESC"; break;
             }
         }
-
 
         Collection<DettaglioOrdine> lista = new ArrayList<>();
 
@@ -107,7 +90,7 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
         }
     }
 
-    // 🔥 Recupera tutti i dettagli di un ordine + nome articolo
+    // ⭐ Recupera tutti i dettagli di un ordine + nome + immagine articolo
     public List<DettaglioOrdine> doRetrieveByOrdine(int idOrdine) throws SQLException {
 
         String query = "SELECT * FROM Dettaglio_Ordine WHERE ID_Ordine=?";
@@ -124,10 +107,11 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
             while (rs.next()) {
                 DettaglioOrdine d = extractDettaglio(rs);
 
-                // 🔥 Recupero nome articolo
+                // ⭐ Recupero articolo completo
                 Articolo art = articoloDAO.doRetrieveByKey(d.getIdArticolo());
                 if (art != null) {
                     d.setNomeArticolo(art.getNomeArticolo());
+                    d.setImmagine(art.getImmagine()); // ⭐ AGGIUNTO
                 }
 
                 lista.add(d);
@@ -169,7 +153,7 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
         }
     }
 
-    // 🔥 Metodo di utilità per mappare il ResultSet
+    // ⭐ Mappa il ResultSet → DettaglioOrdine
     private DettaglioOrdine extractDettaglio(ResultSet rs) throws SQLException {
         DettaglioOrdine d = new DettaglioOrdine();
 
