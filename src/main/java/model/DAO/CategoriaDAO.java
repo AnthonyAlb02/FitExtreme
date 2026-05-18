@@ -49,8 +49,25 @@ public class CategoriaDAO implements DaoInterface<Categoria, Integer> {
         String query = "SELECT * FROM " + TABLE_NAME;
 
         if (order != null && !order.isEmpty()) {
-            query += " ORDER BY " + order;
+            switch (order) {
+                case "nome_asc":
+                    query += " ORDER BY Nome ASC";
+                    break;
+                case "nome_desc":
+                    query += " ORDER BY Nome DESC";
+                    break;
+                case "id_asc":
+                    query += " ORDER BY ID_Categoria ASC";
+                    break;
+                case "id_desc":
+                    query += " ORDER BY ID_Categoria DESC";
+                    break;
+                default:
+                 
+                    break;
+            }
         }
+
 
         Collection<Categoria> lista = new ArrayList<>();
 

@@ -43,10 +43,32 @@ public class ArticoloDAO implements DaoInterface<Articolo, Integer> {
     @Override
     public Collection<Articolo> doRetrieveAll(String order) throws SQLException {
         String query = "SELECT * FROM " + TABLE_NAME;
-
         if (order != null && !order.isEmpty()) {
-            query += " ORDER BY " + order;
+            switch (order) {
+                case "nome_asc":
+                    query += " ORDER BY Nome_Articolo ASC";
+                    break;
+                case "nome_desc":
+                    query += " ORDER BY Nome_Articolo DESC";
+                    break;
+                case "prezzo_asc":
+                    query += " ORDER BY Prezzo_Listino ASC";
+                    break;
+                case "prezzo_desc":
+                    query += " ORDER BY Prezzo_Listino DESC";
+                    break;
+                case "qta_asc":
+                    query += " ORDER BY Qta_Disponibile ASC";
+                    break;
+                case "qta_desc":
+                    query += " ORDER BY Qta_Disponibile DESC";
+                    break;
+                default:
+                   
+                    break;
+            }
         }
+
 
         Collection<Articolo> lista = new ArrayList<>();
 

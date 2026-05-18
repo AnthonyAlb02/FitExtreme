@@ -80,10 +80,23 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
     public Collection<Ordine> doRetrieveAll(String order) throws SQLException {
         // Recupero tutti gli ordini, con eventuale ordinamento
         String query = "SELECT * FROM " + TABLE_NAME;
+        switch (order) {
+        case "data_asc":
+            query += " ORDER BY Data_Ordine ASC";
+            break;
+        case "data_desc":
+            query += " ORDER BY Data_Ordine DESC";
+            break;
+        case "importo_asc":
+            query += " ORDER BY Importo_Totale ASC";
+            break;
+        case "importo_desc":
+            query += " ORDER BY Importo_Totale DESC";
+            break;
+        default:
+            break;
+    }
 
-        if (order != null && !order.isEmpty()) {
-            query += " ORDER BY " + order;
-        }
 
         Collection<Ordine> lista = new ArrayList<>();
 

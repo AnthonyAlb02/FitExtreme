@@ -65,8 +65,31 @@ public class UtenteDAO implements DaoInterface<Utente, Integer> {
         String query = "SELECT * FROM " + TABLE_NAME;
 
         if (order != null && !order.isEmpty()) {
-            query += " ORDER BY " + order;
+            switch (order) {
+                case "nome_asc":
+                    query += " ORDER BY Nome ASC";
+                    break;
+                case "nome_desc":
+                    query += " ORDER BY Nome DESC";
+                    break;
+                case "cognome_asc":
+                    query += " ORDER BY Cognome ASC";
+                    break;
+                case "cognome_desc":
+                    query += " ORDER BY Cognome DESC";
+                    break;
+                case "email_asc":
+                    query += " ORDER BY Email ASC";
+                    break;
+                case "email_desc":
+                    query += " ORDER BY Email DESC";
+                    break;
+                default:
+                    
+                    break;
+            }
         }
+
 
         Collection<Utente> lista = new ArrayList<>();
 

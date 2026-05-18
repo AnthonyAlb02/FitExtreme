@@ -49,8 +49,31 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
         String query = "SELECT * FROM " + TABLE_NAME;
 
         if (order != null && !order.isEmpty()) {
-            query += " ORDER BY " + order;
+            switch (order) {
+                case "quantita_asc":
+                    query += " ORDER BY Quantita ASC";
+                    break;
+                case "quantita_desc":
+                    query += " ORDER BY Quantita DESC";
+                    break;
+                case "prezzo_asc":
+                    query += " ORDER BY Prezzo_Acquisto ASC";
+                    break;
+                case "prezzo_desc":
+                    query += " ORDER BY Prezzo_Acquisto DESC";
+                    break;
+                case "subtotale_asc":
+                    query += " ORDER BY Subtotale ASC";
+                    break;
+                case "subtotale_desc":
+                    query += " ORDER BY Subtotale DESC";
+                    break;
+                default:
+                    
+                    break;
+            }
         }
+
 
         Collection<DettaglioOrdine> lista = new ArrayList<>();
 
