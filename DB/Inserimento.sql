@@ -9,7 +9,7 @@ INSERT INTO Categoria (Nome) VALUES
 ('Attrezzatura');
 
 
--- TAGLIE 
+-- TAGLI
 
 INSERT INTO Taglia (Nome_Taglia) VALUES
 ('S'), ('M'), ('L'), ('XL');
