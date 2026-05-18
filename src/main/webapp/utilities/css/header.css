@@ -296,3 +296,31 @@
 		text-align: center;
 	}
 }
+@media (max-width: 768px) {
+
+    .top-bar {
+        flex-direction: column;
+        gap: 12px;
+        padding: 10px 20px;
+    }
+
+    .logo img {
+        height: 55px;
+    }
+
+    .search-bar {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .header-icons {
+        justify-content: center;
+        gap: 18px;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 10px 0;
+    }
+}
