@@ -1,0 +1,109 @@
+/* ===========================
+   PAGINE POLICY – FITEXTREME
+=========================== */
+
+/* Contenitore principale */
+.page-container {
+    width: min(80%, 900px);
+    margin: 60px auto;
+    padding: 50px 60px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* Titolo principale */
+.policy-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #111111;
+    letter-spacing: -0.5px;
+}
+
+/* Intro */
+.policy-intro {
+    font-size: 1.15rem;
+    color: #6E6E6E;
+    margin-bottom: 35px;
+    line-height: 1.7;
+}
+
+/* Sottotitoli */
+.page-container h2 {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #111111;
+}
+
+.page-container h3 {
+    margin-top: 25px;
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #8C5A2B; /* colore secondario */
+}
+
+/* Paragrafi */
+.page-container p {
+    margin-bottom: 18px;
+    line-height: 1.7;
+    font-size: 1rem;
+    color: #111111;
+}
+
+/* Liste */
+.page-container ul {
+    margin: 12px 0 25px 25px;
+    line-height: 1.8;
+}
+
+.page-container li {
+    margin-bottom: 6px;
+}
+
+/* Link */
+.page-container a {
+    color: #8C5A2B;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.page-container a:hover {
+    opacity: 0.7;
+}
+
+/* Pulsante finale */
+.page-container .btn-primary {
+    margin-top: 25px;
+    padding: 12px 22px;
+    font-size: 1rem;
+    border-radius: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-container {
+        width: 92%;
+        padding: 30px 20px;
+        margin: 30px auto;
+    }
+
+    .policy-title {
+        font-size: 2rem;
+    }
+
+    .policy-intro {
+        font-size: 1rem;
+    }
+
+    .page-container h2 {
+        font-size: 1.4rem;
+    }
+
+    .page-container h3 {
+        font-size: 1.15rem;
+    }
+}
