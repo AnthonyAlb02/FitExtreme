@@ -51,7 +51,7 @@ public class RegisterServlet extends HttpServlet {
             // Controllo parametri null
             if (email == null || password == null || nome == null || cognome == null) {
                 request.setAttribute("errore", "Compila tutti i campi obbligatori.");
-                request.getRequestDispatcher("/jsp/utente/registrazione.jsp").forward(request, response);
+                request.getRequestDispatcher("/register.jsp").forward(request, response);
                 return;
             }
 
@@ -62,7 +62,7 @@ public class RegisterServlet extends HttpServlet {
             Utente esistente = model.doRetrieveByEmail(email);
             if (esistente != null) {
                 request.setAttribute("errore", "Email già registrata");
-                request.getRequestDispatcher("/jsp/utente/registrazione.jsp").forward(request, response);
+                request.getRequestDispatcher("/register.jsp").forward(request, response);
                 return;
             }
 
@@ -84,7 +84,7 @@ public class RegisterServlet extends HttpServlet {
             HttpSession sessione = request.getSession();
             sessione.setAttribute("utente", nuovo);
             sessione.setAttribute("id", nuovo.getIdUtente());
-            sessione.setAttribute("admin", false);
+            sessione.setAttribute("isAdmin", false);
 
             // Messaggio di benvenuto
             sessione.setAttribute("successo", "Registrazione completata! Benvenuto su FitExtreme.");

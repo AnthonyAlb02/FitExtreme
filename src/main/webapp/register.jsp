@@ -12,9 +12,11 @@
 	href="<%= request.getContextPath() %>/utilities/css/base.css">
 <link rel="stylesheet"
 	href="<%= request.getContextPath() %>/utilities/css/auth.css">
+	<link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/header.css">
 </head>
 
 <body>
+<jsp:include page="/header.jsp" />
 
 	<section class="auth-container fade-in">
 
