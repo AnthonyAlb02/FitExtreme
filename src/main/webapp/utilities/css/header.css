@@ -5,7 +5,6 @@
     width: 100%;
     background: #FFC266;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    transition: transform 0.25s ease;
     position: sticky;
     top: 0;
     z-index: 999;
@@ -61,23 +60,30 @@
 
 /* ============================
    SEARCH CONTAINER
+   FIX: position:relative qui,
+   overflow:visible obbligatorio
+   così il dropdown non viene tagliato
 ============================ */
 .search-container {
-    position: relative;
+    position: relative;    /* ancora per il dropdown assoluto */
     flex: 2;
     max-width: 550px;
     margin: 0 auto;
-    overflow: visible;
+    overflow: visible;     /* FIX: mai hidden, altrimenti taglia il dropdown */
 }
 
 /* ============================
    SEARCH BAR
+   FIX: overflow RIMOSSO (era hidden)
+   Il border-radius si ottiene sul wrapper
+   tramite clip-path invece
 ============================ */
 .search-bar {
     display: flex;
     align-items: center;
     background: white;
     border-radius: 10px;
+    /* overflow: hidden  <-- RIMOSSO: tagliava il .suggestions-box */
     border: 2px solid rgba(140, 90, 43, 0.13);
     width: 100%;
 }
@@ -113,6 +119,8 @@
 
 /* ============================
    SUGGERIMENTI AJAX
+   FIX: z-index > z-index del main-header (999)
+   FIX: position:absolute relativo a .search-container
 ============================ */
 .suggestions-box {
     position: absolute;
@@ -123,10 +131,10 @@
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    z-index: 100000;
+    z-index: 100000;       /* FIX: deve battere z-index:999 dello sticky header */
     max-height: 260px;
     overflow-y: auto;
-    display: none;
+    display: none;         /* mostrato via JS */
 }
 
 .suggestion-item {
@@ -192,6 +200,7 @@
     filter: brightness(0.8);
 }
 
+/* CARRELLO BADGE */
 .cart-badge {
     position: absolute;
     top: -6px;
@@ -262,6 +271,7 @@
     opacity: 0.75;
 }
 
+/* Apri dropdown su hover */
 .user-menu:hover .user-dropdown,
 .user-menu:focus-within .user-dropdown {
     display: flex;
@@ -393,4 +403,15 @@
     .cookie-buttons {
         justify-content: center;
     }
+}
+
+/* ============================
+   HIDE ON SCROLL
+============================ */
+.main-header {
+    transition: transform 0.3s ease;
+}
+
+.main-header.header-hidden {
+    transform: translateY(-100%);
 }

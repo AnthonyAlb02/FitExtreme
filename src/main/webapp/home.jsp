@@ -106,7 +106,7 @@
             %>
 
 				<a class="card-link"
-					href="<%= request.getContextPath() %>/Prodotto?id=<%= a.getIdArticolo() %>">
+					href="<%= request.getContextPath() %>/prodotto?id=<%= a.getIdArticolo() %>">
 					<div class="card">
 
 						<div class="card-img">

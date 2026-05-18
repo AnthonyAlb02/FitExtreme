@@ -13,22 +13,16 @@
 <meta charset="UTF-8">
 <title><%= p.getNomeArticolo() %> | FitExtreme</title>
 
-<!-- CSS GLOBALI -->
-<link rel="stylesheet"
-	href="<%= request.getContextPath() %>/utilities/css/base.css">
-<link rel="stylesheet"
-	href="<%= request.getContextPath() %>/utilities/css/header.css">
-<link rel="stylesheet"
-	href="<%= request.getContextPath() %>/utilities/css/footer.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/base.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/header.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/footer.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/prodotto.css">
 
-<!-- CSS SPECIFICO -->
-<link rel="stylesheet"
-	href="<%= request.getContextPath() %>/utilities/css/prodotto.css">
+
+
 </head>
 
-<body data-context="<%= request.getContextPath() %>"
-	class="product-page">
-	<body data-context="<%= request.getContextPath() %>" class="product-page">
+<body data-context="<%= request.getContextPath() %>" class="product-page">
 
 <%
     String successo = (String) session.getAttribute("successo");
@@ -39,178 +33,166 @@
         session.removeAttribute("successo");
     }
 %>
-	
 
-	<!-- HEADER -->
-	<jsp:include page="/header.jsp" />
+    <!-- HEADER -->
+    <jsp:include page="/header.jsp" />
 
-	<!-- HERO -->
-	<section class="product-hero">
-		<h1><%= p.getNomeArticolo() %></h1>
-	</section>
+    <!-- HERO -->
+    <section class="product-hero">
+        <h1><%= p.getNomeArticolo() %></h1>
+    </section>
 
-	<!-- LAYOUT PRODOTTO -->
-	<section class="product-layout">
+    <!-- LAYOUT PRODOTTO -->
+    <section class="product-layout">
 
-		<!-- IMMAGINE GRANDE -->
-		<div class="product-gallery">
-			<div class="zoom-container">
-				<img class="zoom-img"
-					src="<%= request.getContextPath() %>/utilities/immagini/<%= p.getImmagine() %>"
-					alt="<%= p.getNomeArticolo() %>">
-			</div>
-		</div>
+        <!-- IMMAGINE GRANDE -->
+        <div class="product-gallery">
+            <div class="zoom-container">
+                <img class="zoom-img"
+                    src="<%= request.getContextPath() %>/utilities/immagini/<%= p.getImmagine() %>"
+                    alt="<%= p.getNomeArticolo() %>">
+            </div>
+        </div>
 
-		<!-- INFO PRODOTTO -->
-		<div class="product-details">
+        <!-- INFO PRODOTTO -->
+        <div class="product-details">
 
-			<h2 class="product-title"><%= p.getNomeArticolo() %></h2>
+            <h2 class="product-title"><%= p.getNomeArticolo() %></h2>
 
-			<p class="product-price">
-				€
-				<%= p.getPrezzoListino() %></p>
+            <p class="product-price">€ <%= p.getPrezzoListino() %></p>
 
-			<p class="product-description"><%= p.getDescrizione() %></p>
+            <p class="product-description"><%= p.getDescrizione() %></p>
 
-			<!-- LOGICA BOTTONE -->
-			<% if (p.getQtaDisponibile() > 0) { %>
+            <% if (p.getQtaDisponibile() > 0) { %>
+                <button class="btn-add-cart add-to-cart"
+                    data-id="<%= p.getIdArticolo() %>">Aggiungi al carrello</button>
+            <% } else { %>
+                <a href="<%= request.getContextPath() %>/catalogo" class="btn-back">
+                    Torna al catalogo
+                </a>
+            <% } %>
 
-			<button class="btn-add-cart add-to-cart"
-				data-id="<%= p.getIdArticolo() %>">Aggiungi al carrello</button>
+            <p class="shipping-info">🚚 Spedizione gratuita sopra i 50€</p>
+            <p class="shipping-info">↩️ Reso facile entro 30 giorni</p>
 
-			<% } else { %>
+        </div>
 
-			<a href="<%= request.getContextPath() %>/catalogo" class="btn-back">
-				Torna al catalogo </a>
+    </section>
 
-			<% } %>
+    <!-- PRODOTTI CORRELATI -->
+    <section class="related-products">
+        <h3>Potrebbe interessarti</h3>
 
-			<p class="shipping-info">🚚 Spedizione gratuita sopra i 50€</p>
-			<p class="shipping-info">↩️ Reso facile entro 30 giorni</p>
+        <div class="related-row">
 
-		</div>
+            <%
+                int categoria = p.getIdCategoria();
+                int count = 0;
 
-	</section>
+                if (tutti != null) {
+                    Collections.shuffle(tutti);
 
-	<!-- SEZIONE PRODOTTI CORRELATI -->
-	<section class="related-products">
-		<h3>Potrebbe interessarti</h3>
+                    for (Articolo c : tutti) {
+                        if (c.getIdCategoria() == categoria && c.getIdArticolo() != p.getIdArticolo()) {
+                            if (count == 6) break;
+                            count++;
 
-		<div class="related-row">
+                            String imgCorrelato = (c.getImmagine() != null && !c.getImmagine().isEmpty())
+                                                  ? c.getImmagine() : "default.jpg";
+            %>
 
-			<%
-            int categoria = p.getIdCategoria();
-            int count = 0;
+            <a href="<%= request.getContextPath() %>/prodotto?id=<%= c.getIdArticolo() %>"
+               class="related-card">
+                <div class="card-img">
+                    <img src="<%= request.getContextPath() %>/utilities/immagini/<%= imgCorrelato %>"
+                         alt="<%= c.getNomeArticolo() %>">
+                </div>
+                <div class="card-body">
+                    <h4><%= c.getNomeArticolo() %></h4>
+                    <p class="price">€ <%= c.getPrezzoListino() %></p>
+                </div>
+            </a>
 
-            if (tutti != null) {
-                Collections.shuffle(tutti);
-
-                for (Articolo c : tutti) {
-
-                    if (c.getIdCategoria() == categoria && c.getIdArticolo() != p.getIdArticolo()) {
-
-                        if (count == 6) break;
-                        count++;
-        %>
-
-			<a
-				href="<%= request.getContextPath() %>/prodotto?id=<%= c.getIdArticolo() %>"
-				class="related-card"> <img
-				src="<%= request.getContextPath() %>/utilities/immagini/<%= c.getImmagine() %>"
-				alt="<%= c.getNomeArticolo() %>">
-				<h4><%= c.getNomeArticolo() %></h4>
-				<p class="price">
-					€
-					<%= c.getPrezzoListino() %></p>
-			</a>
-
-			<%
+            <%
+                        }
                     }
                 }
-            }
 
-            if (count == 0) {
+                if (count == 0) {
+            %>
+                <p class="placeholder">Nessun prodotto correlato disponibile.</p>
+            <% } %>
+
+        </div>
+    </section>
+
+    <!-- RECENSIONI -->
+    <section class="reviews-section">
+        <h3>Recensioni</h3>
+
+        <%
+            List<Recensione> recensioni = (List<Recensione>) request.getAttribute("recensioni");
+            Utente utenteLoggato = (Utente) session.getAttribute("utente");
         %>
 
-			<p class="placeholder">Nessun prodotto correlato disponibile.</p>
-
-			<% } %>
-
-		</div>
-	</section>
-	<!-- SEZIONE RECENSIONI -->
-<section class="reviews-section">
-    <h3>Recensioni</h3>
-
-    <%
-        List<Recensione> recensioni = (List<Recensione>) request.getAttribute("recensioni");
-        Utente utenteLoggato = (Utente) session.getAttribute("utente");
-    %>
-
-    <!-- LISTA RECENSIONI -->
-    <div class="reviews-list">
-        <% if (recensioni == null || recensioni.isEmpty()) { %>
-            <p class="placeholder">Nessuna recensione disponibile.</p>
-        <% } else { %>
-            <% for (Recensione r : recensioni) { %>
-                <div class="review-card">
-                    <div class="review-rating">Voto: <%= r.getVoto() %>/5 ⭐</div>
-                    <p class="review-comment"><%= r.getCommento() %></p>
-                    <small class="review-date"><%= r.getDataRecensione() %></small>
-                </div>
+        <div class="reviews-list">
+            <% if (recensioni == null || recensioni.isEmpty()) { %>
+                <p class="placeholder">Nessuna recensione disponibile.</p>
+            <% } else { %>
+                <% for (Recensione r : recensioni) { %>
+                    <div class="review-card">
+                        <div class="review-rating">Voto: <%= r.getVoto() %>/5 ⭐</div>
+                        <p class="review-comment"><%= r.getCommento() %></p>
+                        <small class="review-date"><%= r.getDataRecensione() %></small>
+                    </div>
+                <% } %>
             <% } %>
-        <% } %>
-    </div>
-
-    <!-- FORM RECENSIONE (solo utenti loggati) -->
-    <% if (utenteLoggato != null) { %>
-        <div class="review-form">
-            <h4>Lascia una recensione</h4>
-
-            <form action="<%= request.getContextPath() %>/addReview" method="post">
-                <input type="hidden" name="idArticolo" value="<%= p.getIdArticolo() %>">
-
-                <label for="voto">Voto:</label>
-                <select name="voto" id="voto" required>
-                    <option value="1">1 ⭐</option>
-                    <option value="2">2 ⭐⭐</option>
-                    <option value="3">3 ⭐⭐⭐</option>
-                    <option value="4">4 ⭐⭐⭐⭐</option>
-                    <option value="5">5 ⭐⭐⭐⭐⭐</option>
-                </select>
-
-                <label for="commento">Commento:</label>
-                <textarea name="commento" id="commento" required></textarea>
-
-                <button type="submit" class="btn-add-cart">Invia recensione</button>
-            </form>
         </div>
-    <% } else { %>
-       <button type="submit" class="review-submit-btn">Invia recensione</button>
 
-    <% } %>
+        <% if (utenteLoggato != null) { %>
+            <div class="review-form">
+                <h4>Lascia una recensione</h4>
+                <form action="<%= request.getContextPath() %>/addReview" method="post">
+                    <input type="hidden" name="idArticolo" value="<%= p.getIdArticolo() %>">
 
-</section>
+                    <label for="voto">Voto:</label>
+                    <select name="voto" id="voto" required>
+                        <option value="1">1 ⭐</option>
+                        <option value="2">2 ⭐⭐</option>
+                        <option value="3">3 ⭐⭐⭐</option>
+                        <option value="4">4 ⭐⭐⭐⭐</option>
+                        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+                    </select>
 
-	
+                    <label for="commento">Commento:</label>
+                    <textarea name="commento" id="commento" required></textarea>
 
-	<!-- FOOTER -->
-	<jsp:include page="/footer.jsp" />
+                    <button type="submit">Invia recensione</button>
+                </form>
+            </div>
+        <% } else { %>
+            <p class="login-warning">
+                <a href="<%= request.getContextPath() %>/login">Accedi</a> per lasciare una recensione.
+            </p>
+        <% } %>
 
-	<!-- JS -->
-	<script src="<%= request.getContextPath() %>/utilities/js/cart.js"></script>
-	<script src="<%= request.getContextPath() %>/utilities/js/prodotto.js"></script>
-<script>
-    const popup = document.querySelector('.review-success-popup');
-    if (popup) {
-        // Attendi che il popup finisca l’animazione
-        setTimeout(() => {
-            window.location.href = "<%= request.getContextPath() %>/catalogo";
-        }, 2500); // 2.5 secondi = durata animazione
-    }
-</script>
+    </section>
 
-	
+    <!-- FOOTER -->
+    <jsp:include page="/footer.jsp" />
+
+    <!-- JS -->
+    <script src="<%= request.getContextPath() %>/utilities/js/cart.js"></script>
+    <script src="<%= request.getContextPath() %>/utilities/js/prodotto.js"></script>
+
+    <script>
+        var popup = document.querySelector('.review-success-popup');
+        if (popup) {
+            setTimeout(function() {
+                window.location.href = "<%= request.getContextPath() %>/catalogo";
+            }, 2500);
+        }
+    </script>
 
 </body>
 </html>

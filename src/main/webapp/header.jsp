@@ -184,5 +184,7 @@
     });
 </script>
 
+<script src="<%= request.getContextPath() %>/utilities/js/header.js"></script>
+
 
 <script src="<%= request.getContextPath() %>/utilities/js/search.js"></script>

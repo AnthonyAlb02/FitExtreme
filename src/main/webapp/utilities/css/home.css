@@ -2,305 +2,323 @@
    HERO
    ========================= */
 .hero {
-	background: url("../immagini/hero.png") center/cover no-repeat;
-	background-position: center 20%;
-	height: 300px;
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	padding: 0 60px;
-	color: #FFFFFF;
-	text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    background: url("../immagini/hero.png") center/cover no-repeat;
+    background-position: center 20%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 60px;
+    color: #FFFFFF;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
-/* PORTA IL TESTO SOPRA L’OVERLAY */
 .hero-content h1 {
-	font-size: 38px;
-	font-weight: 700;
-	margin-bottom: 10px;
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
 .hero-content p {
-	font-size: 17px;
-	margin-bottom: 20px;
+    font-size: 17px;
+    margin-bottom: 20px;
 }
 
 .hero-btn {
-	display: inline-block;
-	padding: 10px 22px;
-	background-color: #FFC266;
-	color: #fff;
-	border-radius: 6px;
-	text-decoration: none;
-	font-weight: 600;
-	transition: 0.2s ease;
+    display: inline-block;
+    padding: 10px 22px;
+    background-color: #FFC266;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s ease;
 }
 
 .hero-btn:hover {
-	background-color: #8C5A2B;
-	transform: translateY(-1px);
+    background-color: #8C5A2B;
+    transform: translateY(-1px);
 }
 
 /* =========================
    SEZIONI
    ========================= */
 .section {
-	padding: 40px 0;
+    padding: 40px 0;
 }
 
 .section-title {
-	font-size: 26px;
-	margin-bottom: 20px;
-	text-align: center;
-	color: #111111;
-}
-
-.container {
-	width: 100%;
-	max-width: 1200px;
-	margin: 0 auto;
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #111111;
 }
 
 /* =========================
    CATEGORIE (CAROUSEL)
    ========================= */
 .categories {
-	padding: 40px 0 20px 0;
+    padding: 40px 0 20px 0;
 }
 
 .carousel-wrapper {
-	position: relative;
-	max-width: 1200px;
-	margin: 0 auto;
-	overflow: hidden;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* FIX: overflow hidden solo sui lati, non taglia le card in altezza */
+    overflow: hidden;
 }
 
 .carousel {
-	display: flex;
-	gap: 20px;
-	overflow-x: auto;
-	scroll-behavior: smooth;
-	padding: 10px 0;
-	scrollbar-width: none;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 4px;          /* piccolo padding verticale per non tagliare le ombre */
+    scrollbar-width: none;
+    /* FIX: allinea tutte le card allo stesso asse */
+    align-items: stretch;
 }
 
 .carousel::-webkit-scrollbar {
-	display: none;
+    display: none;
 }
 
-/* CARD CATEGORIA */
+/* CARD CATEGORIA
+   FIX: dimensioni fisse uguali per tutte,
+   flex-shrink:0 impedisce che vengano schiacciate
+   quando il container è più piccolo del contenuto */
 .cat-card {
-	flex: 0 0 auto;
-	min-width: 240px;
-	height: 280px;
-	display: flex;
-	flex-direction: column;
-	text-decoration: none;
-	color: #111;
-	background: #fff;
-	border-radius: 10px;
-	overflow: hidden;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-	transition: 0.2s ease;
+    flex: 0 0 240px;            /* FIX: larghezza fissa, non si restringe */
+    width: 240px;
+    height: 280px;
+
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #111;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cat-card .img-wrapper {
-	height: 200px;
-	overflow: hidden;
+    height: 200px;
+    flex-shrink: 0;             /* FIX: l'immagine non si restringe mai */
+    overflow: hidden;
 }
 
 .cat-card .img-wrapper img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.cat-card:hover .img-wrapper img {
+    transform: scale(1.04);
 }
 
 .cat-card span {
-	flex-grow: 1;
-	display: flex;
-	align-items: center;
-	padding: 12px 14px;
-	font-size: 16px;
-	font-weight: 600;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .cat-card:hover {
-	transform: translateY(-4px);
-	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
 /* FRECCE */
 .carousel-btn {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	background: rgba(0, 0, 0, 0.55);
-	border: none;
-	color: white;
-	font-size: 22px;
-	padding: 12px;
-	border-radius: 50%;
-	cursor: pointer;
-	z-index: 10;
-	transition: 0.25s;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.55);
+    border: none;
+    color: white;
+    font-size: 22px;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.25s;
 }
 
 .carousel-btn:hover {
-	background: rgba(0, 0, 0, 0.85);
-	transform: translateY(-50%) scale(1.1);
+    background: rgba(0, 0, 0, 0.85);
+    transform: translateY(-50%) scale(1.1);
 }
 
-.carousel-btn.left {
-	left: 0;
-}
-
-.carousel-btn.right {
-	right: 0;
-}
+.carousel-btn.left  { left: 0; }
+.carousel-btn.right { right: 0; }
 
 /* =========================
-   BANNER
+   BANNER PROMO
    ========================= */
 .promo-banner {
-	margin: 30px auto;
-	max-width: 1200px;
+    margin: 30px auto;
+    max-width: 1200px;
 }
 
 .promo-banner img {
-	width: 100%;
-	max-height: 260px;
-	object-fit: cover;
-	border-radius: 10px;
+    width: 100%;
+    max-height: 260px;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 /* =========================
    GRIGLIA PRODOTTI
    ========================= */
 .grid {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 24px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    align-items: stretch;
 }
 
-.card-link {
-	text-decoration: none;
-	color: inherit;
-	display: block;
-	height: 100%;
+/* Card prodotti stile carousel */
+.grid .card-link {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
 }
 
-/* CARD PRODOTTO */
-.card {
-	min-height: 340px;
-	display: flex;
-	flex-direction: column;
-	background: #fff;
-	border-radius: 10px;
-	overflow: hidden;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-	transition: 0.2s ease;
+.grid .card {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 0;
 }
 
-/* IMMAGINE */
-.card-img {
-	height: 200px;
-	overflow: hidden;
+.grid .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
-.card-img img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+.grid .card-img {
+    height: 200px;
+    flex-shrink: 0;
+    overflow: hidden;
 }
 
-/* CONTENUTO */
-.card-body {
-	padding: 12px 14px 16px;
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
+.grid .card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
 }
 
-/* TITOLO BLOCCATO */
-.card .title {
-	font-size: 15px;
-	font-weight: 600;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-	min-height: 38px;
+.grid .card:hover .card-img img {
+    transform: scale(1.04);
 }
 
-/* PREZZO IN BASSO */
-.card .price {
-	font-size: 18px;
-	font-weight: 700;
-	color: #FFC266;
-	margin-top: auto;
+.grid .card-body {
+    padding: 12px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
-/* HOVER */
-.card:hover {
-	transform: translateY(-4px);
-	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+.grid .card .title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111;
+    display: -webkit-box;
+  
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 38px;
+    text-align: center;
+}
+
+.grid .card .price {
+    font-size: 17px;
+    font-weight: 700;
+    color: #FFC266;
+    margin-top: auto;
+    padding-top: 8px;
 }
 
 /* =========================
    TRUST
    ========================= */
 .trust {
-	padding: 40px 0 50px;
-	background: #fff7e6;
+    padding: 40px 0 50px;
+    background: #fff7e6;
 }
 
 .trust-grid {
-	max-width: 900px;
-	margin: 0 auto;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 20px;
-	text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    text-align: center;
 }
 
 .trust-item img {
-	height: 40px;
-	margin-bottom: 10px;
+    height: 40px;
+    margin-bottom: 10px;
 }
 
 .trust-item p {
-	font-size: 14px;
-	font-weight: 500;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 /* =========================
    RESPONSIVE
    ========================= */
-@media ( max-width : 992px) {
-	.hero {
-		padding: 0 20px;
-		text-align: center;
-		justify-content: center;
-	}
-	.grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
+@media (max-width: 992px) {
+    .hero {
+        padding: 0 20px;
+        text-align: center;
+        justify-content: center;
+    }
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-@media ( max-width : 600px) {
-	.hero {
-		height: 240px;
-	}
-	.hero-content h1 {
-		font-size: 28px;
-	}
-	.hero-content p {
-		font-size: 14px;
-	}
-	.grid {
-		grid-template-columns: 1fr;
-	}
-	.trust-grid {
-		grid-template-columns: 1fr;
-	}
+@media (max-width: 600px) {
+    .hero {
+        height: 240px;
+    }
+    .hero-content h1 {
+        font-size: 28px;
+    }
+    .hero-content p {
+        font-size: 14px;
+    }
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    .trust-grid {
+        grid-template-columns: 1fr;
+    }
+    .cat-card {
+        flex: 0 0 200px;
+        width: 200px;
+        height: 250px;
+    }
+    .cat-card .img-wrapper {
+        height: 170px;
+    }
 }

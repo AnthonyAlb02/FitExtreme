@@ -162,19 +162,88 @@ a:hover {
 }
 
 /* ===========================
-   CARD BASE
+   CARD PRODOTTO
+   Unica definizione valida per
+   home, catalogo e ogni altra pagina.
+   NON usare padding diretto su .card:
+   il layout è immagine + body separati.
 =========================== */
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
 .card {
+    /* dimensioni fisse: tutte le card sono identiche */
+    width: 100%;
+    height: 340px;
+
+    display: flex;
+    flex-direction: column;
+
     background: #FFFFFF;
-    border-radius: 14px;
-    padding: 24px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    overflow: hidden;                          /* taglia l'immagine ai bordi */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    /* nessun padding qui: ci pensano .card-img e .card-body */
 }
 
 .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+}
+
+/* IMMAGINE — altezza fissa, mai compressa né stirata */
+.card-img {
+    height: 200px;
+    flex-shrink: 0;                            /* non si restringe mai */
+    overflow: hidden;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-img img {
+    transform: scale(1.04);
+}
+
+/* CONTENUTO */
+.card-body {
+    padding: 12px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;                              /* occupa lo spazio rimanente */
+    min-height: 0;                             /* fix firefox flex overflow */
+}
+
+/* TITOLO: massimo 2 righe, poi ellissi */
+.card .title {
+    font-size: 15px;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 38px;
+    color: #111;
+}
+
+/* PREZZO: sempre in fondo alla card */
+.card .price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #FFC266;
+    margin-top: auto;
+    padding-top: 8px;
 }
 
 /* ===========================

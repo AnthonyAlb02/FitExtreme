@@ -2,256 +2,301 @@
    PALETTE FITEXTREME
 ============================================================ */
 :root {
-	--fx-orange: #F9A825;
-	--fx-brown: #6D4C41;
-	--fx-light: #F5F5F5;
-	--fx-dark: #212121;
-	--fx-white: #FFFFFF;
+    --fx-orange: #FFC266;
+    --fx-brown:  #8C5A2B;
+    --fx-light:  #F5F5F5;
+    --fx-dark:   #111111;
+    --fx-white:  #FFFFFF;
 }
 
 /* ============================================================
    HERO
 ============================================================ */
 .catalogo-hero {
-	text-align: center;
-	padding: 40px 0;
-	background: var(--fx-white);
-	border-bottom: 2px solid #e0e0e0;
-}
-
-/* ============================================================
-   BADGE ESAURITO (identico al bottone, blurrato)
-============================================================ */
-.soldout-badge {
-	position: absolute;
-	bottom: 15px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 85%;
-	padding: 12px;
-	border-radius: 8px;
-	font-size: 15px;
-	font-weight: bold;
-	text-align: center;
-	background: rgba(249, 168, 37, 0.35);
-	color: rgba(33, 33, 33, 0.55);
-	backdrop-filter: blur(4px);
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-	cursor: not-allowed;
-	z-index: 10;
-	/* Anti-glitch */
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+    text-align: center;
+    padding: 40px 0;
+    background: var(--fx-white);
+    border-bottom: 2px solid #e0e0e0;
 }
 
 /* ============================================================
    GRIGLIA PRODOTTI
 ============================================================ */
 .prodotti-container {
-	padding: 40px;
-	display: grid !important;
-	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-	gap: 25px;
-	align-items: stretch;
+    padding: 40px;
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+    align-items: stretch;
 }
 
 /* ============================================================
    CARD WRAPPER
 ============================================================ */
 .card-wrapper {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 /* ============================================================
-   CARD PRODOTTO
+   CARD PRODOTTO — stesso stile home
 ============================================================ */
 .card {
-	background: var(--fx-white);
-	border-radius: 10px;
-	padding: 15px;
-	text-align: center;
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-	transition: transform .2s, box-shadow .2s;
-	height: 380px;
-	display: flex;
-	flex-direction: column;
-	position: relative;
-	overflow: hidden;
-	padding-bottom: 70px; /* spazio per bottone/badge */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--fx-white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    padding: 0;                 /* nessun padding: gestito da card-img e card-body */
 }
 
 .card:hover {
-	transform: translateY(-4px);
-	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
 /* ============================================================
-   IMMAGINE PRODOTTO
+   IMMAGINE
 ============================================================ */
-.card img {
-	width: 100%;
-	height: 180px;
-	object-fit: cover;
-	border-radius: 8px;
+.card-img-link {
+    display: block;
+    text-decoration: none;
+}
+
+.card-img {
+    height: 200px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-img img {
+    transform: scale(1.04);
 }
 
 /* ============================================================
-   TITOLO & PREZZO
+   BODY
 ============================================================ */
-.card h3 {
-	margin: 12px 0 6px;
-	font-size: 16px;
-	font-weight: 600;
-	min-height: 40px;
-	max-height: 70px;
-	overflow: hidden;
-	display: -webkit-box;
-	-webkit-line-clamp: 3;
-	-webkit-box-orient: vertical;
+.card-body {
+    padding: 12px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-title-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card .title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 38px;
+    text-align: center;
+    /* Troncamento max 2 righe senza webkit */
+    display: block;
+    max-height: 44px;
+    line-height: 1.4;
 }
 
 .prezzo {
-	font-size: 18px;
-	font-weight: bold;
-	color: var(--fx-orange);
-	margin-top: auto;
-	margin-bottom: 10px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--fx-orange);
+    margin-top: auto;
+    padding-top: 8px;
+    text-align: center;
 }
 
 /* ============================================================
-   BOTTONE "AGGIUNGI" (in fondo alla card, a comparsa)
+   BOTTONE AGGIUNGI AL CARRELLO
+   Sempre visibile nel body, sotto il prezzo
 ============================================================ */
 .card-btn {
-	position: absolute;
-	bottom: 15px;
-	left: 50%;
-	transform: translateX(-50%) translateY(10px);
-	width: 85%;
-	padding: 12px;
-	background: var(--fx-orange);
-	border: none;
-	border-radius: 8px;
-	font-size: 15px;
-	font-weight: bold;
-	cursor: pointer;
-	opacity: 0;
-	pointer-events: none;
-	transition: opacity .25s ease, transform .25s ease;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--fx-orange);
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--fx-dark);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
+    pointer-events: none;
 }
 
 .card:hover .card-btn {
-	opacity: 1;
-	pointer-events: auto;
-	transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .card-btn:hover {
-	background: #FFC266;
+    background: var(--fx-brown);
+    color: #fff;
+}
+
+/* ============================================================
+   BADGE ESAURITO
+============================================================ */
+.soldout-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    z-index: 10;
 }
 
 /* ============================================================
    BARRA FILTRI ORIZZONTALE
 ============================================================ */
 .fx-filters {
-	display: flex;
-	align-items: flex-end;
-	gap: 25px;
-	padding: 20px 25px;
-	background: var(--fx-white);
-	border-radius: 12px;
-	box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-	margin: 20px auto;
-	width: 95%;
+    display: flex;
+    align-items: flex-end;
+    gap: 25px;
+    padding: 20px 25px;
+    background: var(--fx-white);
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    margin: 20px auto;
+    width: 95%;
 }
 
 .fx-filter {
-	display: flex;
-	flex-direction: column;
-	gap: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .fx-filter label {
-	font-size: 14px;
-	font-weight: 600;
-	color: var(--fx-dark);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fx-dark);
 }
 
-.fx-filter select, .fx-price input {
-	padding: 10px 14px;
-	border-radius: 10px;
-	border: 1px solid #ccc;
-	background: var(--fx-light);
-	transition: .2s;
-	font-size: 14px;
+.fx-filter select,
+.fx-price input {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background: var(--fx-light);
+    transition: border-color 0.2s;
+    font-size: 14px;
+}
+.fx-filter select:focus,
+.fx-price input:focus {
+    outline: none;
+    border-color: var(--fx-orange);
+    box-shadow: 0 0 0 3px rgba(255, 194, 102, 0.3);
 }
 
-.fx-filter select:hover, .fx-price input:hover {
-	border-color: var(--fx-orange);
+.fx-filter select:hover,
+.fx-price input:hover {
+    border-color: var(--fx-orange);
 }
 
 .fx-price {
-	display: flex;
-	align-items: center;
-	gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .fx-btn {
-	padding: 12px 22px;
-	background: var(--fx-orange);
-	color: var(--fx-dark);
-	border-radius: 10px;
-	border: none;
-	cursor: pointer;
-	transition: .2s;
-	font-weight: 600;
+    padding: 12px 22px;
+    background: var(--fx-orange);
+    color: var(--fx-dark);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-weight: 600;
 }
 
 .fx-btn:hover {
-	background: #FFC266;
+    background: var(--fx-brown);
+    color: #fff;
 }
 
 /* ============================================================
    BADGE FILTRI ATTIVI
 ============================================================ */
 .fx-active-filters {
-	margin: 15px 0 25px;
-	display: flex;
-	gap: 10px;
-	flex-wrap: wrap;
+    margin: 15px 0 25px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .fx-badge {
-	background: var(--fx-light);
-	padding: 6px 12px;
-	border-radius: 20px;
-	font-size: 13px;
-	display: flex;
-	align-items: center;
-	gap: 6px;
-	border: 1px solid #ddd;
+    background: var(--fx-light);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #ddd;
 }
 
 .fx-badge span {
-	cursor: pointer;
-	font-weight: bold;
-	color: var(--fx-brown);
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--fx-brown);
 }
 
-/* Animazione fade-in */
+/* ============================================================
+   ANIMAZIONE FADE
+============================================================ */
+@keyframes fade {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
 .fade-in {
-	animation: fade .4s ease;
+    animation: fade 0.4s ease;
 }
 
-@
-keyframes fade {from { opacity:0;
-	transform: translateY(10px);
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 768px) {
+    .fx-filters {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .prodotti-container {
+        padding: 20px;
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-to {
-	opacity: 1;
-	transform: translateY(0);
-}
+@media (max-width: 480px) {
+    .prodotti-container {
+        grid-template-columns: 1fr;
+    }
 }
