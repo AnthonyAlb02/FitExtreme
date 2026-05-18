@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -35,7 +37,7 @@ public class generaFattura extends HttpServlet {
 
         OrdineDAO ordineDAO = new OrdineDAO();
         DettaglioOrdineDAO dettaglioDAO = new DettaglioOrdineDAO();
-        UtenteDAO utenteDAO = new UtenteDAO();   // ⭐ MANCAVA!
+        UtenteDAO utenteDAO = new UtenteDAO();
 
         try {
             Ordine ordine = ordineDAO.doRetrieveByKey(idOrdine);
@@ -44,17 +46,22 @@ public class generaFattura extends HttpServlet {
             List<DettaglioOrdine> dettagli = dettaglioDAO.doRetrieveByOrdine(idOrdine);
             System.out.println("DETTAGLI = " + dettagli);
 
-            // ⭐ Recupero utente dalla sessione
+            // Recupero utente
             Utente utente = (Utente) request.getSession().getAttribute("utente");
-            System.out.println("UTENTE (sessione) = " + utente);
-
-            // ⭐ Se la sessione non contiene l’utente, lo recupero dal DB
             if (utente == null) {
-                System.out.println("UTENTE NULL → recupero da ordine");
                 utente = utenteDAO.doRetrieveByKey(ordine.getIdUtente());
-                System.out.println("UTENTE (DB) = " + utente);
             }
 
+            // ⭐ Calcolo IVA scorporata dal totale
+            BigDecimal totale = ordine.getImportoTotale();
+            BigDecimal iva = totale
+                    .multiply(new BigDecimal("22"))
+                    .divide(new BigDecimal("122"), 2, RoundingMode.HALF_UP);
+
+            // ⭐ Passo l’IVA alla JSP della fattura
+            request.setAttribute("iva", iva);
+
+            // Genero PDF
             byte[] pdfBytes = InvoiceService.generateInvoicePDFBytes(ordine, dettagli, utente);
             System.out.println("PDF GENERATO, SIZE = " + pdfBytes.length);
 

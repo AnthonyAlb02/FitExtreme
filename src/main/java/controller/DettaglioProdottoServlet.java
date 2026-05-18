@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -55,10 +57,21 @@ public class DettaglioProdottoServlet extends HttpServlet {
                 return;
             }
 
-            // 4) Metto il prodotto nella request
-            request.setAttribute("prodotto", prodotto);
+            // ⭐ 4) Calcolo IVA scorporata
+            BigDecimal prezzo = prodotto.getPrezzoListino();
 
-            // 5) Forward alla JSP
+            BigDecimal iva = prezzo
+                    .multiply(new BigDecimal("22"))
+                    .divide(new BigDecimal("122"), 2, RoundingMode.HALF_UP);
+
+            BigDecimal imponibile = prezzo.subtract(iva);
+
+            // ⭐ 5) Metto tutto nella request
+            request.setAttribute("prodotto", prodotto);
+            request.setAttribute("iva", iva);
+            request.setAttribute("imponibile", imponibile);
+
+            // 6) Forward alla JSP
             dispatcher.forward(request, response);
 
         } catch (SQLException | NumberFormatException e) {

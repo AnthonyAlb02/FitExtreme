@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpSession;
 
 import model.DAO.ArticoloDAO;
 import model.beans.Articolo;
-import model.beans.Utente;
 
 @WebServlet("/checkout")
 public class checkoutServlet extends HttpServlet {
@@ -40,13 +40,13 @@ public class checkoutServlet extends HttpServlet {
 
         HttpSession sessione = request.getSession(false);
 
-        // 🔒 1) Utente non loggato → redirect al login
+        // 🔒 Utente non loggato
         if (sessione == null || sessione.getAttribute("utente") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        // 🔒 2) Carrello mancante → redirect al carrello
+        // 🔒 Carrello vuoto
         Map<Integer, Integer> carrello =
                 (Map<Integer, Integer>) sessione.getAttribute("carrello");
 
@@ -65,7 +65,7 @@ public class checkoutServlet extends HttpServlet {
             List<Articolo> prodotti = new ArrayList<>();
             BigDecimal totale = BigDecimal.ZERO;
 
-            // 3) Recupero articoli e calcolo totale
+            // 🔥 Calcolo totale prodotti
             for (Map.Entry<Integer, Integer> entry : carrello.entrySet()) {
                 int idArticolo = entry.getKey();
                 int qta = entry.getValue();
@@ -80,10 +80,21 @@ public class checkoutServlet extends HttpServlet {
                 }
             }
 
-            // 4) Passo i dati alla JSP
+           
+            BigDecimal iva = totale
+                    .multiply(new BigDecimal("0.22"))
+                    .setScale(2, RoundingMode.HALF_UP);
+
+            
+            BigDecimal totaleConIva = totale; // il totale resta lo stesso
+
+
+           
             request.setAttribute("prodotti", prodotti);
             request.setAttribute("quantita", carrello);
             request.setAttribute("totale", totale);
+            request.setAttribute("iva", iva);
+            request.setAttribute("totaleConIva", totaleConIva);
 
             RequestDispatcher dispatcher =
                     getServletContext().getRequestDispatcher("/checkout.jsp");

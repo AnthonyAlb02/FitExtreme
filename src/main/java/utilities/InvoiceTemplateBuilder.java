@@ -1,6 +1,7 @@
 package utilities;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -85,8 +86,17 @@ public class InvoiceTemplateBuilder {
 
         html.append("</table>");
 
-        // TOTALE
-        html.append("<p class=\"totale\">Totale: ").append(totale).append(" €</p>");
+        // ⭐ CALCOLO IVA SCORPORATA
+        BigDecimal iva = totale
+                .multiply(new BigDecimal("22"))
+                .divide(new BigDecimal("122"), 2, RoundingMode.HALF_UP);
+
+        BigDecimal imponibile = totale.subtract(iva);
+
+        // RIEPILOGO FINALE
+        html.append("<p class=\"totale\">Imponibile: ").append(imponibile).append(" €</p>");
+        html.append("<p class=\"totale\">IVA (22%): ").append(iva).append(" €</p>");
+        html.append("<p class=\"totale\">Totale (IVA inclusa): ").append(totale).append(" €</p>");
 
         html.append("</body>");
         html.append("</html>");
