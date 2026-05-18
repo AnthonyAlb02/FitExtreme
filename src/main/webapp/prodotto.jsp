@@ -28,6 +28,18 @@
 
 <body data-context="<%= request.getContextPath() %>"
 	class="product-page">
+	<body data-context="<%= request.getContextPath() %>" class="product-page">
+
+<%
+    String successo = (String) session.getAttribute("successo");
+    if (successo != null) {
+%>
+    <div class="review-success-popup"><%= successo %></div>
+<%
+        session.removeAttribute("successo");
+    }
+%>
+	
 
 	<!-- HEADER -->
 	<jsp:include page="/header.jsp" />
@@ -174,10 +186,12 @@
             </form>
         </div>
     <% } else { %>
-        <p class="login-warning">Effettua il login per lasciare una recensione.</p>
+       <button type="submit" class="review-submit-btn">Invia recensione</button>
+
     <% } %>
 
 </section>
+
 	
 
 	<!-- FOOTER -->
@@ -186,6 +200,17 @@
 	<!-- JS -->
 	<script src="<%= request.getContextPath() %>/utilities/js/cart.js"></script>
 	<script src="<%= request.getContextPath() %>/utilities/js/prodotto.js"></script>
+<script>
+    const popup = document.querySelector('.review-success-popup');
+    if (popup) {
+        // Attendi che il popup finisca l’animazione
+        setTimeout(() => {
+            window.location.href = "<%= request.getContextPath() %>/catalogo";
+        }, 2500); // 2.5 secondi = durata animazione
+    }
+</script>
+
+	
 
 </body>
 </html>

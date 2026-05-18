@@ -136,6 +136,7 @@
     padding-bottom: 10px;
 }
 
+
 .related-row::-webkit-scrollbar {
     height: 8px;
 }
@@ -336,6 +337,10 @@
     color: var(--text-secondary);
 }
 
+
+
+
+
 /* ============================= */
 /*           RESPONSIVE          */
 /* ============================= */
@@ -353,3 +358,57 @@
         padding: 20px;
     }
 }
+
+.review-success-popup {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: var(--primary);
+    color: var(--text-main);
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeElegant 2.5s ease forwards;
+    z-index: 9999;
+}
+
+@keyframes fadeElegant {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    20% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+}
+
+.review-submit-btn {
+    background: var(--primary);
+    color: var(--text-main);
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.review-submit-btn:hover {
+    background: var(--secondary);
+    color: #fff;
+}
+
