@@ -159,23 +159,23 @@
 <script>
     let lastScroll = 0;
     const header = document.querySelector('.main-header');
-    const triggerHeight = 120; // altezza dopo la quale l’header può sparire
+    const triggerHeight = 120; /
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
 
-        // Se siamo in cima, l’header deve essere sempre visibile
+     
         if (currentScroll <= triggerHeight) {
             header.style.transform = "translateY(0)";
             lastScroll = currentScroll;
             return;
         }
 
-        // Scroll verso il basso → nascondi header
+        
         if (currentScroll > lastScroll) {
             header.style.transform = "translateY(-100%)";
         } 
-        // Scroll verso l’alto → mostra header
+       
         else {
             header.style.transform = "translateY(0)";
         }
