@@ -29,7 +29,7 @@
 		<!-- BRAND -->
 		<div class="footer-col brand">
 			<h3>FitExtreme</h3>
-			<p>Sport, performance e qualità per ogni atleta.</p>
+			<p>Sport, performance e materiali per ogni atleta.</p>
 		</div>
 
 		<!-- CATEGORIE -->
@@ -46,22 +46,22 @@
 
 		<!-- SUPPORTO -->
 		<div class="footer-col">
-			<h4>Supporto</h4>
-			<ul>
-				<li><a href="<%= request.getContextPath() %>/faq">FAQ</a></li>
-				<li><a href="<%= request.getContextPath() %>/spedizioni">Spedizioni</a></li>
-				<li><a href="<%= request.getContextPath() %>/resi">Resi e
-						rimborsi</a></li>
-				<li><a href="#footer">Contatti</a></li>
-			</ul>
-		</div>
+			<!-- ABOUT US -->
+<div class="footer-col">
+    <h4>About Us</h4>
+    <ul>
+        <li><a href="<%= request.getContextPath() %>/about">Chi siamo</a></li>
+    </ul>
+</div>
+
+		
 
 		<!-- CONTATTI -->
 		<div class="footer-col">
 			<h4>Contattaci</h4>
 			<ul class="contact-list">
 				<li><a href="mailto:assistenza@fitextreme.it">assistenza@fitextreme.it</a></li>
-				<li><a href="tel:+390000000000">+39 000 000 0000</a></li>
+				<li><a href="+393393786329">+39 339 37 8632</a></li>
 			</ul>
 		</div>
 

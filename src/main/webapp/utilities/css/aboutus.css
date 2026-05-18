@@ -1,14 +1,118 @@
+/* ===========================
+   ABOUT US – FitExtreme
+=========================== */
+
+/* Contenitore principale */
+.about-container {
+    width: min(85%, 900px);
+    margin: 60px auto;
+    padding: 50px 60px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* Titolo principale */
+.about-container h1 {
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #111;
+    text-align: center;
+}
+
+/* Sezioni */
 .about-section {
-	padding: 40px 0;
+    margin-top: 40px;
 }
 
 .about-section h2 {
-	text-align: center;
-	margin-bottom: 20px;
-	color: #111111;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #111;
 }
 
 .about-section p {
-	color: #6E6E6E;
-	line-height: 1.6;
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+/* Team */
+.about-team {
+    margin-top: 50px;
+}
+
+.about-team h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #111;
+    text-align: center;
+}
+
+/* Griglia team */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Card team */
+.team-card {
+    background: #fafafa;
+    border-radius: 14px;
+    padding: 25px 20px;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+}
+
+/* Foto team */
+.team-card img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+/* Nome */
+.team-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 6px;
+}
+
+/* Ruolo */
+.team-card p {
+    font-size: 0.95rem;
+    color: #777;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .about-container {
+        width: 92%;
+        padding: 30px 20px;
+        margin: 30px auto;
+    }
+
+    .about-container h1 {
+        font-size: 2.2rem;
+    }
+
+    .about-section h2,
+    .about-team h2 {
+        font-size: 1.5rem;
+    }
 }

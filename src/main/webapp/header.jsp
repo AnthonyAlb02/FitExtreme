@@ -113,16 +113,25 @@
         <a href="<%= request.getContextPath() %>/catalogo?id=1">Abbigliamento</a>
         <a href="<%= request.getContextPath() %>/catalogo?id=2">Accessori</a>
         <a href="<%= request.getContextPath() %>/catalogo?id=3">Attrezzatura</a>
-        <a href="#footer">Contatti</a>
+        <a href="<%= request.getContextPath() %>/contatti">Contatti</a>
+
     </nav>
 
 </header>
 
 <!-- COOKIE BANNER -->
+<!-- COOKIE BANNER -->
 <% if (!cookieAccepted) { %>
 <div id="cookie-banner" role="dialog" aria-label="Consenso cookie">
     <div class="cookie-content">
-        <p>Questo sito utilizza cookie tecnici e, previo consenso, cookie di profilazione.</p>
+        <p>
+            Questo sito utilizza cookie tecnici e, previo consenso, cookie di profilazione.
+            Per maggiori informazioni consulta la nostra 
+            <a href="<%= request.getContextPath() %>/cookie-policy.jsp">Cookie Policy</a> 
+            e la 
+            <a href="<%= request.getContextPath() %>/privacy-policy.jsp">Privacy Policy</a>.
+        </p>
+
         <div class="cookie-buttons">
             <button id="acceptCookies" class="cookie-accept">Accetta</button>
             <button id="rejectCookies" class="cookie-reject">Rifiuta</button>
@@ -130,6 +139,7 @@
     </div>
 </div>
 <% } %>
+
 
 <script>
     const contextPath = "<%= request.getContextPath() %>";
