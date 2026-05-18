@@ -28,7 +28,7 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     margin-bottom: 20px;
 }
 
@@ -42,13 +42,9 @@ p, span, li {
     font-size: 1rem;
 }
 
-.text-secondary {
-    color: #6E6E6E;
-}
-
+.text-secondary,
 .note {
     color: #6E6E6E;
-    font-size: 0.95rem;
 }
 
 /* ===========================
@@ -75,12 +71,72 @@ a:hover {
 }
 
 /* ===========================
+   SEZIONI PAGINA UNIFICATE
+=========================== */
+.page-container,
+.about-container {
+    width: min(90%, 900px);
+    margin: 50px auto;
+    padding: 40px 50px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* ===========================
+   FORM GLOBALI
+=========================== */
+.contact-form,
+.generic-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.contact-form label,
+.generic-form label {
+    font-weight: 600;
+    color: #111;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.contact-form input,
+.contact-form textarea,
+.generic-form input,
+.generic-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    background: #fafafa;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus,
+.generic-form input:focus,
+.generic-form textarea:focus {
+    border-color: #8C5A2B;
+    background: #fff;
+    outline: none;
+}
+
+.contact-form textarea,
+.generic-form textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+/* ===========================
    BOTTONI GLOBALI
 =========================== */
 .btn {
     display: inline-block;
-    padding: 10px 18px;
-    border-radius: 6px;
+    padding: 12px 20px;
+    border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s ease;
@@ -106,18 +162,6 @@ a:hover {
 }
 
 /* ===========================
-   SFONDI GLOBALI
-=========================== */
-.bg-light {
-    background-color: #F5F5F5;
-}
-
-.bg-dark {
-    background-color: #111111;
-    color: #FFFFFF;
-}
-
-/* ===========================
    CARD BASE
 =========================== */
 .card {
@@ -134,31 +178,38 @@ a:hover {
 }
 
 /* ===========================
-   SEZIONI PAGINA
+   SFONDI GLOBALI
 =========================== */
-.page-container {
-    width: min(90%, 900px);
-    margin: 40px auto;
-    padding: 30px;
-    background: #FFFFFF;
-    border-radius: 14px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+.bg-light {
+    background-color: #F5F5F5;
+}
+
+.bg-dark {
+    background-color: #111111;
+    color: #FFFFFF;
 }
 
 /* ===========================
    RESPONSIVE BASE
 =========================== */
 @media (max-width: 768px) {
+
     h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
+
     h2 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
+
     .container {
         width: 92%;
     }
-    .page-container {
-        padding: 20px;
+
+    .page-container,
+    .about-container {
+        width: 92%;
+        padding: 25px 20px;
+        margin: 30px auto;
     }
 }
