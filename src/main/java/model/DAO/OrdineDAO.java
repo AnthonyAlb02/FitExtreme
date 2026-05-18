@@ -5,6 +5,7 @@ import model.beans.Ordine;
 import javax.naming.*;
 import javax.sql.*;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 
 public class OrdineDAO implements DaoInterface<Ordine, Integer> {
@@ -21,6 +22,37 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
             throw new RuntimeException(e);
         }
     }
+    public List<Ordine> doRetrieveByUserAndDate(int idUtente, LocalDate data) throws SQLException {
+
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE ID_Utente=?";
+
+        if (data != null) {
+            query += " AND DATE(Data_Ordine) = ?";
+        }
+
+        query += " ORDER BY Data_Ordine DESC";
+
+        List<Ordine> lista = new ArrayList<>();
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, idUtente);
+
+            if (data != null) {
+                ps.setDate(2, java.sql.Date.valueOf(data));
+            }
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lista.add(extractOrdine(rs));
+            }
+        }
+
+        return lista;
+    }
+
 
     @Override
     public Ordine doRetrieveByKey(Integer pk) throws SQLException {
@@ -134,6 +166,7 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
 
      return lista;
  }
+ 
 
 
     @Override

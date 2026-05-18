@@ -94,12 +94,74 @@ body {
 	align-self: flex-end;
 }
 
+/* ----------------------------- */
+/* FILTRO ORDINI – FITEXTREME UI */
+/* ----------------------------- */
+
+.filter-box {
+    background: #fff;
+    padding: 18px 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    animation: fadeIn .4s ease;
+}
+
+.filter-box label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.filter-box input[type="date"] {
+    padding: 10px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    background: #fafafa;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.filter-box input[type="date"]:hover {
+    border-color: #FFC266;
+    background: #fff;
+}
+
+.filter-box input[type="date"]:focus {
+    outline: none;
+    border-color: #e6a957;
+    box-shadow: 0 0 0 3px rgba(255,194,102,0.35);
+}
+
+/* Icona calendario */
+.filter-box input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(60%) sepia(40%) saturate(500%) hue-rotate(330deg);
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .filter-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .filter-box input[type="date"] {
+        width: 100%;
+    }
+}
+
 /* ANIMAZIONE */
 .fade-in {
 	animation: fadeIn .4s ease;
 }
 
-@
+
 keyframes fadeIn {from { opacity:0;
 	transform: translateY(8px);
 }
