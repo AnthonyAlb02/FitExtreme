@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+/* WRAPPER */
+.order-detail-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* TITOLI */
+.order-detail-wrapper h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 25px 0 15px;
+}
+
+/* BOX INFO ORDINE */
+.order-info-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+    margin-bottom: 25px;
+}
+
+.order-info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 16px;
+}
+
+.status {
+    color: #FFC266;
+    font-weight: 700;
+}
+
+/* LISTA ARTICOLI */
+.items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.item-card {
+    background: #fff;
+    padding: 18px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.item-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.item-qty {
+    color: #777;
+}
+
+.item-price {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.item-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.item-img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+
+/* TOTALE */
+.total-box {
+    margin-top: 25px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+    font-size: 20px;
+    font-weight: 700;
+    text-align: right;
+}
+
+/* BOTTONI */
+.btn-back {
+    display: inline-block;
+    margin-top: 25px;
+    background: #FFC266;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    color: #111;
+    text-decoration: none;
+    transition: 0.25s;
+}
+
+.btn-back:hover {
+    background: #e6a957;
+}
+
+/* ANIMAZIONE */
+.fade-in {
+    animation: fadeIn .4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

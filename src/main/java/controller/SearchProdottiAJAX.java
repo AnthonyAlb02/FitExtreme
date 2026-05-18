@@ -22,15 +22,19 @@ public class SearchProdottiAJAX extends HttpServlet {
         super();
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doPost(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
         PrintWriter out = response.getWriter();
 
         try {
@@ -38,6 +42,7 @@ public class SearchProdottiAJAX extends HttpServlet {
 
             if (keyword == null || keyword.trim().isEmpty()) {
                 out.print("[]");
+                out.flush();
                 return;
             }
 
@@ -46,17 +51,33 @@ public class SearchProdottiAJAX extends HttpServlet {
             ArticoloDAO model = new ArticoloDAO();
             Collection<Articolo> risultati = model.doSearch(keyword);
 
-            // Costruisco JSON manualmente (semplice e compatibile)
-            StringBuilder json = new StringBuilder("[");
+            if (risultati == null || risultati.isEmpty()) {
+                out.print("[]");
+                out.flush();
+                return;
+            }
+
+            StringBuilder json = new StringBuilder();
+            json.append("[");
+
             boolean first = true;
 
             for (Articolo a : risultati) {
-                if (!first) json.append(",");
+
+                if (a == null) continue;
+
+                if (!first) {
+                    json.append(",");
+                }
                 first = false;
+
+                String nome = a.getNomeArticolo() != null
+                        ? a.getNomeArticolo().replace("\"", "\\\"")
+                        : "";
 
                 json.append("{")
                     .append("\"id\":").append(a.getIdArticolo()).append(",")
-                    .append("\"nome\":\"").append(a.getNomeArticolo().replace("\"", "\\\"")).append("\",")
+                    .append("\"nome\":\"").append(nome).append("\",")
                     .append("\"prezzo\":").append(a.getPrezzoListino()).append(",")
                     .append("\"qta\":").append(a.getQtaDisponibile())
                     .append("}");
@@ -65,10 +86,20 @@ public class SearchProdottiAJAX extends HttpServlet {
             json.append("]");
 
             out.print(json.toString());
+            out.flush();
 
         } catch (SQLException e) {
             e.printStackTrace();
+
+            // fallback sicuro per AJAX
             out.print("[]");
+            out.flush();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            out.print("[]");
+            out.flush();
         }
     }
 }

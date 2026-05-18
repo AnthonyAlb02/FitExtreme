@@ -1,301 +1,362 @@
 /* ============================
-   HEADER STICKY + ANIMAZIONE
+   HEADER STICKY + OMBRA
 ============================ */
 .main-header {
-	width: 100%;
-	background: #FFC266;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-	position: sticky;
-	top: 0;
-	z-index: 999;
-	transition: transform 0.25s ease;
+    width: 100%;
+    background: #FFC266;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.main-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 100%;
+    height: 12px;
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.18),
+        rgba(0, 0, 0, 0.05),
+        rgba(0, 0, 0, 0)
+    );
+    pointer-events: none;
 }
 
 /* ============================
-   TOP BAR
+   TOP BAR LAYOUT
 ============================ */
 .top-bar {
-	display: flex;
-	align-items: center;
-	padding: 12px 40px;
-	gap: 25px;
+    display: flex;
+    align-items: center;
+    padding: 12px 40px;
+    gap: 25px;
 }
 
 .logo {
-	flex: 1;
-}
-
-.search-bar {
-	flex: 1; /* OCCUPA IL CENTRO */
-	max-width: 550px; /* Limite estetico */
-	margin: 0 auto; /* CENTRATA */
-}
-
-.header-icons {
-	flex: 1;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	gap: 22px;
+    flex: 1;
 }
 
 .logo a {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .logo img {
-	height: 70px; /* Logo più grande */
-	width: auto;
-	object-fit: contain;
-	margin-right: 10px; /* Avvicina ulteriormente alla search bar */
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-icons {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 22px;
+}
+
+/* ============================
+   SEARCH CONTAINER
+============================ */
+.search-container {
+    position: relative;
+    flex: 2;
+    max-width: 550px;
+    margin: 0 auto;
+    overflow: visible;
 }
 
 /* ============================
    SEARCH BAR
 ============================ */
 .search-bar {
-	flex: 2;
-	max-width: 550px;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
-	background: white;
-	border-radius: 10px;
-	overflow: hidden;
-	border: 2px solid #8C5A2B22;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 10px;
+    border: 2px solid rgba(140, 90, 43, 0.13);
+    width: 100%;
 }
 
 .search-bar input {
-	flex: 1;
-	padding: 10px 14px;
-	border: none;
-	outline: none;
-	font-size: 16px;
+    flex: 1;
+    padding: 10px 14px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-radius: 10px 0 0 10px;
+    background: transparent;
 }
 
 .search-bar button {
-	width: 48px;
-	height: 48px;
-	background-image: url('../immagini/search.png');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 22px 22px;
-	border: none;
-	cursor: pointer;
-	transition: 0.2s;
+    width: 48px;
+    height: 48px;
+    background-image: url('../immagini/search.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 22px 22px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 0 8px 8px 0;
+    flex-shrink: 0;
 }
 
 .search-bar button:hover {
-	background-color: #ffe0b3;
+    background-color: #ffe0b3;
 }
 
 /* ============================
-   ICONS
+   SUGGERIMENTI AJAX
 ============================ */
-.header-icons {
-	display: flex;
-	align-items: center;
-	gap: 22px;
+.suggestions-box {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    z-index: 100000;
+    max-height: 260px;
+    overflow-y: auto;
+    display: none;
 }
 
+.suggestion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: #111;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background: #fff7ee;
+}
+
+.suggestion-item .name {
+    font-size: 14px;
+}
+
+.suggestion-item .price {
+    color: #FFC266;
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+    margin-left: 12px;
+}
+
+.suggestion-item.empty {
+    justify-content: center;
+    color: #999;
+    font-size: 14px;
+    padding: 14px;
+}
+
+/* ============================
+   ICONS HEADER
+============================ */
 .icon-btn {
-	position: relative;
-	cursor: pointer;
-	transition: 0.2s;
+    position: relative;
+    cursor: pointer;
+    transition: filter 0.2s;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
 }
 
 .icon-img {
-	width: 32px;
-	height: 32px;
-}
-
-.dropdown-icon {
-	width: 22px;
-	height: 22px;
-	object-fit: contain;
+    width: 32px;
+    height: 32px;
+    display: block;
 }
 
 .icon-btn:hover {
-	filter: brightness(0.8);
+    filter: brightness(0.8);
 }
 
-/* BADGE CARRELLO */
 .cart-badge {
-	position: absolute;
-	top: -6px;
-	right: -10px;
-	background: #ff3b3b;
-	color: white;
-	font-size: 12px;
-	padding: 2px 6px;
-	border-radius: 50%;
-	font-weight: 700;
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: #ff3b3b;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: 700;
+    line-height: 1;
+    min-width: 20px;
+    text-align: center;
 }
 
 /* ============================
-   USER MENU
+   USER MENU DROPDOWN
 ============================ */
 .user-menu {
-	position: relative;
+    position: relative;
 }
 
 .user-dropdown {
-	position: absolute;
-	right: 0;
-	top: 40px;
-	background: white;
-	border-radius: 8px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-	display: none;
-	flex-direction: column;
-	min-width: 170px;
-	overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e8e8e8;
+    display: none;
+    flex-direction: column;
+    min-width: 180px;
+    z-index: 100000;
+}
+
+.dropdown-user {
+    padding: 12px 16px 8px;
+    margin: 0;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #444;
 }
 
 .user-dropdown a {
-	padding: 12px 16px;
-	text-decoration: none;
-	color: #111;
-	font-size: 15px;
-	display: flex;
-	align-items: center;
-	gap: 8px;
+    padding: 11px 16px;
+    text-decoration: none;
+    color: #111;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 14px;
+    transition: background 0.15s;
+}
+
+.user-dropdown a:last-child {
+    border-radius: 0 0 10px 10px;
 }
 
 .user-dropdown a:hover {
-	background: #ffe0b3;
+    background: #fff7ee;
 }
 
-.user-menu:hover .user-dropdown {
-	display: flex;
+.dropdown-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    opacity: 0.75;
+}
+
+.user-menu:hover .user-dropdown,
+.user-menu:focus-within .user-dropdown {
+    display: flex;
 }
 
 /* ============================
    NAVBAR
 ============================ */
 .navbar {
-	display: flex;
-	justify-content: center;
-	gap: 40px;
-	padding: 12px 0;
-	background: #ffb84d;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 12px 0;
+    background: #ffb84d;
 }
 
 .navbar a {
-	text-decoration: none;
-	color: #111;
-	font-size: 16px;
-	font-weight: 600;
-	transition: 0.2s;
+    text-decoration: none;
+    color: #111;
+    font-size: 16px;
+    font-weight: 600;
+    transition: color 0.15s;
 }
 
 .navbar a:hover {
-	color: #8C5A2B;
+    color: #8C5A2B;
 }
 
 /* ============================
-   OMBRA MORBIDA SOTTO HEADER
-============================ */
-.main-header::after {
-	content: "";
-	position: absolute;
-	left: 0;
-	bottom: -8px;
-	width: 100%;
-	height: 12px;
-	background: linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.05),
-		rgba(0, 0, 0, 0));
-	pointer-events: none;
-}
-
-/* ============================
-   COOKIE BANNER (E‑COMMERCE CLASSICO)
+   COOKIE BANNER
 ============================ */
 #cookie-banner {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	background: #ffffff;
-	color: #000000;
-	padding: 22px 0;
-	z-index: 99999;
-	border-top: 1px solid #dcdcdc;
-	box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.10);
-	font-family: 'Poppins', sans-serif;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    padding: 22px 0;
+    z-index: 999999;
+    border-top: 1px solid #dcdcdc;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.10);
 }
 
 .cookie-content {
-	width: 90%;
-	max-width: 1100px;
-	margin: auto;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 25px;
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
 }
 
-#cookie-banner p {
-	margin: 0;
-	font-size: 16px;
-	font-weight: 600;
-	line-height: 1.5;
-	color: #000;
-}
-
-#cookie-banner a {
-	color: #8C5A2B;
-	font-weight: 700;
-	text-decoration: underline;
+.cookie-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #444;
 }
 
 .cookie-buttons {
-	display: flex;
-	gap: 14px;
+    display: flex;
+    gap: 14px;
+    flex-shrink: 0;
 }
 
-/* ACCETTA */
 .cookie-accept {
-	background: #FFC266;
-	border: none;
-	padding: 12px 26px;
-	border-radius: 6px;
-	font-weight: 700;
-	cursor: pointer;
-	color: #111;
-	transition: 0.2s;
-	font-size: 15px;
+    background: #FFC266;
+    border: none;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
 .cookie-accept:hover {
-	background: #e6ad59;
+    background: #ffb84d;
 }
 
-/* RIFIUTA */
 .cookie-reject {
-	background: #e6e6e6;
-	border: none;
-	padding: 12px 26px;
-	border-radius: 6px;
-	font-weight: 700;
-	cursor: pointer;
-	color: #111;
-	transition: 0.2s;
-	font-size: 15px;
+    background: #e6e6e6;
+    border: none;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
 .cookie-reject:hover {
-	background: #d0d0d0;
+    background: #d4d4d4;
 }
 
-/* MOBILE */
-@media ( max-width : 768px) {
-	.cookie-content {
-		flex-direction: column;
-		text-align: center;
-	}
-}
+/* ============================
+   MOBILE
+============================ */
 @media (max-width: 768px) {
 
     .top-bar {
@@ -308,19 +369,27 @@
         height: 55px;
     }
 
-    .search-bar {
-        max-width: 100%;
+    .search-container {
         width: 100%;
+        max-width: 100%;
     }
 
     .header-icons {
         justify-content: center;
-        gap: 18px;
     }
 
     .navbar {
         flex-wrap: wrap;
-        gap: 20px;
-        padding: 10px 0;
+        gap: 16px;
+        padding: 10px 16px;
+    }
+
+    .cookie-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .cookie-buttons {
+        justify-content: center;
     }
 }
