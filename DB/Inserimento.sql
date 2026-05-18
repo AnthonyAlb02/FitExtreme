@@ -1,22 +1,22 @@
 USE ecommerce;
 
--- ============================================================
+
 -- CATEGORIE
--- ============================================================
+
 INSERT INTO Categoria (Nome) VALUES
 ('Abbigliamento'),
 ('Accessori'),
 ('Attrezzatura');
 
--- ============================================================
--- TAGLIE (solo per abbigliamento)
--- ============================================================
+
+-- TAGLIE 
+
 INSERT INTO Taglia (Nome_Taglia) VALUES
 ('S'), ('M'), ('L'), ('XL');
 
--- ============================================================
+
 -- UTENTI
--- ============================================================
+
 INSERT INTO Utente 
 (Email, Data_Registrazione, Password_Hash, Nome, Cognome, Telefono, 
  Indirizzo_Spedizione, Session_ID, IP_Address, Livello_Accesso, 
@@ -35,9 +35,9 @@ VALUES
 ('admin@example.com', CURDATE(), 'adminhash', 'Admin', 'Master', '3330001111',
  'Via Università 1, Fisciano', NULL, NULL, 10, 'Gestione Sistema', 'admin');
 
--- ============================================================
--- ARTICOLI (con immagini)
--- ============================================================
+
+-- ARTICOLI 
+
 INSERT INTO Articolo 
 (Nome_Articolo, Descrizione, Prezzo_Listino, Qta_Disponibile, ID_Categoria, Immagine)
 VALUES
@@ -53,9 +53,9 @@ VALUES
 ('Elastici Fitness Set', 'Set di elastici con diverse resistenze', 22.99, 50, 3, '1.jpeg'),
 ('Tappetino Yoga', 'Tappetino antiscivolo 180x60cm', 19.99, 40, 3, '1.jpeg');
 
--- ============================================================
+
 -- TAGLIE PER ABBIGLIAMENTO
--- ============================================================
+
 
 -- Articolo 1: Maglietta Sportiva Uomo
 INSERT INTO Articolo_Taglia VALUES
@@ -78,9 +78,8 @@ INSERT INTO Articolo_Taglia VALUES
 (3, 3, 10),
 (3, 4, 5);
 
--- ============================================================
 -- RECENSIONI
--- ============================================================
+
 INSERT INTO Recensione 
 (ID_Utente, ID_Articolo, Voto, Commento, Data_Recensione)
 VALUES
@@ -88,36 +87,36 @@ VALUES
 (2, 4, 4, 'Buoni guanti, presi per palestra.', CURDATE()),
 (1, 9, 5, 'Tappetino perfetto per yoga.', CURDATE());
 
--- ============================================================
+
 -- ORDINI
--- ============================================================
+
 INSERT INTO Ordine 
 (ID_Utente, ID_Amministratore, Data_Ordine, Stato_Avanzamento, Importo_Totale)
 VALUES
 (1, 4, CURDATE(), 'In elaborazione', 39.98),
 (2, 4, CURDATE(), 'Spedito', 29.99);
 
--- ============================================================
+
 -- DETTAGLI ORDINE
--- ============================================================
+
 INSERT INTO Dettaglio_Ordine 
 (ID_Ordine, ID_Articolo, Quantita, Prezzo_Acquisto, Subtotale)
 VALUES
 (1, 1, 2, 19.99, 39.98),
 (2, 7, 1, 29.99, 29.99);
 
--- ============================================================
+
 -- FATTURE
--- ============================================================
+
 INSERT INTO Fattura 
 (ID_Ordine, Numero_Fattura, Data_Emissione)
 VALUES
 (1, 'FT-2026-001', CURDATE()),
 (2, 'FT-2026-002', CURDATE());
 
--- ============================================================
+
 -- PAGAMENTI
--- ============================================================
+
 INSERT INTO Pagamento 
 (ID_Ordine, Data_Transazione, Metodo_Pagamento, Importo_Saldato)
 VALUES

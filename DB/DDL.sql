@@ -1,14 +1,14 @@
--- ============================================================
--- DATABASE E-COMMERCE BASATO SULLO SCHEMA ER + TAGLIE ABBIGLIAMENTO
--- ============================================================
+
+-- DATABASE E-COMMERCE 
+
 
 DROP DATABASE IF EXISTS ecommerce;
 CREATE DATABASE ecommerce;
 USE ecommerce;
 
--- ============================================================
+
 -- TABELLA UTENTE
--- ============================================================
+
 CREATE TABLE Utente (
     ID_Utente INT AUTO_INCREMENT PRIMARY KEY,
     Email VARCHAR(255) NOT NULL UNIQUE,
@@ -37,9 +37,9 @@ CREATE TABLE Categoria (
     Nome VARCHAR(100) NOT NULL UNIQUE
 );
 
--- ============================================================
+
 -- TABELLA ARTICOLO
--- ============================================================
+
 CREATE TABLE Articolo (
     ID_Articolo INT AUTO_INCREMENT PRIMARY KEY,
     Nome_Articolo VARCHAR(255) NOT NULL,
@@ -54,17 +54,17 @@ CREATE TABLE Articolo (
         ON UPDATE CASCADE
 );
 
--- ============================================================
--- TABELLA TAGLIA (SOLO PER ABBIGLIAMENTO)
--- ============================================================
+
+-- TABELLA TAGLIA 
+
 CREATE TABLE Taglia (
     ID_Taglia INT AUTO_INCREMENT PRIMARY KEY,
     Nome_Taglia VARCHAR(10) NOT NULL UNIQUE
 );
 
--- ============================================================
--- TABELLA ARTICOLO_TAGLIA (VARIANTI SOLO PER ABBIGLIAMENTO)
--- ============================================================
+
+-- TABELLA ARTICOLO_TAGLIA 
+-
 CREATE TABLE Articolo_Taglia (
     ID_Articolo INT NOT NULL,
     ID_Taglia INT NOT NULL,
@@ -79,9 +79,9 @@ CREATE TABLE Articolo_Taglia (
         ON DELETE CASCADE
 );
 
--- ============================================================
+
 -- TABELLA RECENSIONE
--- ============================================================
+
 CREATE TABLE Recensione (
     ID_Recensione INT AUTO_INCREMENT PRIMARY KEY,
     ID_Utente INT NOT NULL,
@@ -96,9 +96,9 @@ CREATE TABLE Recensione (
         ON DELETE CASCADE
 );
 
--- ============================================================
+
 -- TABELLA ORDINE
--- ============================================================
+
 CREATE TABLE Ordine (
     ID_Ordine INT AUTO_INCREMENT PRIMARY KEY,
     ID_Utente INT NOT NULL,
@@ -114,9 +114,9 @@ CREATE TABLE Ordine (
         ON DELETE SET NULL
 );
 
--- ============================================================
+
 -- TABELLA DETTAGLIO ORDINE
--- ============================================================
+
 CREATE TABLE Dettaglio_Ordine (
     ID_Dettaglio INT AUTO_INCREMENT PRIMARY KEY,
     ID_Ordine INT NOT NULL,
@@ -131,9 +131,9 @@ CREATE TABLE Dettaglio_Ordine (
         ON DELETE CASCADE
 );
 
--- ============================================================
+
 -- TABELLA FATTURA
--- ============================================================
+
 CREATE TABLE Fattura (
     ID_Fattura INT AUTO_INCREMENT PRIMARY KEY,
     ID_Ordine INT NOT NULL UNIQUE,
@@ -144,9 +144,9 @@ CREATE TABLE Fattura (
         ON DELETE CASCADE
 );
 
--- ============================================================
+
 -- TABELLA PAGAMENTO
--- ============================================================
+
 CREATE TABLE Pagamento (
     ID_Pagamento INT AUTO_INCREMENT PRIMARY KEY,
     ID_Ordine INT NOT NULL UNIQUE,
