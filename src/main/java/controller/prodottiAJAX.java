@@ -17,6 +17,7 @@ import model.beans.Articolo;
 
 @WebServlet("/prodottiAjax")
 public class prodottiAJAX extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     public prodottiAJAX() {
@@ -32,33 +33,31 @@ public class prodottiAJAX extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
         try {
-            // Parametri (NOME CORRETTO!)
-            String idParam = request.getParameter("id");   // <--- FIX
-            String minP = request.getParameter("min");
-            String maxP = request.getParameter("max");
-            String order = request.getParameter("order");
+            String idParam = request.getParameter("id");
+            String minP    = request.getParameter("min");
+            String maxP    = request.getParameter("max");
+            String order   = request.getParameter("order");
 
-            Integer categoria = (idParam != null && !idParam.isEmpty()) ? Integer.parseInt(idParam) : null;
-            BigDecimal min = (minP != null && !minP.isEmpty()) ? new BigDecimal(minP) : null;
-            BigDecimal max = (maxP != null && !maxP.isEmpty()) ? new BigDecimal(maxP) : null;
+            Integer categoria = (idParam != null && !idParam.isEmpty()) 
+                                ? Integer.parseInt(idParam) : null;
+            BigDecimal min = (minP != null && !minP.isEmpty()) 
+                             ? new BigDecimal(minP) : null;
+            BigDecimal max = (maxP != null && !maxP.isEmpty()) 
+                             ? new BigDecimal(maxP) : null;
 
             ArticoloDAO model = new ArticoloDAO();
-
             Collection<Articolo> prodotti;
 
-            // Se c'è ordinamento → usa doFilterOrder
             if (order != null && !order.isEmpty()) {
                 prodotti = model.doFilterOrder(categoria, min, max, order);
-            } 
-            // Altrimenti → usa doFilter
-            else {
+            } else {
                 prodotti = model.doFilter(categoria, min, max);
             }
 
-            // JSON manuale CORRETTO per il tuo JS
             StringBuilder json = new StringBuilder("[");
             boolean first = true;
 
@@ -68,14 +67,16 @@ public class prodottiAJAX extends HttpServlet {
 
                 json.append("{")
                     .append("\"idArticolo\":").append(a.getIdArticolo()).append(",")
-                    .append("\"nomeArticolo\":\"").append(a.getNomeArticolo().replace("\"", "\\\"")).append("\",")
+                    .append("\"nomeArticolo\":\"")
+                        .append(a.getNomeArticolo().replace("\"", "\\\"")).append("\",")
                     .append("\"prezzoListino\":").append(a.getPrezzoListino()).append(",")
-                    .append("\"immagine\":\"").append(a.getImmagine()).append("\"")
+                    .append("\"immagine\":\"")
+                        .append(a.getImmagine() != null ? a.getImmagine() : "").append("\",")
+                    .append("\"qtaDisponibile\":").append(a.getQtaDisponibile())  // aggiunto
                     .append("}");
             }
 
             json.append("]");
-
             out.print(json.toString());
 
         } catch (SQLException | NumberFormatException e) {
