@@ -32,7 +32,8 @@ VALUES
 ('guest1@example.com', CURDATE(), NULL, NULL, NULL, NULL,
  NULL, 'SESSION123', '192.168.1.10', NULL, NULL, 'guest'),
 
-('admin@example.com', CURDATE(), 'adminhash', 'Admin', 'Master', '3330001111',
+('admin@example.com', CURDATE(), '0f3f2f4f4c6f4d2f8b8c3f3d9b5e4c6a3e4d8f9b2c1a0e3d4f5b6c7d8e9f001
+', 'Admin', 'Master', '3330001111',
  'Via Università 1, Fisciano', NULL, NULL, 10, 'Gestione Sistema', 'admin');
 
 
@@ -41,7 +42,7 @@ VALUES
 INSERT INTO Articolo 
 (Nome_Articolo, Descrizione, Prezzo_Listino, Qta_Disponibile, ID_Categoria, Immagine)
 VALUES
-('Maglietta Sportiva Uomo', 'Maglietta traspirante per allenamento', 19.99, 0, 1, '1.jpeg'),
+('Maglietta Sportiva Uomo', 'Maglietta traspirante per allenamento', 19.99, 0, 1, '2.png'),
 ('Pantaloncini Running', 'Shorts leggeri per corsa', 24.99, 40, 1, '1.jpeg'),
 ('Felpa Fitness', 'Felpa termica per palestra', 39.99, 30, 1, '1.jpeg'),
 
