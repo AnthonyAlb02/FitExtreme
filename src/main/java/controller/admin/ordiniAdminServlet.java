@@ -3,6 +3,8 @@ package controller.admin;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,64 +12,49 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import model.DAO.OrdineDAO;
+import model.DAO.UtenteDAO;
 import model.beans.Ordine;
+import model.beans.Utente;
 
-@WebServlet("/admin/ordiniAdmin")
+@WebServlet("/admin/ordini")
 public class ordiniAdminServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    RequestDispatcher dispatcher;
-
-    public ordiniAdminServlet() {
-        super();
-    }
-
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doPost(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Indico la JSP che mostra la lista degli ordini per l'admin
-        dispatcher = getServletContext().getRequestDispatcher("/jsp/admin/ordini/ordiniAdmin.jsp");
-
-        // Recupero la sessione
-        HttpSession sessione = request.getSession(false);
-
-        // Se non c'è sessione → non è loggato
-        if (sessione == null) {
-            response.sendRedirect("../login");
-            return;
-        }
-
-        // Controllo che l'utente sia admin
-        String ruolo = (String) sessione.getAttribute("ruolo");
-        if (ruolo == null || !ruolo.equals("admin")) {
-            response.sendRedirect("../errorePermessi.jsp");
-            return;
-        }
-
         try {
-            // DAO per recuperare gli ordini
             OrdineDAO ordineDAO = new OrdineDAO();
+            UtenteDAO utenteDAO = new UtenteDAO();
 
-            // Recupero tutti gli ordini dal DB
-            Collection<Ordine> ordini = ordineDAO.doRetrieveAll("Data_Ordine DESC");
+            Collection<Ordine> ordini = ordineDAO.doRetrieveAll("id_asc");
 
-            // Passo la lista alla JSP
+            // Mappa idUtente → nome completo
+            Map<Integer, String> nomiUtenti = new HashMap<>();
+            Collection<Utente> utenti = utenteDAO.doRetrieveAll(null);
+            for (Utente u : utenti) {
+                nomiUtenti.put(u.getIdUtente(), u.getNome() + " " + u.getCognome());
+            }
+
             request.setAttribute("ordini", ordini);
+            request.setAttribute("nomiUtenti", nomiUtenti);
 
-            // Mostro la pagina
+            RequestDispatcher dispatcher =
+                getServletContext().getRequestDispatcher("/admin/ordini.jsp");
             dispatcher.forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            dispatcher.forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/error/error.jsp");
         }
     }
 }

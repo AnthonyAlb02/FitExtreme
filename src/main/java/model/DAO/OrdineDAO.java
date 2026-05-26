@@ -139,6 +139,9 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
                 case "importo_desc":
                     query += " ORDER BY Importo_Totale DESC";
                     break;
+                case "id_asc":
+                    query += " ORDER BY ID_Ordine ASC";
+                    break;
             }
         }
 
