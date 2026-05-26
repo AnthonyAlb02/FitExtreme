@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import model.DAO.ArticoloDAO;
 import model.DAO.OrdineDAO;
@@ -19,67 +18,34 @@ import model.DAO.UtenteDAO;
 public class adminDashboardServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    RequestDispatcher dispatcher;
-
-    public adminDashboardServlet() {
-        super();
-    }
-
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+
+        // Il filtro AdminFilter ha già verificato sessione e ruolo,
+        // qui non serve ricontrollare
+
+        ArticoloDAO articoloDAO = new ArticoloDAO();
+		OrdineDAO ordineDAO    = new OrdineDAO();
+		UtenteDAO utenteDAO    = new UtenteDAO();
+
+		// Uso i metodi count dedicati invece di caricare tutte le liste
+		int numeroArticoli = articoloDAO.countProducts();
+		int numeroOrdini   = ordineDAO.countOrders();
+		int numeroUtenti   = utenteDAO.countUsers();
+
+		request.setAttribute("numeroArticoli", numeroArticoli);
+		request.setAttribute("numeroOrdini",   numeroOrdini);
+		request.setAttribute("numeroUtenti",   numeroUtenti);
+
+		RequestDispatcher dispatcher =
+		        getServletContext().getRequestDispatcher("/admin/dashboard.jsp");
+		dispatcher.forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // Indico la JSP della dashboard admin
-        dispatcher = getServletContext().getRequestDispatcher("/jsp/admin/dashboard.jsp");
-
-        // Recupero la sessione
-        HttpSession sessione = request.getSession(false);
-
-        // Se non c'è sessione → non è loggato
-        if (sessione == null) {
-            response.sendRedirect("../login");
-            return;
-        }
-
-        // Controllo che l'utente sia admin
-        String ruolo = (String) sessione.getAttribute("ruolo");
-
-        // Se non è admin → lo mando via
-        if (ruolo == null || !ruolo.equals("admin")) {
-            response.sendRedirect("../errorePermessi.jsp");
-            return;
-        }
-
-        try {
-            // DAO per recuperare statistiche
-            ArticoloDAO articoloDAO = new ArticoloDAO();
-            OrdineDAO ordineDAO = new OrdineDAO();
-            UtenteDAO utenteDAO = new UtenteDAO();
-
-            // Recupero il numero totale di articoli
-            int numeroArticoli = articoloDAO.doRetrieveAll(null).size();
-
-            // Recupero il numero totale di ordini
-            int numeroOrdini = ordineDAO.doRetrieveAll(null).size();
-
-            // Recupero il numero totale di utenti
-            int numeroUtenti = utenteDAO.doRetrieveAll(null).size();
-
-            // Passo i dati alla JSP
-            request.setAttribute("numeroArticoli", numeroArticoli);
-            request.setAttribute("numeroOrdini", numeroOrdini);
-            request.setAttribute("numeroUtenti", numeroUtenti);
-
-            // Mostro la dashboard
-            dispatcher.forward(request, response);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            dispatcher.forward(request, response);
-        }
+        doGet(request, response);
     }
 }

@@ -1,40 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-	version="4.0">
+         version="4.0"
+         metadata-complete="false">
 
-	<!-- DataSource JNDI (se lo userai) -->
-	<resource-ref>
-		<description>DB Connection</description>
-		<res-ref-name>jdbc/ecommerce</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-	</resource-ref>
+    <!-- DataSource JNDI -->
+    <resource-ref>
+        <description>DB Connection</description>
+        <res-ref-name>jdbc/ecommerce</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
 
-	<!-- Pagina iniziale del sito -->
-	<welcome-file-list>
-		<welcome-file>home</welcome-file>
-	</welcome-file-list>
-	
-	
-	<!-- errors -->
-	<error-page>
-    <error-code>404</error-code>
-    <location>/error/error.jsp</location>
-</error-page>
+    <!-- Pagina iniziale -->
+    <welcome-file-list>
+        <welcome-file>home</welcome-file>
+    </welcome-file-list>
 
-<error-page>
-    <error-code>500</error-code>
-    <location>/error/error.jsp</location>
-</error-page>
+    <!-- Error pages -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/error.jsp</location>
+    </error-page>
 
-<error-page>
-    <exception-type>java.lang.Throwable</exception-type>
-    <location>/error/error.jsp</location>
-</error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/error.jsp</location>
+    </error-page>
 
-
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error/error.jsp</location>
+    </error-page>
 
 </web-app>

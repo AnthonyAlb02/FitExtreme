@@ -2,7 +2,6 @@ package controller;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
@@ -32,7 +31,6 @@ public class LoginServlet extends HttpServlet {
 
         request.setAttribute("tentativo", false);
 
-        // Controllo se l'utente ha già accettato i cookie
         boolean cookieAccepted = false;
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -45,7 +43,6 @@ public class LoginServlet extends HttpServlet {
         }
 
         request.setAttribute("cookieAccepted", cookieAccepted);
-
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
@@ -59,13 +56,13 @@ public class LoginServlet extends HttpServlet {
         try {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            String remember = request.getParameter("remember"); // checkbox
+            String remember = request.getParameter("remember");
 
             if (email != null) {
                 email = email.trim().toLowerCase();
             }
 
-            // 1️⃣ Validazione email
+            // 1) Validazione email
             if (email == null || !EMAIL_REGEX.matcher(email).matches()) {
                 request.setAttribute("errore", "Inserisci un'email valida.");
                 request.setAttribute("tentativo", true);
@@ -73,7 +70,7 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
 
-            // 2️⃣ Email esiste?
+            // 2) Recupero utente
             Utente utente = model.doRetrieveByEmail(email);
 
             if (utente == null) {
@@ -83,7 +80,7 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
 
-            // 3️⃣ Password corretta?
+            // 3) Password corretta?
             if (!checkCredentials(email, password, utente)) {
                 request.setAttribute("errore", "Credenziali errate. Riprova.");
                 request.setAttribute("tentativo", true);
@@ -91,34 +88,42 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
 
-            // 4️⃣ LOGIN OK → creo sessione
+            // 4) LOGIN OK → determino ruolo PRIMA di creare la sessione
+            boolean adminFlag = "admin".equalsIgnoreCase(utente.getRuolo());
+
+            // 5) Creo/rinnovo sessione
+            sessione.invalidate(); // invalido la vecchia per sicurezza
+            sessione = request.getSession(true); // ne creo una nuova
+
             sessione.setAttribute("utente", utente);
             sessione.setAttribute("id", utente.getIdUtente());
-            sessione.setAttribute("admin", "admin".equalsIgnoreCase(utente.getRuolo()));
+            sessione.setAttribute("isAdmin", adminFlag); // Boolean coerente
 
-            // Messaggio flash
-            sessione.setAttribute("successo", "Login effettuato con successo!");
-
-            // 5️⃣ COOKIE REMEMBER-ME (solo se spuntato)
+            // 6) Remember me
             if ("on".equals(remember)) {
                 Cookie rememberCookie = new Cookie("rememberEmail", utente.getEmail());
-                rememberCookie.setMaxAge(60 * 60 * 24 * 30); // 30 giorni
+                rememberCookie.setMaxAge(60 * 60 * 24 * 30);
                 rememberCookie.setHttpOnly(true);
                 rememberCookie.setPath("/");
                 response.addCookie(rememberCookie);
             }
 
-            // 6️⃣ COOKIE CONSENT (accettazione cookie)
+            // 7) Cookie consent
             Cookie consent = new Cookie("cookieConsent", "true");
-            consent.setMaxAge(60 * 60 * 24 * 365); // 1 anno
+            consent.setMaxAge(60 * 60 * 24 * 365);
             consent.setPath("/");
             response.addCookie(consent);
 
-            // 🔥 Redirect PRG
-            response.sendRedirect(request.getContextPath() + "/home");
+            // 8) Redirect in base al ruolo
+            if (adminFlag) {
+                response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/home");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/error/error.jsp");
         }
     }
 

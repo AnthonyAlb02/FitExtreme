@@ -71,6 +71,24 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         }
         return null;
     }
+    public int countOrders() {
+        String query = "SELECT COUNT(*) FROM Ordine";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
 
     // 🔥 Salva ordine e ritorna ID generato
     public int doSaveAndReturnKey(Ordine o) throws SQLException {
@@ -106,11 +124,22 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
 
         String query = "SELECT * FROM " + TABLE_NAME;
 
-        switch (order) {
-            case "data_asc": query += " ORDER BY Data_Ordine ASC"; break;
-            case "data_desc": query += " ORDER BY Data_Ordine DESC"; break;
-            case "importo_asc": query += " ORDER BY Importo_Totale ASC"; break;
-            case "importo_desc": query += " ORDER BY Importo_Totale DESC"; break;
+        // Evita NullPointerException
+        if (order != null) {
+            switch (order) {
+                case "data_asc":
+                    query += " ORDER BY Data_Ordine ASC";
+                    break;
+                case "data_desc":
+                    query += " ORDER BY Data_Ordine DESC";
+                    break;
+                case "importo_asc":
+                    query += " ORDER BY Importo_Totale ASC";
+                    break;
+                case "importo_desc":
+                    query += " ORDER BY Importo_Totale DESC";
+                    break;
+            }
         }
 
         Collection<Ordine> lista = new ArrayList<>();
@@ -123,6 +152,7 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
                 lista.add(extractOrdine(rs));
             }
         }
+
         return lista;
     }
 

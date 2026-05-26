@@ -54,6 +54,24 @@ public class UtenteDAO implements DaoInterface<Utente, Integer> {
         }
         return null;
     }
+    public int countUsers() {
+        String query = "SELECT COUNT(*) FROM " + TABLE_NAME;
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
 
 
 
