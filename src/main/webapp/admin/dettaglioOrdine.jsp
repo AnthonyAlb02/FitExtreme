@@ -50,7 +50,11 @@
 
             <div>
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 4px;">Data ordine</p>
-                <p style="font-weight: 600; margin: 0;"><%= ordine.getDataOrdine() %></p>
+                <p style="font-weight: 600; margin: 0;"><%= ordine.getDataOrdine().format(
+        java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    )
+%>
+</p>
             </div>
 
             <div>

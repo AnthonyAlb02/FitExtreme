@@ -51,7 +51,11 @@
 
                 <div class="order-header">
                     <span class="order-id">Ordine #<%= o.getIdOrdine() %></span>
-                    <span class="order-date"><%= o.getDataOrdine() %></span>
+                    <span class="order-date"><%= o.getDataOrdine().format(
+        java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    )
+%>
+</span>
                 </div>
 
                 <div class="order-body">

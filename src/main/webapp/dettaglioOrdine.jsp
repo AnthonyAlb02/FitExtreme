@@ -44,7 +44,11 @@
     <div class="order-info-box fade-in">
         <div class="order-info-row">
             <span>Data ordine:</span>
-            <strong><%= ordine.getDataOrdine() %></strong>
+            <strong><%= ordine.getDataOrdine().format(
+        java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    )
+%>
+</strong>
         </div>
 
         <div class="order-info-row">

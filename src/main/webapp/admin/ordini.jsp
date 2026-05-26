@@ -62,7 +62,11 @@
             style="cursor: pointer;">
             <td><%= o.getIdOrdine() %></td>
             <td><%= nomeUtente %></td>
-            <td><%= o.getDataOrdine() %></td>
+            <td><%= o.getDataOrdine().format(
+        java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    )
+%>
+</td>
             <td><%= o.getStatoAvanzamento() %></td>
             <td>€ <%= o.getImportoTotale() %></td>
         </tr>
