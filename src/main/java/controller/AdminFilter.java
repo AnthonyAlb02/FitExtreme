@@ -29,7 +29,7 @@ public class AdminFilter implements Filter {
         Object isAdminAttr = session.getAttribute("isAdmin");
 
         if (!(isAdminAttr instanceof Boolean) || !(Boolean) isAdminAttr) {
-            resp.sendRedirect(req.getContextPath() + "/accesso-negato.jsp");
+            resp.sendRedirect(req.getContextPath() + "/accesso-negato");
             return;
         }
 

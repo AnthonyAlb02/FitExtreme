@@ -39,7 +39,7 @@ public class redirectAdminServlet extends HttpServlet {
 
         // Se non è admin → lo mando alla pagina errore permessi
         if (ruolo == null || !ruolo.equals("admin")) {
-            response.sendRedirect("../errorePermessi.jsp");
+            response.sendRedirect("../errorePermessi");
             return;
         }
 

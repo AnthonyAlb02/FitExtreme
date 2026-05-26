@@ -123,7 +123,7 @@ public class LoginServlet extends HttpServlet {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/error/error.jsp");
+            response.sendRedirect(request.getContextPath() + "/error/error");
         }
     }
 
