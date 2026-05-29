@@ -178,7 +178,13 @@ public class insProdottoServlet extends HttpServlet {
             ArticoloDAO dao = new ArticoloDAO();
             dao.doSave(a);
 
+            // ⭐ Messaggio di conferma
+            sessione.setAttribute("messaggioSuccesso", "Prodotto inserito correttamente.");
+
+            // ⭐ Redirect corretto
             response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+            return;
+
 
         } catch (SQLException e) {
             e.printStackTrace();

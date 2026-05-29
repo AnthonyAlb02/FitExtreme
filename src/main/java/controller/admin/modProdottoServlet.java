@@ -29,7 +29,7 @@ public class modProdottoServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Mostro la pagina con il form di modifica prodotto
-        dispatcher = getServletContext().getRequestDispatcher("/jsp/admin/articoli/modProdotto.jsp");
+        dispatcher = getServletContext().getRequestDispatcher("/admin/articoli/modProdotto.jsp");
 
         HttpSession sessione = request.getSession(false);
 
@@ -42,7 +42,7 @@ public class modProdottoServlet extends HttpServlet {
         // Controllo che sia admin
         String ruolo = (String) sessione.getAttribute("ruolo");
         if (ruolo == null || !ruolo.equals("admin")) {
-            response.sendRedirect("../errorePermessi.jsp");
+            response.sendRedirect("../errorePermessi");
             return;
         }
 
