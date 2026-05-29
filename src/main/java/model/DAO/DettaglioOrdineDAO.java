@@ -74,23 +74,25 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
     @Override
     public void doSave(DettaglioOrdine d) throws SQLException {
         String query = "INSERT INTO " + TABLE_NAME +
-                " (ID_Ordine, ID_Articolo, Quantita, Prezzo_Acquisto, Subtotale) " +
-                "VALUES (?, ?, ?, ?, ?)";
+                " (ID_Ordine, ID_Articolo, Quantita, Prezzo_Acquisto, Subtotale, Nome_Articolo, Immagine) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setInt(1, d.getIdOrdine());
-            ps.setInt(2, d.getIdArticolo());
+            ps.setObject(2, d.getIdArticolo()); // può essere NULL
             ps.setInt(3, d.getQuantita());
             ps.setBigDecimal(4, d.getPrezzoAcquisto());
             ps.setBigDecimal(5, d.getSubtotale());
+            ps.setString(6, d.getNomeArticolo());
+            ps.setString(7, d.getImmagine());
 
             ps.executeUpdate();
         }
     }
 
-    // ⭐ Recupera tutti i dettagli di un ordine + nome + immagine articolo
+    // ⭐ Recupera tutti i dettagli di un ordine + gestisce articoli eliminati
     public List<DettaglioOrdine> doRetrieveByOrdine(int idOrdine) throws SQLException {
 
         String query = "SELECT * FROM Dettaglio_Ordine WHERE ID_Ordine=?";
@@ -109,9 +111,15 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
 
                 // ⭐ Recupero articolo completo
                 Articolo art = articoloDAO.doRetrieveByKey(d.getIdArticolo());
+
                 if (art != null) {
+                    // Articolo ancora esistente
                     d.setNomeArticolo(art.getNomeArticolo());
-                    d.setImmagine(art.getImmagine()); // ⭐ AGGIUNTO
+                    d.setImmagine(art.getImmagine());
+                } else {
+                    // Articolo eliminato → uso i dati salvati nel dettaglio ordine
+                    d.setNomeArticolo(rs.getString("Nome_Articolo"));
+                    d.setImmagine(rs.getString("Immagine"));
                 }
 
                 lista.add(d);
@@ -124,18 +132,20 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
     @Override
     public void doUpdate(DettaglioOrdine d) throws SQLException {
         String query = "UPDATE " + TABLE_NAME +
-                " SET ID_Ordine=?, ID_Articolo=?, Quantita=?, Prezzo_Acquisto=?, Subtotale=? " +
+                " SET ID_Ordine=?, ID_Articolo=?, Quantita=?, Prezzo_Acquisto=?, Subtotale=?, Nome_Articolo=?, Immagine=? " +
                 "WHERE ID_Dettaglio=?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setInt(1, d.getIdOrdine());
-            ps.setInt(2, d.getIdArticolo());
+            ps.setObject(2, d.getIdArticolo());
             ps.setInt(3, d.getQuantita());
             ps.setBigDecimal(4, d.getPrezzoAcquisto());
             ps.setBigDecimal(5, d.getSubtotale());
-            ps.setInt(6, d.getIdDettaglio());
+            ps.setString(6, d.getNomeArticolo());
+            ps.setString(7, d.getImmagine());
+            ps.setInt(8, d.getIdDettaglio());
 
             ps.executeUpdate();
         }
@@ -163,6 +173,10 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
         d.setQuantita(rs.getInt("Quantita"));
         d.setPrezzoAcquisto(rs.getBigDecimal("Prezzo_Acquisto"));
         d.setSubtotale(rs.getBigDecimal("Subtotale"));
+
+        // ⭐ Dati salvati nel dettaglio ordine
+        d.setNomeArticolo(rs.getString("Nome_Articolo"));
+        d.setImmagine(rs.getString("Immagine"));
 
         return d;
     }

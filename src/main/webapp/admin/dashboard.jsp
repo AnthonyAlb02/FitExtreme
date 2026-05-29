@@ -35,21 +35,21 @@
     </div>
 
     <!-- BOTTONI NAVIGAZIONE -->
-    <div class="admin-links">
+   <div class="admin-links">
 
-        <a href="${pageContext.request.contextPath}/admin/utenti" class="admin-btn">
-            Gestione utenti
-        </a>
+    <a href="${pageContext.request.contextPath}/admin/utenti" class="btn btn-primary">
+        Gestione utenti
+    </a>
 
-        <a href="${pageContext.request.contextPath}/admin/ordini" class="admin-btn">
-            Gestione ordini
-        </a>
+    <a href="${pageContext.request.contextPath}/admin/ordini" class="btn btn-primary">
+        Gestione ordini
+    </a>
 
-        <a href="${pageContext.request.contextPath}/admin/prodotti" class="admin-btn">
-            Gestione prodotti
-        </a>
+    <a href="${pageContext.request.contextPath}/admin/prodotti" class="btn btn-primary">
+        Gestione prodotti
+    </a>
 
-    </div>
+</div>
 
 </div>
 
