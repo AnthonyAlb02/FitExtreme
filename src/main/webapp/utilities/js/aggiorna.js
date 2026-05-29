@@ -33,25 +33,36 @@ function updateCart(id, action) {
     .then(res => res.json())
     .then(data => {
 
+        // ❗ SE STOCK ESAURITO
+        if (data.error === "stock_esaurito") {
+
+            const row = document.getElementById("row-" + id);
+            row.classList.add("shake");
+
+            setTimeout(() => row.classList.remove("shake"), 500);
+
+            return; // ❗ BLOCCA AGGIORNAMENTO
+        }
+
+        // ❗ SE L'ARTICOLO È STATO RIMOSSO
         if (data.removed === true || data.removed === "true") {
-            // Rimuovi riga
             const row = document.getElementById("row-" + id);
             if (row) row.remove();
         } else {
-            // Aggiorna quantità
+            // ✔ Aggiorna quantità
             document.getElementById("qty-" + id).textContent = data.qta;
 
-            // Aggiorna subtotale
+            // ✔ Aggiorna subtotale
             document.getElementById("subtotal-" + id).textContent = data.subtotale + " €";
         }
 
-        // Aggiorna totale
+        // ✔ Aggiorna totale
         document.querySelector(".cart-total-text").textContent = "Totale: " + data.totale + " €";
 
-        // Aggiorna badge carrello
+        // ✔ Aggiorna badge carrello
         document.getElementById("cart-count").textContent = data.cartCount;
 
-        // Carrello vuoto
+        // ✔ Carrello vuoto
         if (data.cartCount === 0) {
             document.querySelector(".cart-container").innerHTML =
                 "<p class='text-secondary'>Il carrello è vuoto.</p>";

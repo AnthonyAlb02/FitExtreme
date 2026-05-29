@@ -30,25 +30,32 @@ public class aggiornaCarrelloServlet extends HttpServlet {
         if (sessione == null) return;
 
         String idParam = request.getParameter("id");
-        String action = request.getParameter("action");
-
+        String action  = request.getParameter("action");
         if (idParam == null || action == null) return;
 
         try {
             int idArticolo = Integer.parseInt(idParam);
 
             Map<Integer, Integer> carrello =
-                    (Map<Integer, Integer>) sessione.getAttribute("carrello");
-
+                (Map<Integer, Integer>) sessione.getAttribute("carrello");
             if (carrello == null) return;
 
             Integer qtaObj = carrello.get(idArticolo);
             if (qtaObj == null) return;
 
             int qta = qtaObj;
+            ArticoloDAO dao = new ArticoloDAO();
 
-            // LOGICA + / - / remove
             if ("plus".equals(action)) {
+                Articolo articolo = dao.doRetrieveByKey(idArticolo);
+                int stock = articolo.getQtaDisponibile();
+
+                if (qta >= stock) {
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"error\": \"stock_esaurito\"}");
+                    return;
+                }
+
                 qta++;
                 carrello.put(idArticolo, qta);
 
@@ -57,14 +64,11 @@ public class aggiornaCarrelloServlet extends HttpServlet {
                     qta--;
                     carrello.put(idArticolo, qta);
                 }
-
             } else if ("remove".equals(action)) {
                 carrello.remove(idArticolo);
             }
 
-            ArticoloDAO dao = new ArticoloDAO();
-
-            // Calcolo subtotale (solo se non è remove)
+            // Calcolo subtotale
             BigDecimal subtotale = BigDecimal.ZERO;
             if (!"remove".equals(action)) {
                 Articolo articolo = dao.doRetrieveByKey(idArticolo);
@@ -78,11 +82,9 @@ public class aggiornaCarrelloServlet extends HttpServlet {
                 totale = totale.add(a.getPrezzoListino().multiply(new BigDecimal(entry.getValue())));
             }
 
-            // Aggiorno badge carrello
             int cartCount = carrello.values().stream().mapToInt(Integer::intValue).sum();
             sessione.setAttribute("cartCount", cartCount);
 
-            // RISPOSTA JSON
             response.setContentType("application/json");
             response.getWriter().write(
                 "{"
