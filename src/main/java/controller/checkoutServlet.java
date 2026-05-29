@@ -93,6 +93,8 @@ public class checkoutServlet extends HttpServlet {
             request.setAttribute("prodotti", prodotti);
             request.setAttribute("quantita", carrello);
             request.setAttribute("totale", totale);
+            sessione.setAttribute("totalePagamento", totale);
+
             request.setAttribute("iva", iva);
             request.setAttribute("totaleConIva", totaleConIva);
 

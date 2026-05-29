@@ -112,6 +112,8 @@ public class confermaOrdineServlet extends HttpServlet {
                 dett.setQuantita(qta);
                 dett.setPrezzoAcquisto(a.getPrezzoListino());
                 dett.setSubtotale(a.getPrezzoListino().multiply(new BigDecimal(qta)));
+                dett.setNomeArticolo(a.getNomeArticolo());
+                dett.setImmagine(a.getImmagine());
 
                 dettaglioDAO.doSave(dett);
 

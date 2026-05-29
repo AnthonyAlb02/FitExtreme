@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import model.DAO.ArticoloDAO;
 
-@WebServlet("/admin/CancellaProdotto")
+@WebServlet("/admin/elimina-prodotto")
 public class eliminaProdottoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -20,56 +20,60 @@ public class eliminaProdottoServlet extends HttpServlet {
         super();
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doPost(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Recupero la sessione dell'utente
         HttpSession sessione = request.getSession(false);
 
-        // Se non c'è sessione → non è loggato
+        // Utente non loggato
         if (sessione == null) {
             response.sendRedirect("../login");
             return;
         }
 
-        // Controllo che l'utente sia admin
-        String ruolo = (String) sessione.getAttribute("ruolo");
-        if (ruolo == null || !ruolo.equals("admin")) {
-            response.sendRedirect("../errorePermessi.jsp");
+        // Controllo ruolo admin
+        Boolean isAdmin = (Boolean) sessione.getAttribute("isAdmin");
+
+        if (isAdmin == null || !isAdmin) {
+            response.sendRedirect("../errorePermessi");
             return;
         }
 
-        // Recupero l'ID del prodotto da eliminare
-        String idParam = request.getParameter("id");
 
-        // Se non c'è ID → torno alla lista
+        // Recupero ID prodotto
+        String idParam = request.getParameter("id");
         if (idParam == null || idParam.isEmpty()) {
-            response.sendRedirect("prodottiAdmin");
+            response.sendRedirect("prodotti");
             return;
         }
 
         try {
             int id = Integer.parseInt(idParam);
 
-            // DAO per eliminare il prodotto
             ArticoloDAO dao = new ArticoloDAO();
 
-            // Elimino il prodotto dal DB
-            dao.doDelete(id);
+            // ⭐ Eliminazione reale → grazie a ON DELETE SET NULL gli ordini restano intatti
+            boolean eliminato = dao.doDelete(id);
 
-            // Dopo l'eliminazione torno alla lista prodotti admin
-            response.sendRedirect("prodottiAdmin");
+            if (eliminato) {
+                sessione.setAttribute("messaggioSuccesso", "Prodotto eliminato correttamente.");
+            } else {
+                sessione.setAttribute("messaggioErrore", "Impossibile eliminare il prodotto.");
+            }
+
+            response.sendRedirect("prodotti");
 
         } catch (SQLException | NumberFormatException e) {
             e.printStackTrace();
-
-            // In caso di errore torno comunque alla lista
-            response.sendRedirect("prodottiAdmin");
+            sessione.setAttribute("messaggioErrore", "Errore durante l'eliminazione del prodotto.");
+            response.sendRedirect("prodotti");
         }
     }
 }
