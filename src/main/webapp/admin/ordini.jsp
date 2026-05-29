@@ -62,18 +62,18 @@
             <tbody>
             <%
                 Collection<Ordine> ordini = (Collection<Ordine>) request.getAttribute("ordini");
-                Map<Integer, String> nomiUtenti = (Map<Integer, String>) request.getAttribute("nomiUtenti");
 
                 if (ordini != null) {
                     for (Ordine o : ordini) {
-                        String nomeUtente = nomiUtenti != null
-                            ? nomiUtenti.getOrDefault(o.getIdUtente(), "Utente #" + o.getIdUtente())
-                            : "Utente #" + o.getIdUtente();
+
+                        String nomeUtente = o.getNomeUtente(); // ⭐ ORA VIENE DAL DAO
             %>
+
             <tr data-nome="<%= nomeUtente.toLowerCase() %>"
                 data-data="<%= o.getDataOrdine() %>"
                 onclick="location.href='<%= request.getContextPath() %>/admin/dettaglioOrdine?id=<%= o.getIdOrdine() %>'"
                 style="cursor: pointer;">
+
                 <td><%= o.getIdOrdine() %></td>
                 <td><%= nomeUtente %></td>
                 <td><%= o.getDataOrdine().format(
@@ -82,6 +82,7 @@
                 <td><%= o.getStatoAvanzamento() %></td>
                 <td>€ <%= o.getImportoTotale() %></td>
             </tr>
+
             <%
                     }
                 }

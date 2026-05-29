@@ -12,6 +12,9 @@ public class Ordine {
     private String statoAvanzamento;
     private BigDecimal importoTotale;
 
+    
+    private String nomeUtente;
+
     public Ordine() {}
 
     public Ordine(int idOrdine, int idUtente, LocalDate dataOrdine, String statoAvanzamento) {
@@ -39,8 +42,14 @@ public class Ordine {
     public BigDecimal getImportoTotale() { return importoTotale; }
     public void setImportoTotale(BigDecimal importoTotale) { this.importoTotale = importoTotale; }
 
+    // ⭐ Getter/Setter aggiunti
+    public String getNomeUtente() { return nomeUtente; }
+    public void setNomeUtente(String nomeUtente) { this.nomeUtente = nomeUtente; }
+
     @Override
     public String toString() {
-        return "Ordine #" + idOrdine + " - Utente: " + idUtente + " - Totale: " + importoTotale;
+        return "Ordine #" + idOrdine +
+                " - Utente: " + (nomeUtente != null ? nomeUtente : idUtente) +
+                " - Totale: " + importoTotale;
     }
 }

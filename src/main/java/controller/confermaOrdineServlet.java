@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -46,13 +45,9 @@ public class confermaOrdineServlet extends HttpServlet {
             return;
         }
 
+        // Recupero utente e ID corretto
         Utente utente = (Utente) sessione.getAttribute("utente");
-        Integer idUtente = (Integer) sessione.getAttribute("id");
-
-        if (idUtente == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
+        int idUtente = utente.getIdUtente();   // ⭐ ID corretto
 
         // Recupero carrello
         Map<Integer, Integer> carrello =
@@ -129,13 +124,18 @@ public class confermaOrdineServlet extends HttpServlet {
             sessione.removeAttribute("carrello");
             sessione.setAttribute("cartCount", 0);
 
-
             // Redirect finale
             response.sendRedirect(request.getContextPath() + "/ordineCompletato?id=" + idOrdine);
 
-        } catch (SQLException e) {
+        }catch (Exception e) {
+
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/checkout");
+
+            response.setContentType("text/plain");
+
+            response.getWriter().println("ERRORE:");
+            response.getWriter().println(e.getClass().getName());
+            response.getWriter().println(e.getMessage());
         }
     }
 }

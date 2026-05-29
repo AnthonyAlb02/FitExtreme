@@ -32,7 +32,7 @@ public class InvoiceTemplateBuilder {
         html.append("background-repeat: no-repeat; ");
         html.append("background-position: center center; ");
         html.append("background-size: 40%; ");
-        html.append("opacity: 0.98; ");
+       
         html.append("} ");
 
         html.append("h1 { color: #FFC266; text-align: center; margin-bottom: 10px; }");

@@ -22,17 +22,54 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         }
     }
 
-    // 🔥 Recupera ordini filtrati per data (se presente) e ordinati dal più recente
-    public List<Ordine> doRetrieveByUserAndDate(int idUtente, LocalDate data) throws SQLException {
+    // -------------------------------
+    //   METODO DI ESTRAZIONE COMPLETO
+    // -------------------------------
+    private Ordine extractOrdine(ResultSet rs) throws SQLException {
+        Ordine o = new Ordine();
 
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE ID_Utente=?";
+        o.setIdOrdine(rs.getInt("ID_Ordine"));
+        o.setIdUtente(rs.getInt("ID_Utente"));
+        o.setIdAmministratore((Integer) rs.getObject("ID_Amministratore"));
+        o.setDataOrdine(rs.getDate("Data_Ordine").toLocalDate());
+        o.setStatoAvanzamento(rs.getString("Stato_Avanzamento"));
+        o.setImportoTotale(rs.getBigDecimal("Importo_Totale"));
 
-        if (data != null) {
-            query += " AND DATE(Data_Ordine) = ?";
+        return o;
+    }
+
+    // ⭐ Estrae ordine + nome utente (o "Utente eliminato")
+    private Ordine extractOrdineWithUser(ResultSet rs) throws SQLException {
+        Ordine o = extractOrdine(rs);
+
+        String nome = rs.getString("nome");
+        String cognome = rs.getString("cognome");
+
+        if (nome == null || cognome == null) {
+            o.setNomeUtente("Utente eliminato");
+        } else {
+            o.setNomeUtente(nome + " " + cognome);
         }
 
-        // ⭐ Ordina dal più recente al meno recente
-        query += " ORDER BY ID_Ordine DESC";
+        return o;
+    }
+
+    // ---------------------------------------
+    //   RECUPERA ORDINI PER UTENTE + DATA
+    // ---------------------------------------
+    public List<Ordine> doRetrieveByUserAndDate(int idUtente, LocalDate data) throws SQLException {
+
+        String query =
+                "SELECT o.*, u.nome, u.cognome " +
+                "FROM Ordine o " +
+                "LEFT JOIN Utente u ON o.ID_Utente = u.ID_Utente " +
+                "WHERE o.ID_Utente=?";
+
+        if (data != null) {
+            query += " AND DATE(o.Data_Ordine) = ?";
+        }
+
+        query += " ORDER BY o.ID_Ordine DESC";
 
         List<Ordine> lista = new ArrayList<>();
 
@@ -48,16 +85,24 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                lista.add(extractOrdine(rs));
+                lista.add(extractOrdineWithUser(rs));
             }
         }
 
         return lista;
     }
 
+    // -------------------------------
+    //   RECUPERA ORDINE PER PK
+    // -------------------------------
     @Override
     public Ordine doRetrieveByKey(Integer pk) throws SQLException {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE ID_Ordine=?";
+
+        String query =
+                "SELECT o.*, u.nome, u.cognome " +
+                "FROM Ordine o " +
+                "LEFT JOIN Utente u ON o.ID_Utente = u.ID_Utente " +   // <--- spazio aggiunto
+                "WHERE o.ID_Ordine=?";                                 // <--- ora è valido
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -66,11 +111,15 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return extractOrdine(rs);
+                return extractOrdineWithUser(rs);
             }
         }
         return null;
     }
+
+    // -------------------------------
+    //   CONTA ORDINI
+    // -------------------------------
     public int countOrders() {
         String query = "SELECT COUNT(*) FROM Ordine";
 
@@ -89,8 +138,9 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         return 0;
     }
 
-
-    // 🔥 Salva ordine e ritorna ID generato
+    // -------------------------------
+    //   SALVA ORDINE + RITORNA PK
+    // -------------------------------
     public int doSaveAndReturnKey(Ordine o) throws SQLException {
 
         String query = "INSERT INTO " + TABLE_NAME +
@@ -119,28 +169,33 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         return generatedKey;
     }
 
+    // -------------------------------
+    //   RECUPERA TUTTI GLI ORDINI
+    // -------------------------------
     @Override
     public Collection<Ordine> doRetrieveAll(String order) throws SQLException {
 
-        String query = "SELECT * FROM " + TABLE_NAME;
+        String query =
+                "SELECT o.*, u.nome, u.cognome " +
+                "FROM Ordine o " +
+                "LEFT JOIN Utente u ON o.ID_Utente = u.ID_Utente";
 
-        // Evita NullPointerException
         if (order != null) {
             switch (order) {
                 case "data_asc":
-                    query += " ORDER BY Data_Ordine ASC";
+                    query += " ORDER BY o.Data_Ordine ASC";
                     break;
                 case "data_desc":
-                    query += " ORDER BY Data_Ordine DESC";
+                    query += " ORDER BY o.Data_Ordine DESC";
                     break;
                 case "importo_asc":
-                    query += " ORDER BY Importo_Totale ASC";
+                    query += " ORDER BY o.Importo_Totale ASC";
                     break;
                 case "importo_desc":
-                    query += " ORDER BY Importo_Totale DESC";
+                    query += " ORDER BY o.Importo_Totale DESC";
                     break;
                 case "id_asc":
-                    query += " ORDER BY ID_Ordine ASC";
+                    query += " ORDER BY o.ID_Ordine ASC";
                     break;
             }
         }
@@ -152,18 +207,24 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                lista.add(extractOrdine(rs));
+                lista.add(extractOrdineWithUser(rs));
             }
         }
 
         return lista;
     }
 
-    // ⭐ Metodo usato dalla pagina "ordini.jsp"
-    //    → ORA ordina correttamente dal più recente
+    // -------------------------------
+    //   RECUPERA ORDINI PER UTENTE
+    // -------------------------------
     public List<Ordine> doRetrieveByUser(int idUtente) throws SQLException {
 
-        String query = "SELECT * FROM Ordine WHERE ID_Utente=? ORDER BY ID_Ordine DESC";
+        String query =
+                "SELECT o.*, u.nome, u.cognome " +
+                "FROM Ordine o " +
+                "LEFT JOIN Utente u ON o.ID_Utente = u.ID_Utente " +
+                "WHERE o.ID_Utente=? " +
+                "ORDER BY o.ID_Ordine DESC";
 
         List<Ordine> lista = new ArrayList<>();
 
@@ -174,13 +235,16 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                lista.add(extractOrdine(rs));
+                lista.add(extractOrdineWithUser(rs));
             }
         }
 
         return lista;
     }
 
+    // -------------------------------
+    //   SALVA ORDINE
+    // -------------------------------
     @Override
     public void doSave(Ordine o) throws SQLException {
 
@@ -201,6 +265,9 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         }
     }
 
+    // -------------------------------
+    //   UPDATE ORDINE
+    // -------------------------------
     @Override
     public void doUpdate(Ordine o) throws SQLException {
 
@@ -222,6 +289,9 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         }
     }
 
+    // -------------------------------
+    //   DELETE ORDINE
+    // -------------------------------
     @Override
     public boolean doDelete(Integer pk) throws SQLException {
 
@@ -233,18 +303,5 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
             ps.setInt(1, pk);
             return ps.executeUpdate() > 0;
         }
-    }
-
-    private Ordine extractOrdine(ResultSet rs) throws SQLException {
-        Ordine o = new Ordine();
-
-        o.setIdOrdine(rs.getInt("ID_Ordine"));
-        o.setIdUtente(rs.getInt("ID_Utente"));
-        o.setIdAmministratore((Integer) rs.getObject("ID_Amministratore"));
-        o.setDataOrdine(rs.getDate("Data_Ordine").toLocalDate());
-        o.setStatoAvanzamento(rs.getString("Stato_Avanzamento"));
-        o.setImportoTotale(rs.getBigDecimal("Importo_Totale"));
-
-        return o;
     }
 }
