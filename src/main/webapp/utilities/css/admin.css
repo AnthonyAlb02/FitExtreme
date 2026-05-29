@@ -1,5 +1,5 @@
 /* ===========================
-   ADMIN LAYOUT
+   BASE LAYOUT
 =========================== */
 
 .admin-wrapper {
@@ -12,6 +12,7 @@
 /* ===========================
    SIDEBAR
 =========================== */
+
 .admin-sidebar {
     width: 260px;
     background: #111;
@@ -47,6 +48,7 @@
 /* ===========================
    CONTENT AREA
 =========================== */
+
 .admin-content {
     flex-grow: 1;
     padding: 50px 60px;
@@ -113,19 +115,44 @@
     margin-bottom: 2rem;
 }
 
-.admin-btn {
-    padding: 12px 24px;
-    background-color: #FFC266;
-    color: #FFF;
+/* ===========================
+   BOTTONI GLOBALI
+=========================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    padding: 0 20px;
     border-radius: 8px;
-    text-decoration: none;
+    font-size: 0.95rem;
     font-weight: 600;
+    cursor: pointer;
     transition: 0.25s ease;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
 }
 
-.admin-btn:hover {
-    background-color: #8C5A2B;
-    transform: translateY(-2px);
+.btn-primary {
+    background: #8C5A2B;
+    color: #FFF;
+    min-width: 160px;
+}
+
+.btn-primary:hover {
+    background: #734922;
+}
+
+.btn-secondary {
+    background: #FFC266;
+    color: #111;
+    min-width: 160px;
+}
+
+.btn-secondary:hover {
+    background: #E6AD59;
 }
 
 /* ===========================
@@ -183,39 +210,6 @@
 }
 
 /* ===========================
-   BOTTONI AZIONE
-=========================== */
-
-.btn {
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.25s ease;
-    border: none;
-    font-family: "Poppins", sans-serif;
-}
-
-.btn-secondary {
-    background: #FFC266;
-    color: #111;
-}
-
-.btn-secondary:hover {
-    background: #E6AD59;
-}
-
-.btn-primary {
-    background: #8C5A2B;
-    color: #FFF;
-}
-
-.btn-primary:hover {
-    background: #734922;
-}
-
-/* ===========================
    POPUP
 =========================== */
 
@@ -248,20 +242,24 @@
 }
 
 .popup-buttons {
-    margin-top: 28px;
     display: flex;
-    justify-content: space-between;
+    gap: 12px;
+    margin-top: 25px;
 }
 
 .popup-buttons .btn {
-    width: 48%;
+    flex: 1;
+    height: 48px;
+    font-size: 1rem;
+    border-radius: 10px;
 }
+
 /* ===========================
-   FORM ADMIN (INSERISCI / MODIFICA PRODOTTO)
+   FORM ADMIN
 =========================== */
 
 .admin-content form {
-    background: #fff;
+    background: #FFF;
     padding: 30px 35px;
     border-radius: 14px;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
@@ -281,18 +279,18 @@ textarea.form-control {
     width: 100%;
     padding: 12px 14px;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #CCC;
     font-family: "Poppins", sans-serif;
     font-size: 0.95rem;
     transition: 0.2s ease;
-    background: #fafafa;
+    background: #FAFAFA;
 }
 
 .form-control:focus,
 .form-select:focus,
 textarea.form-control:focus {
     border-color: #FFC266;
-    background: #fff;
+    background: #FFF;
     outline: none;
     box-shadow: 0 0 0 3px rgba(255, 194, 102, 0.35);
 }
@@ -301,106 +299,19 @@ textarea.form-control:focus {
     margin-bottom: 20px;
 }
 
-/* Alert errore */
 .alert-danger {
-    background: #ffe0e0;
-    border-left: 5px solid #cc0000;
+    background: #FFE0E0;
+    border-left: 5px solid #CC0000;
     padding: 12px 16px;
     border-radius: 8px;
     font-weight: 600;
-    color: #b30000;
+    color: #B30000;
     margin-bottom: 20px;
 }
 
-/* Pulsanti form */
-.btn-primary {
-    background: #8C5A2B;
-    color: #fff;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: 0.25s ease;
-}
-
-.btn-primary:hover {
-    background: #734922;
-}
-
-.btn-secondary {
-    background: #FFC266;
-    color: #111;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: 0.25s ease;
-}
-
-.btn-secondary:hover {
-    background: #e6ad59;
-}
-
-/* File input */
 input[type="file"] {
-    background: #fafafa;
+    background: #FAFAFA;
     padding: 10px;
     border-radius: 8px;
-    border: 1px solid #ccc;
-}
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 45px; /* altezza uniforme */
-    padding: 0 20px; /* niente padding verticale */
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.25s ease;
-    border: none;
-    font-family: "Poppins", sans-serif;
-    text-decoration: none;
-}
-.btn-primary,
-.btn-secondary {
-    min-width: 160px; /* stessa larghezza minima */
-    text-align: center;
-}
-/* ===========================
-   POPUP BUTTONS MIGLIORATI
-=========================== */
-
-.popup-buttons {
-    display: flex;
-    gap: 12px;
-    margin-top: 25px;
-}
-
-.popup-buttons .btn {
-    flex: 1;
-    height: 48px;
-    font-size: 1rem;
-    border-radius: 10px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Colori coerenti */
-.popup-buttons .btn-primary {
-    background: #8C5A2B;
-    color: #fff;
-}
-
-.popup-buttons .btn-primary:hover {
-    background: #734922;
-}
-
-.popup-buttons .btn-secondary {
-    background: #FFC266;
-    color: #111;
-}
-
-.popup-buttons .btn-secondary:hover {
-    background: #e6ad59;
+    border: 1px solid #CCC;
 }

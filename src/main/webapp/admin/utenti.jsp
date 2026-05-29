@@ -9,7 +9,22 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/utilities/css/base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/utilities/css/admin.css">
+
+    <style>
+        /* FIX BOTTONI NELLA TABELLA */
+        .azioni-cell {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .azioni-cell form {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
+
 <body>
 
 <div class="admin-wrapper">
@@ -37,7 +52,7 @@
                     <th>Email</th>
                     <th>Telefono</th>
                     <th>Ruolo</th>
-                    <th>Azioni</th>
+                    <th style="width: 220px;">Azioni</th>
                 </tr>
             </thead>
 
@@ -46,26 +61,32 @@
                 Collection<Utente> utenti = (Collection<Utente>) request.getAttribute("utenti");
                 if (utenti != null) {
                     for (Utente u : utenti) {
+
+                        String nome = (u.getNome() != null ? u.getNome() : "N/D");
+                        String cognome = (u.getCognome() != null ? u.getCognome() : "");
+                        String telefono = (u.getTelefono() != null ? u.getTelefono() : "-");
+                        String ruolo = u.getRuolo() != null ? u.getRuolo() : "guest";
             %>
+
             <tr>
                 <td><%= u.getIdUtente() %></td>
-                <td><%= u.getNome() %> <%= u.getCognome() %></td>
+                <td><%= nome %> <%= cognome %></td>
                 <td><%= u.getEmail() %></td>
-                <td><%= u.getTelefono() %></td>
+                <td><%= telefono %></td>
 
                 <td>
-                    <span class="badge <%= u.getRuolo().equals("admin") ? "badge-admin" : "badge-user" %>">
-                        <%= u.getRuolo() %>
+                    <span class="badge <%= ruolo.equals("admin") ? "badge-admin" : "badge-user" %>">
+                        <%= ruolo %>
                     </span>
                 </td>
 
-                <td>
-                    <% if (!u.getRuolo().equals("admin")) { %>
+                <td class="azioni-cell">
+
+                    <% if (!ruolo.equals("admin")) { %>
                     <form action="${pageContext.request.contextPath}/admin/promuovi-utente"
                           method="post"
-                          onsubmit="apriPopupPromuovi(this.dataset.nome, this); return false;"
-                          data-nome="<%= u.getNome() %> <%= u.getCognome() %>"
-                          style="display:inline;">
+                          data-nome="<%= nome + " " + cognome %>"
+                          onsubmit="apriPopupPromuovi(this.dataset.nome, this); return false;">
                         <input type="hidden" name="id" value="<%= u.getIdUtente() %>">
                         <button class="btn btn-secondary" type="submit">Rendi Admin</button>
                     </form>
@@ -73,14 +94,15 @@
 
                     <form action="${pageContext.request.contextPath}/admin/elimina-utente"
                           method="post"
-                          onsubmit="apriPopupElimina(this.dataset.nome, this); return false;"
-                          data-nome="<%= u.getNome() %> <%= u.getCognome() %>"
-                          style="display:inline;">
+                          data-nome="<%= nome + " " + cognome %>"
+                          onsubmit="apriPopupElimina(this.dataset.nome, this); return false;">
                         <input type="hidden" name="id" value="<%= u.getIdUtente() %>">
                         <button class="btn btn-primary" type="submit">Elimina</button>
                     </form>
+
                 </td>
             </tr>
+
             <%
                     }
                 }
@@ -119,3 +141,4 @@
 
 </body>
 </html>
+	
