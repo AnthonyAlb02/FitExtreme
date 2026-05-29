@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import model.DAO.ArticoloDAO;
 import model.beans.Articolo;
 
-@WebServlet("/admin/prodottiAdmin")
+@WebServlet("/admin/prodotti")
 public class prodottiAdmin extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -34,7 +34,7 @@ public class prodottiAdmin extends HttpServlet {
             throws ServletException, IOException {
 
         // Indico la JSP che mostra la lista degli articoli per l'admin
-        dispatcher = getServletContext().getRequestDispatcher("/jsp/admin/articoli/prodottiAdmin.jsp");
+        dispatcher = getServletContext().getRequestDispatcher("/admin/prodotti.jsp");
 
         // Recupero la sessione dell'utente
         HttpSession sessione = request.getSession(false);
@@ -46,13 +46,13 @@ public class prodottiAdmin extends HttpServlet {
         }
 
         // Controllo che l'utente sia admin
-        String ruolo = (String) sessione.getAttribute("ruolo");
+        Boolean isAdmin = (Boolean) sessione.getAttribute("isAdmin");
 
-        // Se non è admin → lo mando alla pagina errore permessi
-        if (ruolo == null || !ruolo.equals("admin")) {
-            response.sendRedirect("../errorePermessi.jsp");
+        if (isAdmin == null || !isAdmin) {
+            response.sendRedirect("../errorePermessi");
             return;
         }
+
 
         try {
             // DAO per recuperare gli articoli

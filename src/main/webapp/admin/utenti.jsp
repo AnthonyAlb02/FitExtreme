@@ -6,71 +6,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestione Utenti</title>
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/utilities/css/base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/utilities/css/admin.css">
 </head>
 <body>
 
-<div class="admin-content">
+<div class="admin-wrapper">
 
-    <h1 class="admin-title">Gestione Utenti</h1>
+    <!-- SIDEBAR -->
+    <div class="admin-sidebar">
+        <h2>FitExtreme Admin</h2>
 
-    <table class="admin-table">
-        <thead>
+        <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
+        <a href="${pageContext.request.contextPath}/admin/utenti" style="background:#222;">Gestione utenti</a>
+        <a href="${pageContext.request.contextPath}/admin/ordini">Gestione ordini</a>
+        <a href="${pageContext.request.contextPath}/admin/prodotti">Gestione prodotti</a>
+    </div>
+
+    <!-- CONTENUTO PRINCIPALE -->
+    <div class="admin-content">
+
+        <h1 class="admin-title">Gestione Utenti</h1>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                    <th>Ruolo</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <%
+                Collection<Utente> utenti = (Collection<Utente>) request.getAttribute("utenti");
+                if (utenti != null) {
+                    for (Utente u : utenti) {
+            %>
             <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Telefono</th>
-                <th>Ruolo</th>
-                <th>Azioni</th>
+                <td><%= u.getIdUtente() %></td>
+                <td><%= u.getNome() %> <%= u.getCognome() %></td>
+                <td><%= u.getEmail() %></td>
+                <td><%= u.getTelefono() %></td>
+
+                <td>
+                    <span class="badge <%= u.getRuolo().equals("admin") ? "badge-admin" : "badge-user" %>">
+                        <%= u.getRuolo() %>
+                    </span>
+                </td>
+
+                <td>
+                    <% if (!u.getRuolo().equals("admin")) { %>
+                    <form action="${pageContext.request.contextPath}/admin/promuovi-utente"
+                          method="post"
+                          onsubmit="apriPopupPromuovi(this.dataset.nome, this); return false;"
+                          data-nome="<%= u.getNome() %> <%= u.getCognome() %>"
+                          style="display:inline;">
+                        <input type="hidden" name="id" value="<%= u.getIdUtente() %>">
+                        <button class="btn btn-secondary" type="submit">Rendi Admin</button>
+                    </form>
+                    <% } %>
+
+                    <form action="${pageContext.request.contextPath}/admin/elimina-utente"
+                          method="post"
+                          onsubmit="apriPopupElimina(this.dataset.nome, this); return false;"
+                          data-nome="<%= u.getNome() %> <%= u.getCognome() %>"
+                          style="display:inline;">
+                        <input type="hidden" name="id" value="<%= u.getIdUtente() %>">
+                        <button class="btn btn-primary" type="submit">Elimina</button>
+                    </form>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-        <%
-            Collection<Utente> utenti = (Collection<Utente>) request.getAttribute("utenti");
-            if (utenti != null) {
-                for (Utente u : utenti) {
-        %>
-        <tr>
-            <td><%= u.getIdUtente() %></td>
-            <td><%= u.getNome() %> <%= u.getCognome() %></td>
-            <td><%= u.getEmail() %></td>
-            <td><%= u.getTelefono() %></td>
-            <td>
-                <span class="badge <%= u.getRuolo().equals("admin") ? "badge-admin" : "badge-user" %>">
-                    <%= u.getRuolo() %>
-                </span>
-            </td>
-            <td>
-                <% if (!u.getRuolo().equals("admin")) { %>
-                <form action="${pageContext.request.contextPath}/admin/promuovi-utente"
-                      method="post"
-                      onsubmit="apriPopupPromuovi(this.dataset.nome, this); return false;"
-                      data-nome="<%= u.getNome() %> <%= u.getCognome() %>"
-                      style="display:inline;">
-                    <input type="hidden" name="id" value="<%= u.getIdUtente() %>">
-                    <button class="btn btn-secondary" type="submit">Rendi Admin</button>
-                </form>
-                <% } %>
-
-                <form action="${pageContext.request.contextPath}/admin/elimina-utente"
-                      method="post"
-                      onsubmit="apriPopupElimina(this.dataset.nome, this); return false;"
-                      data-nome="<%= u.getNome() %> <%= u.getCognome() %>"
-                      style="display:inline;">
-                    <input type="hidden" name="id" value="<%= u.getIdUtente() %>">
-                    <button class="btn btn-primary" type="submit">Elimina</button>
-                </form>
-            </td>
-        </tr>
-        <%
+            <%
+                    }
                 }
-            }
-        %>
-        </tbody>
-    </table>
+            %>
+            </tbody>
+        </table>
 
+    </div>
 </div>
 
 <!-- POPUP ELIMINAZIONE -->

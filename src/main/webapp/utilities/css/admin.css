@@ -14,30 +14,34 @@
 =========================== */
 .admin-sidebar {
     width: 260px;
-    background: #111111;
-    color: #FFFFFF;
-    padding: 30px 20px;
+    background: #111;
+    color: #FFF;
+    padding: 35px 22px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 22px;
+    border-right: 1px solid #222;
 }
 
 .admin-sidebar h2 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
 }
 
 .admin-sidebar a {
-    color: #FFFFFF;
+    color: #FFF;
     font-size: 1rem;
-    padding: 10px 14px;
-    border-radius: 6px;
-    transition: background 0.2s ease;
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: 0.25s ease;
+    font-weight: 500;
 }
 
 .admin-sidebar a:hover {
-    background: #222222;
+    background: #222;
+    transform: translateX(4px);
 }
 
 /* ===========================
@@ -45,22 +49,22 @@
 =========================== */
 .admin-content {
     flex-grow: 1;
-    padding: 40px 50px;
-}
-
-.admin-subtitle {
-    font-size: 0.85rem;
-    color: #888;
-    margin: 0 0 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    padding: 50px 60px;
 }
 
 .admin-title {
-    font-size: 2rem;
-    font-weight: 600;
-    margin: 0 0 30px;
-    color: #111111;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #111;
+}
+
+.admin-subtitle {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
 }
 
 /* ===========================
@@ -69,88 +73,92 @@
 
 .admin-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    margin-bottom: 2.5rem;
 }
 
 .admin-card {
-    background: #FFFFFF;
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+    background: #FFF;
+    border-radius: 14px;
+    padding: 24px 28px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    transition: 0.25s ease;
+}
+
+.admin-card:hover {
+    transform: translateY(-3px);
 }
 
 .card-label {
-    font-size: 0.85rem;
-    color: #888;
-    margin: 0 0 8px;
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 10px;
 }
 
 .card-value {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 2.2rem;
+    font-weight: 700;
     color: #111;
-    margin: 0;
 }
 
 /* ===========================
-   BOTTONI NAVIGAZIONE DASHBOARD
+   BOTTONI NAVIGAZIONE
 =========================== */
 
 .admin-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 2rem;
 }
 
 .admin-btn {
-    display: inline-block;
-    padding: 10px 22px;
+    padding: 12px 24px;
     background-color: #FFC266;
-    color: #fff;
-    border-radius: 6px;
+    color: #FFF;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
-    font-family: "Poppins", sans-serif;
-    transition: 0.2s ease;
+    transition: 0.25s ease;
 }
 
 .admin-btn:hover {
     background-color: #8C5A2B;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 /* ===========================
-   TABELLA UTENTI
+   TABELLE
 =========================== */
 
 .admin-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 30px;
-    background: #fff;
-    border-radius: 12px;
+    margin-top: 35px;
+    background: #FFF;
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
 }
 
 .admin-table th {
     background: #FFC266;
     color: #111;
-    padding: 14px;
+    padding: 16px;
     text-align: left;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 1rem;
 }
 
 .admin-table td {
-    padding: 14px;
-    border-bottom: 1px solid #eee;
+    padding: 16px;
+    border-bottom: 1px solid #EEE;
+    font-size: 0.95rem;
 }
 
 .admin-table tr:hover {
-    background: #fff7e6;
+    background: #FFF7E6;
 }
 
 /* ===========================
@@ -158,19 +166,19 @@
 =========================== */
 
 .badge {
-    padding: 6px 12px;
-    border-radius: 8px;
+    padding: 7px 14px;
+    border-radius: 10px;
     font-weight: 600;
     font-size: 0.9rem;
 }
 
 .badge-admin {
     background: #8C5A2B;
-    color: #fff;
+    color: #FFF;
 }
 
 .badge-user {
-    background: #ddd;
+    background: #DDD;
     color: #111;
 }
 
@@ -179,14 +187,12 @@
 =========================== */
 
 .btn {
-    display: inline-block;
-    padding: 8px 14px;
+    padding: 10px 16px;
     border-radius: 8px;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    text-decoration: none;
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: 0.25s ease;
     border: none;
     font-family: "Poppins", sans-serif;
 }
@@ -197,12 +203,12 @@
 }
 
 .btn-secondary:hover {
-    background: #e6ad59;
+    background: #E6AD59;
 }
 
 .btn-primary {
     background: #8C5A2B;
-    color: #fff;
+    color: #FFF;
 }
 
 .btn-primary:hover {
@@ -210,7 +216,7 @@
 }
 
 /* ===========================
-   POPUP CONFERMA
+   POPUP
 =========================== */
 
 .popup-overlay {
@@ -227,12 +233,12 @@
 }
 
 .popup-box {
-    background: #fff;
-    padding: 30px 35px;
-    border-radius: 14px;
-    width: 380px;
+    background: #FFF;
+    padding: 35px 40px;
+    border-radius: 16px;
+    width: 400px;
     text-align: center;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.25);
     animation: popupFade 0.25s ease;
 }
 
@@ -241,18 +247,160 @@
     to   { transform: scale(1);   opacity: 1; }
 }
 
-.popup-box h3 {
-    margin-bottom: 15px;
-    font-size: 1.4rem;
-    font-weight: 600;
-}
-
 .popup-buttons {
-    margin-top: 25px;
+    margin-top: 28px;
     display: flex;
     justify-content: space-between;
 }
 
 .popup-buttons .btn {
     width: 48%;
+}
+/* ===========================
+   FORM ADMIN (INSERISCI / MODIFICA PRODOTTO)
+=========================== */
+
+.admin-content form {
+    background: #fff;
+    padding: 30px 35px;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    max-width: 650px;
+}
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+    color: #333;
+}
+
+.form-control,
+.form-select,
+textarea.form-control {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.95rem;
+    transition: 0.2s ease;
+    background: #fafafa;
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea.form-control:focus {
+    border-color: #FFC266;
+    background: #fff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 194, 102, 0.35);
+}
+
+.mb-3 {
+    margin-bottom: 20px;
+}
+
+/* Alert errore */
+.alert-danger {
+    background: #ffe0e0;
+    border-left: 5px solid #cc0000;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #b30000;
+    margin-bottom: 20px;
+}
+
+/* Pulsanti form */
+.btn-primary {
+    background: #8C5A2B;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.btn-primary:hover {
+    background: #734922;
+}
+
+.btn-secondary {
+    background: #FFC266;
+    color: #111;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.btn-secondary:hover {
+    background: #e6ad59;
+}
+
+/* File input */
+input[type="file"] {
+    background: #fafafa;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px; /* altezza uniforme */
+    padding: 0 20px; /* niente padding verticale */
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+}
+.btn-primary,
+.btn-secondary {
+    min-width: 160px; /* stessa larghezza minima */
+    text-align: center;
+}
+/* ===========================
+   POPUP BUTTONS MIGLIORATI
+=========================== */
+
+.popup-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.popup-buttons .btn {
+    flex: 1;
+    height: 48px;
+    font-size: 1rem;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Colori coerenti */
+.popup-buttons .btn-primary {
+    background: #8C5A2B;
+    color: #fff;
+}
+
+.popup-buttons .btn-primary:hover {
+    background: #734922;
+}
+
+.popup-buttons .btn-secondary {
+    background: #FFC266;
+    color: #111;
+}
+
+.popup-buttons .btn-secondary:hover {
+    background: #e6ad59;
 }
