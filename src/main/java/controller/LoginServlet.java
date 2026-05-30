@@ -46,12 +46,13 @@ public class LoginServlet extends HttpServlet {
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         UtenteDAO model = new UtenteDAO();
-        HttpSession sessione = request.getSession();
+        HttpSession sessione = request.getSession(); // NON invalidare
 
         try {
             String email = request.getParameter("email");
@@ -88,18 +89,23 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
 
-            // 4) LOGIN OK → determino ruolo PRIMA di creare la sessione
+            // ⭐ SALVO IL CARRELLO PRIMA DEL LOGIN
+            Object carrello = sessione.getAttribute("carrello");
+            Object cartCount = sessione.getAttribute("cartCount");
+
+            // 4) LOGIN OK
             boolean adminFlag = "admin".equalsIgnoreCase(utente.getRuolo());
 
-            // 5) Creo/rinnovo sessione
-            sessione.invalidate(); // invalido la vecchia per sicurezza
-            sessione = request.getSession(true); // ne creo una nuova
-
+            // ⭐ NON invalidare la sessione
             sessione.setAttribute("utente", utente);
             sessione.setAttribute("id", utente.getIdUtente());
-            sessione.setAttribute("isAdmin", adminFlag); // Boolean coerente
+            sessione.setAttribute("isAdmin", adminFlag);
 
-            // 6) Remember me
+            // ⭐ RIPRISTINO IL CARRELLO
+            if (carrello != null) sessione.setAttribute("carrello", carrello);
+            if (cartCount != null) sessione.setAttribute("cartCount", cartCount);
+
+            // 5) Remember me
             if ("on".equals(remember)) {
                 Cookie rememberCookie = new Cookie("rememberEmail", utente.getEmail());
                 rememberCookie.setMaxAge(60 * 60 * 24 * 30);
@@ -108,13 +114,13 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(rememberCookie);
             }
 
-            // 7) Cookie consent
+            // 6) Cookie consent
             Cookie consent = new Cookie("cookieConsent", "true");
             consent.setMaxAge(60 * 60 * 24 * 365);
             consent.setPath("/");
             response.addCookie(consent);
 
-            // 8) Redirect in base al ruolo
+            // 7) Redirect
             if (adminFlag) {
                 response.sendRedirect(request.getContextPath() + "/admin/dashboard");
             } else {
@@ -126,6 +132,7 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/error/error");
         }
     }
+
 
     private boolean checkCredentials(String mail, String pwd, Utente check) {
         return mail.equalsIgnoreCase(check.getEmail()) &&
