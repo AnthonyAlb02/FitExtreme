@@ -37,7 +37,7 @@
         <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
         <a href="${pageContext.request.contextPath}/admin/utenti">Gestione utenti</a>
         <a href="${pageContext.request.contextPath}/admin/ordini">Gestione ordini</a>
-        <a href="${pageContext.request.contextPath}/admin/prodottiAdmin">Gestione prodotti</a>
+        <a href="${pageContext.request.contextPath}/admin/prodotti">Gestione prodotti</a>
     </div>
 
     <div class="admin-content">
