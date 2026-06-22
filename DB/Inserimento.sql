@@ -49,7 +49,7 @@ VALUES
 ('Guanti da Palestra',           'Guanti antiscivolo per sollevamento pesi',14.99, 60, 2, 'guanti.png'),
 ('Fascia da Braccio Smartphone', 'Fascia elastica per smartphone',           9.99, 80, 2, 'fascia.png'),
 ('Borraccia Termica 750ml',      'Acciaio inox, mantiene la temperatura',   17.99, 70, 2, 'borraccia.png'),
-('Manubri 5kg',                  'Coppia di manubri da 5kg',                29.99, 25, 3, '5chili.png'),
+('Manubri 5kg',                  'Coppia di manubri da 5kg',                29.99, 0, 3, '5chili.png'),
 ('Elastici Fitness Set',         'Set di elastici con diverse resistenze',  22.99, 50, 3, 'elastici.png'),
 ('Tappetino Yoga',               'Tappetino antiscivolo 180x60cm',          19.99, 40, 3, 'tappetino.png');
 ('Proteine idrolizzate (cocco)', 'Proteine idrolizzate gusto cocco',          69.99, 40, 4, 'cocco.png');
@@ -79,16 +79,39 @@ VALUES
 INSERT INTO Recensione
 (ID_Utente, ID_Articolo, Voto, Commento, Data_Recensione)
 VALUES
-(1, 1, 5, 'Ottima qualità, molto comoda!',                            CURDATE()),
-(2, 4, 4, 'Buoni guanti, presi per palestra.',                        CURDATE()),
-(1, 9, 5, 'Tappetino perfetto per yoga.',                             CURDATE()),
-(2, 1, 4, 'Maglietta molto comoda, veste bene. Consigliata!',         CURDATE()),
-(1, 2, 5, 'Pantaloncini leggerissimi, perfetti per correre.',          CURDATE()),
-(2, 3, 3, 'Felpa buona ma un po'' calda. Qualità comunque ottima.',   CURDATE()),
-(1, 4, 4, 'Guanti resistenti, ottima presa sui pesi.',                CURDATE()),
-(2, 7, 5, 'Manubri solidi, impugnatura perfetta. Ottimo acquisto.',   CURDATE()),
-(1, 8, 5, 'Set elastici completo, rapporto qualità/prezzo top.',      CURDATE()),
-(2, 9, 4, 'Tappetino comodo e antiscivolo, perfetto per stretching.', CURDATE());
+(1, 1, 5, 'Proteine ottime, gusto cacao molto naturale e senza grumi.', CURDATE()),
+(2, 1, 4, 'Buon prodotto, si scioglie bene ma gusto un po’ intenso.', CURDATE()),
+
+(1, 2, 5, 'Scaldacollo perfetto per correre la mattina presto.', CURDATE()),
+(2, 2, 3, 'Materiale buono ma un po’ leggero per l’inverno.', CURDATE()),
+
+(1, 3, 5, 'Cintura solidissima, mi ha migliorato la stabilità negli squat.', CURDATE()),
+(2, 3, 4, 'Ottima qualità, ma la chiusura poteva essere più robusta.', CURDATE()),
+
+(1, 4, 5, 'Guanti comodissimi, presa migliorata tantissimo!', CURDATE()),
+(2, 4, 4, 'Buoni per allenarsi, ma leggermente stretti.', CURDATE()),
+
+(1, 5, 4, 'Fascia smartphone utile e stabile durante la corsa.', CURDATE()),
+(2, 5, 5, 'Perfetta! Non scivola mai e tiene bene il telefono.', CURDATE()),
+
+(1, 6, 5, 'Borraccia eccellente, mantiene il freddo per ore.', CURDATE()),
+(2, 6, 4, 'Buona qualità, ma un po’ grande per la mia borsa.', CURDATE()),
+
+(1, 7, 5, 'Manubri ben bilanciati, ottima impugnatura.', CURDATE()),
+(2, 7, 5, 'Perfetti per allenarsi a casa, consigliati.', CURDATE()),
+
+(1, 8, 5, 'Set elastici completo, resistenze ben calibrate.', CURDATE()),
+(2, 8, 4, 'Buoni, ma l’elastico più duro è davvero impegnativo.', CURDATE()),
+
+(1, 9, 5, 'Tappetino comodo e antiscivolo, ottimo per yoga.', CURDATE()),
+(2, 9, 4, 'Buona qualità, ma avrei preferito fosse più spesso.', CURDATE()),
+
+(1, 10, 5, 'Proteine al cocco buonissime, gusto delicato.', CURDATE()),
+(2, 10, 4, 'Ottime, ma prezzo un po’ alto.', CURDATE()),
+
+(1, 11, 5, 'Barretta buonissima, perfetta come snack post-allenamento.', CURDATE()),
+(2, 11, 4, 'Buona ma un po’ dolce per i miei gusti.', CURDATE());
+
 
 
 -- ===================== ORDINI =====================
