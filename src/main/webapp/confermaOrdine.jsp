@@ -17,7 +17,9 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+ <jsp:include page="/head.jsp" />
     <meta charset="UTF-8">
+    
     <title>Pagamento ordine | FitExtreme</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/base.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/header.css">

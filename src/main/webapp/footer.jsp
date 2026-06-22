@@ -61,7 +61,7 @@
 			<h4>Contattaci</h4>
 			<ul class="contact-list">
 				<li><a href="mailto:assistenza@fitextreme.it">assistenza@fitextreme.it</a></li>
-				<li><a href="+393393786329">+39 339 37 8632</a></li>
+				<li><a href="+393393786329">+39 339 373 9632</a></li>
 			</ul>
 		</div>
 

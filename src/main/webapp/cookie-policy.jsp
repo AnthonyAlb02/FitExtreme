@@ -14,7 +14,7 @@
 	href="<%= request.getContextPath() %>/utilities/css/policy.css">
 
    
-    
+     <jsp:include page="/head.jsp" />
 </head>
 
 <body>

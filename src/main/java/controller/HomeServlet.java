@@ -21,8 +21,8 @@ public class HomeServlet extends HttpServlet {
 
 
         try {
-            Collection<Articolo> prodotti = dao.doRetrieveAll("ID_Articolo LIMIT 4");
-            request.setAttribute("prodotti", prodotti);
+        	Collection<Articolo> prodotti = dao.doRetrieveHomeList(4);
+        	request.setAttribute("prodotti", prodotti);
         } catch (Exception e) {
             e.printStackTrace();
         }

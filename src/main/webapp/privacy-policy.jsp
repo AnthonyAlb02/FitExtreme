@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+ <jsp:include page="/head.jsp" />
     <meta charset="UTF-8">
+    
     <title>Privacy Policy - FitExtreme</title>
 
     <!-- Stessi stylesheet della Cookie Policy -->

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+ <jsp:include page="/head.jsp" />
 <meta charset="UTF-8">
 <title>Registrazione | FitExtreme</title>
 <link rel="stylesheet"

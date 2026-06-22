@@ -4,6 +4,7 @@
 
 <html>
 <head>
+ <jsp:include page="/head.jsp" />
 <title>Carrello</title>
 
 <link rel="stylesheet"

@@ -7,7 +7,16 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>FitExtreme - Home</title>
+<title>FitExtreme | Home</title>
+
+
+<link rel="icon" type="image/png" sizes="32x32"
+      href="<%= request.getContextPath() %>/utilities/immagini/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16"
+      href="<%= request.getContextPath() %>/utilities/immagini/favicon.png">
+<link rel="apple-touch-icon"
+      href="<%= request.getContextPath() %>/utilities/immagini/favicon.png">
+
 
 <link rel="stylesheet"
 	href="<%= request.getContextPath() %>/utilities/css/base.css">

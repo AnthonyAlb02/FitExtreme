@@ -20,8 +20,14 @@ Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
     }
 %>
 
+
+
 <!-- HEADER -->
 <header class="main-header <%= adminMode ? "admin-header" : "" %>">
+
+
+
+
 
     <% if (adminMode) { %>
         <div class="admin-banner">

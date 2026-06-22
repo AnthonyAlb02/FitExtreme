@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+ <jsp:include page="/head.jsp" />
     <meta charset="UTF-8">
     <title>Messaggio inviato - FitExtreme</title>
 

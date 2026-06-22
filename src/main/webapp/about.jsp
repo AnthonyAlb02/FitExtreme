@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Chi Siamo - FitExtreme</title>
+    
+    <jsp:include page="/head.jsp" />
+    
 
     <!-- Stessi stylesheet delle altre pagine -->
     <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/base.css">

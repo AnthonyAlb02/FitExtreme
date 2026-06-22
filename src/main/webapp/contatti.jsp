@@ -2,14 +2,32 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <jsp:include page="/head.jsp" />
     <meta charset="UTF-8">
     <title>Contatti - FitExtreme</title>
 
-   
     <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/base.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/header.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/footer.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/contatti.css">
+
+    <style>
+        .form-success {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e6ffe6;
+            border-left: 5px solid #28a745;
+            color: #155724;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 
 <body>
@@ -20,7 +38,7 @@
 
     <h1>Contatti</h1>
     <p>
-        Hai bisogno di assistenza o vuoi metterti in contatto con noi?  
+        Hai bisogno di assistenza o vuoi metterti in contatto con noi?
         Puoi utilizzare le informazioni qui sotto oppure compilare il modulo.
     </p>
 
@@ -29,8 +47,8 @@
         <h2>Informazioni di contatto</h2>
 
         <address>
-            <p><strong>Email:</strong> <a href="mailto:support@fitExtreme.it">support@fitExtreme.it</a></p>
-            <p><strong>Telefono:</strong> <a href="tel:+393393786329">+39 339 37 8632</a></p>
+            <p><strong>Email:</strong> support@fitExtreme.it</p>
+            <p><strong>Telefono:</strong> +39 339 37 8632</p>
             <p><strong>Indirizzo:</strong><br>
                 FitExtreme HQ<br>
                 Via MegaFit 22<br>
@@ -41,74 +59,46 @@
 
     <!-- SEZIONE FORM -->
     <section>
-    <h2>Scrivici un messaggio</h2>
+        <h2>Scrivici un messaggio</h2>
 
-    <!-- Messaggi di feedback (gestiti dalla servlet) -->
-    <%
-        String success = request.getParameter("success");
-        String error = request.getParameter("error");
-    %>
+        <!-- MESSAGGIO DI CONFERMA -->
+        <div id="successMessage" class="form-success" style="display:none;">
+            Il tuo messaggio è stato inviato correttamente. Ti risponderemo al più presto.
+        </div>
 
-    <% if ("true".equals(success)) { %>
-        <p class="form-success">Il tuo messaggio è stato inviato correttamente. Ti risponderemo al più presto.</p>
-    <% } %>
+        <!-- FORM FAKE -->
+        <form onsubmit="sendFake(event)" class="contact-form">
 
-    <% if ("true".equals(error)) { %>
-        <p class="form-error">Si è verificato un errore durante l'invio. Riprova più tardi.</p>
-    <% } %>
+            <label for="nome">Nome e cognome</label>
+            <input type="text" id="nome" name="nome" required placeholder="Inserisci il tuo nome">
 
-<form action="<%= request.getContextPath() %>/contatti-success.jsp" method="get" class="contact-form">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="nome@example.com">
 
-    <label for="nome">Nome e cognome</label>
-    <input type="text" id="nome" name="nome" required placeholder="Inserisci il tuo nome">
+            <label for="oggetto">Oggetto</label>
+            <input type="text" id="oggetto" name="oggetto" required placeholder="Es. Informazioni su un ordine">
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required placeholder="nome@example.com">
+            <label for="messaggio">Messaggio</label>
+            <textarea id="messaggio" name="messaggio" required placeholder="Scrivi qui il tuo messaggio..."></textarea>
 
-    <label for="oggetto">Oggetto</label>
-    <input type="text" id="oggetto" name="oggetto" required placeholder="Es. Informazioni su un ordine">
+            <button type="submit" class="btn btn-primary">Invia messaggio</button>
+        </form>
 
-    <label for="messaggio">Messaggio</label>
-    <textarea id="messaggio" name="messaggio" required placeholder="Scrivi qui il tuo messaggio..."></textarea>
-
-    <button type="submit" class="btn btn-primary">Invia messaggio</button>
-</form>
-
-
-</section>
-
+    </section>
 
 </main>
+
 <script>
-function sendMail(event) {
+function sendFake(event) {
     event.preventDefault();
 
-    const nome = document.getElementById("nome").value;
-    const email = document.getElementById("email").value;
-    const oggetto = document.getElementById("oggetto").value;
-    const messaggio = document.getElementById("messaggio").value;
+    // Mostra messaggio di conferma
+    document.getElementById("successMessage").style.display = "block";
 
-    const destinatario = "support@fitExtreme.it";
-
-    const body =
-        "Messaggio inviato da: " + nome + " (" + email + ")\n\n" +
-        messaggio;
-
-    const mailtoLink =
-        "mailto:" + destinatario +
-        "?subject=" + encodeURIComponent(oggetto) +
-        "&body=" + encodeURIComponent(body);
-
-    // Apre il client email
-    window.location.href = mailtoLink;
-
-    // Dopo 1 secondo, redirect alla pagina di conferma
-    setTimeout(() => {
-        window.location.href = "<%= request.getContextPath() %>/contatti-success.jsp";
-    }, 800);
+    // Reset del form
+    event.target.reset();
 }
 </script>
-
 
 <jsp:include page="/footer.jsp" />
 

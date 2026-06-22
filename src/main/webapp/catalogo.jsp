@@ -6,6 +6,7 @@
 	<head>
 	<meta charset="UTF-8">
 	<title>Catalogo | FitExtreme</title>
+	 <jsp:include page="/head.jsp" />
 	
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/base.css">
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/header.css">

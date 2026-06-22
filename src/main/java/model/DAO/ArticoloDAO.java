@@ -22,6 +22,18 @@
 	            throw new RuntimeException(e);
 	        }
 	    }
+	    
+	    public Collection<Articolo> doRetrieveHomeList(int limit) throws SQLException {
+	        String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY RAND() LIMIT ?";
+	        Collection<Articolo> lista = new ArrayList<>();
+	        try (Connection conn = ds.getConnection();
+	             PreparedStatement ps = conn.prepareStatement(query)) {
+	            ps.setInt(1, limit);
+	            ResultSet rs = ps.executeQuery();
+	            while (rs.next()) lista.add(extractArticolo(rs));
+	        }
+	        return lista;
+	    }
 	
 	    @Override
 	    public Articolo doRetrieveByKey(Integer pk) throws SQLException {
