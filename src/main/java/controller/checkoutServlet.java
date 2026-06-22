@@ -40,13 +40,23 @@ public class checkoutServlet extends HttpServlet {
 
         HttpSession sessione = request.getSession(false);
 
-        // 🔒 Utente non loggato
+        // Utente non loggato
+       
         if (sessione == null || sessione.getAttribute("utente") == null) {
+            
+            sessione = request.getSession(true);
+
+            
+            String redirectUrl = request.getContextPath() + "/checkout";
+            sessione.setAttribute("redirectAfterLogin", redirectUrl);
+
+            
+            sessione.setAttribute("infoMessage", "Effettua il login per completare il pagamento");
+
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
-
-        // 🔒 Carrello vuoto
+        //  Carrello vuoto
         Map<Integer, Integer> carrello =
                 (Map<Integer, Integer>) sessione.getAttribute("carrello");
 
@@ -65,7 +75,7 @@ public class checkoutServlet extends HttpServlet {
             List<Articolo> prodotti = new ArrayList<>();
             BigDecimal totale = BigDecimal.ZERO;
 
-            // 🔥 Calcolo totale prodotti
+            //  Calcolo totale prodotti
             for (Map.Entry<Integer, Integer> entry : carrello.entrySet()) {
                 int idArticolo = entry.getKey();
                 int qta = entry.getValue();
