@@ -130,6 +130,27 @@
     <div class="total-box fade-in">
         Totale ordine (IVA inclusa): € <%= totale %>
     </div>
+    
+    <!-- VISUALIZZA FATTURA -->
+<!-- VISUALIZZA FATTURA -->
+<a href="<%= request.getContextPath() %>/generaFattura"
+   onclick="event.preventDefault(); 
+            const f=document.createElement('form');
+            f.method='post';
+            f.action=this.href;
+            f.target='_blank';
+            const i=document.createElement('input');
+            i.type='hidden';
+            i.name='idOrdine';
+            i.value='<%= ordine.getIdOrdine() %>';
+            f.appendChild(i);
+            document.body.appendChild(f);
+            f.submit();"
+   class="btn-back fade-in">
+    Visualizza fattura 
+</a>
+
+    
 
     <!-- TORNA INDIETRO -->
     <a href="<%= request.getContextPath() %>/ordini" class="btn-back">
