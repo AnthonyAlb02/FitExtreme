@@ -1,4 +1,4 @@
--- DATABASE E-COMMERCE 
+-- DATABASE E-COMMERCE
 
 DROP DATABASE IF EXISTS ecommerce;
 CREATE DATABASE ecommerce;
@@ -9,23 +9,19 @@ USE ecommerce;
 -- ============================================================
 
 CREATE TABLE Utente (
-    ID_Utente INT AUTO_INCREMENT PRIMARY KEY,
-    Email VARCHAR(255) NOT NULL UNIQUE,
-    Data_Registrazione DATE NOT NULL,
-
-    Password_Hash VARCHAR(255),
-    Nome VARCHAR(100),
-    Cognome VARCHAR(100),
-    Telefono VARCHAR(30),
+    ID_Utente            INT AUTO_INCREMENT PRIMARY KEY,
+    Email                VARCHAR(255) NOT NULL UNIQUE,
+    Data_Registrazione   DATE         NOT NULL,
+    Password_Hash        VARCHAR(255),
+    Nome                 VARCHAR(100),
+    Cognome              VARCHAR(100),
+    Telefono             VARCHAR(30),
     Indirizzo_Spedizione VARCHAR(255),
-
-    Session_ID VARCHAR(255),
-    IP_Address VARCHAR(45),
-
-    Livello_Accesso INT,
-    Area_Competenza VARCHAR(255),
-
-    Ruolo ENUM('registrato','guest','admin') NOT NULL
+    Session_ID           VARCHAR(255),
+    IP_Address           VARCHAR(45),
+    Livello_Accesso      INT,
+    Area_Competenza      VARCHAR(255),
+    Ruolo                ENUM('registrato','guest','admin') NOT NULL
 );
 
 -- ============================================================
@@ -34,7 +30,7 @@ CREATE TABLE Utente (
 
 CREATE TABLE Categoria (
     ID_Categoria INT AUTO_INCREMENT PRIMARY KEY,
-    Nome VARCHAR(100) NOT NULL UNIQUE
+    Nome         VARCHAR(100) NOT NULL UNIQUE
 );
 
 -- ============================================================
@@ -42,13 +38,13 @@ CREATE TABLE Categoria (
 -- ============================================================
 
 CREATE TABLE Articolo (
-    ID_Articolo INT AUTO_INCREMENT PRIMARY KEY,
-    Nome_Articolo VARCHAR(255) NOT NULL,
-    Descrizione TEXT,
-    Prezzo_Listino DECIMAL(10,2) NOT NULL,
-    Qta_Disponibile INT NOT NULL,
-    ID_Categoria INT,
-    Immagine VARCHAR(255),
+    ID_Articolo     INT AUTO_INCREMENT PRIMARY KEY,
+    Nome_Articolo   VARCHAR(255)   NOT NULL,
+    Descrizione     TEXT,
+    Prezzo_Listino  DECIMAL(10,2)  NOT NULL,
+    Qta_Disponibile INT            NOT NULL,
+    ID_Categoria    INT,
+    Immagine        VARCHAR(255),
 
     FOREIGN KEY (ID_Categoria) REFERENCES Categoria(ID_Categoria)
         ON DELETE SET NULL
@@ -60,18 +56,15 @@ CREATE TABLE Articolo (
 -- ============================================================
 
 CREATE TABLE Recensione (
-    ID_Recensione INT AUTO_INCREMENT PRIMARY KEY,
-    ID_Utente INT NOT NULL,
-    ID_Articolo INT NOT NULL,
-    Voto TINYINT NOT NULL CHECK (Voto BETWEEN 1 AND 5),
-    Commento TEXT,
-    Data_Recensione DATE NOT NULL,
+    ID_Recensione   INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Utente       INT    NOT NULL,
+    ID_Articolo     INT    NOT NULL,
+    Voto            TINYINT NOT NULL CHECK (Voto BETWEEN 1 AND 5),
+    Commento        TEXT,
+    Data_Recensione DATE   NOT NULL,
 
-    FOREIGN KEY (ID_Utente) REFERENCES Utente(ID_Utente)
-        ON DELETE CASCADE,
-
-    FOREIGN KEY (ID_Articolo) REFERENCES Articolo(ID_Articolo)
-        ON DELETE CASCADE
+    FOREIGN KEY (ID_Utente)   REFERENCES Utente(ID_Utente)   ON DELETE CASCADE,
+    FOREIGN KEY (ID_Articolo) REFERENCES Articolo(ID_Articolo) ON DELETE CASCADE
 );
 
 -- ============================================================
@@ -79,18 +72,15 @@ CREATE TABLE Recensione (
 -- ============================================================
 
 CREATE TABLE Ordine (
-    ID_Ordine INT AUTO_INCREMENT PRIMARY KEY,
-    ID_Utente INT NOT NULL,
+    ID_Ordine         INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Utente         INT           NOT NULL,
     ID_Amministratore INT,
-    Data_Ordine DATE NOT NULL,
-    Stato_Avanzamento VARCHAR(50) NOT NULL,
-    Importo_Totale DECIMAL(10,2) NOT NULL,
+    Data_Ordine       DATE          NOT NULL,
+    Stato_Avanzamento VARCHAR(50)   NOT NULL,
+    Importo_Totale    DECIMAL(10,2) NOT NULL,
 
-    FOREIGN KEY (ID_Utente) REFERENCES Utente(ID_Utente)
-        ON DELETE CASCADE,
-
-    FOREIGN KEY (ID_Amministratore) REFERENCES Utente(ID_Utente)
-        ON DELETE SET NULL
+    FOREIGN KEY (ID_Utente)         REFERENCES Utente(ID_Utente) ON DELETE CASCADE,
+    FOREIGN KEY (ID_Amministratore) REFERENCES Utente(ID_Utente) ON DELETE SET NULL
 );
 
 -- ============================================================
@@ -98,21 +88,17 @@ CREATE TABLE Ordine (
 -- ============================================================
 
 CREATE TABLE Dettaglio_Ordine (
-    ID_Dettaglio INT AUTO_INCREMENT PRIMARY KEY,
-    ID_Ordine INT NOT NULL,
-    ID_Articolo INT NULL,
-    Quantita INT NOT NULL,
+    ID_Dettaglio    INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Ordine       INT           NOT NULL,
+    ID_Articolo     INT,                         -- nullable: articolo potrebbe essere eliminato
+    Nome_Articolo   VARCHAR(255),                -- nullable: popolato dalla servlet al momento dell'ordine
+    Immagine        VARCHAR(255),                -- nullable: stessa ragione
+    Quantita        INT           NOT NULL,
     Prezzo_Acquisto DECIMAL(10,2) NOT NULL,
-    Subtotale DECIMAL(10,2) NOT NULL,
+    Subtotale       DECIMAL(10,2) NOT NULL,
 
-    Nome_Articolo VARCHAR(255) NOT NULL,
-    Immagine VARCHAR(255),
-
-    FOREIGN KEY (ID_Ordine) REFERENCES Ordine(ID_Ordine)
-        ON DELETE CASCADE,
-
-    FOREIGN KEY (ID_Articolo) REFERENCES Articolo(ID_Articolo)
-        ON DELETE SET NULL
+    FOREIGN KEY (ID_Ordine)   REFERENCES Ordine(ID_Ordine)     ON DELETE CASCADE,
+    FOREIGN KEY (ID_Articolo) REFERENCES Articolo(ID_Articolo) ON DELETE SET NULL
 );
 
 -- ============================================================
@@ -120,13 +106,12 @@ CREATE TABLE Dettaglio_Ordine (
 -- ============================================================
 
 CREATE TABLE Fattura (
-    ID_Fattura INT AUTO_INCREMENT PRIMARY KEY,
-    ID_Ordine INT NOT NULL UNIQUE,
+    ID_Fattura     INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Ordine      INT         NOT NULL UNIQUE,
     Numero_Fattura VARCHAR(50) NOT NULL UNIQUE,
-    Data_Emissione DATE NOT NULL,
+    Data_Emissione DATE        NOT NULL,
 
-    FOREIGN KEY (ID_Ordine) REFERENCES Ordine(ID_Ordine)
-        ON DELETE CASCADE
+    FOREIGN KEY (ID_Ordine) REFERENCES Ordine(ID_Ordine) ON DELETE CASCADE
 );
 
 -- ============================================================
@@ -134,12 +119,11 @@ CREATE TABLE Fattura (
 -- ============================================================
 
 CREATE TABLE Pagamento (
-    ID_Pagamento INT AUTO_INCREMENT PRIMARY KEY,
-    ID_Ordine INT NOT NULL UNIQUE,
-    Data_Transazione DATE NOT NULL,
-    Metodo_Pagamento VARCHAR(50) NOT NULL,
-    Importo_Saldato DECIMAL(10,2) NOT NULL,
+    ID_Pagamento     INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Ordine        INT           NOT NULL UNIQUE,
+    Data_Transazione DATE          NOT NULL,
+    Metodo_Pagamento VARCHAR(50)   NOT NULL,
+    Importo_Saldato  DECIMAL(10,2) NOT NULL,
 
-    FOREIGN KEY (ID_Ordine) REFERENCES Ordine(ID_Ordine)
-        ON DELETE CASCADE
+    FOREIGN KEY (ID_Ordine) REFERENCES Ordine(ID_Ordine) ON DELETE CASCADE
 );
