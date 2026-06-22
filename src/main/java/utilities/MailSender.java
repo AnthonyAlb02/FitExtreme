@@ -6,8 +6,13 @@ import model.beans.Utente;
 
 import javax.mail.*;
 import javax.mail.internet.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
-import java.io.UnsupportedEncodingException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -19,12 +24,47 @@ public class MailSender {
     private static final String USERNAME = "fitextreme.noreply@gmail.com";
     private static final String PASSWORD = "lnlqrvkiriejhqrg";
 
+    /**
+     * Renderizza una JSP in una stringa HTML
+     */
+    private static String renderJSP(HttpServletRequest request, HttpServletResponse response, String jspPath)
+            throws Exception {
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+
+        HttpServletResponseWrapper fakeResponse = new HttpServletResponseWrapper(response) {
+            @Override
+            public PrintWriter getWriter() {
+                return writer;
+            }
+        };
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher(jspPath);
+        dispatcher.include(request, fakeResponse);
+
+        writer.flush();
+        return stringWriter.toString();
+    }
+
+    /**
+     * Invia la mail di conferma ordine usando la JSP come template
+     */
     public static void inviaConfermaOrdine(
+            HttpServletRequest request,
+            HttpServletResponse response,
             Utente utente,
             Ordine ordine,
             List<DettaglioOrdine> dettagli)
-            throws MessagingException, UnsupportedEncodingException {
+            throws Exception {
 
+        // La servlet DEVE aver già messo questi attributi:
+        // ordine, dettagli, utente, totale, iva, imponibile
+
+        // Renderizzo la JSP fattura_email.jsp (versione email-safe)
+    	String htmlFattura = renderJSP(request, response, "/fattura_email.jsp");
+
+        // Configurazione SMTP
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -38,99 +78,41 @@ public class MailSender {
             }
         });
 
-        String nomeUtente = (utente.getNome() != null && !utente.getNome().isBlank())
-                ? utente.getNome()
-                : utente.getEmail();
-
-        String riepilogoOrdine =
-                InvoiceTemplateBuilder.buildInvoiceHTML(
-                        ordine,
-                        dettagli,
-                        utente);
-
+        // Corpo email responsive e pulito
         String corpoMail =
                 "<!DOCTYPE html>" +
-                "<html>" +
-                "<head>" +
-                "<meta charset='UTF-8'>" +
-                "</head>" +
-                "<body style='font-family: Arial, Helvetica, sans-serif; background-color:#f5f5f5; margin:0; padding:20px;'>" +
+                "<html><head><meta charset='UTF-8'></head>" +
+                "<body style='font-family:Arial; background:#f5f5f5; padding:20px;'>" +
 
                 "<table width='100%' cellpadding='0' cellspacing='0'>" +
-                "<tr>" +
-                "<td align='center'>" +
+                "<tr><td align='center'>" +
 
-                "<table width='700' cellpadding='0' cellspacing='0' " +
-                "style='background:#ffffff; border-radius:8px; overflow:hidden;'>" +
+                "<table width='600' cellpadding='0' cellspacing='0' style='background:#fff; border-radius:8px;'>" +
 
-                "<tr>" +
-                "<td style='background:#111111; color:white; padding:25px; text-align:center;'>" +
+                "<tr><td style='background:#111; color:#fff; padding:20px; text-align:center;'>" +
                 "<h1 style='margin:0;'>FitExtreme</h1>" +
-                "</td>" +
-                "</tr>" +
+                "</td></tr>" +
 
-                "<tr>" +
-                "<td style='padding:30px;'>" +
+                "<tr><td style='padding:20px;'>" +
+                "<h2 style='color:#222;'>Grazie per il tuo ordine!</h2>" +
+                "<p>Ecco la tua fattura:</p>" +
+                htmlFattura +
+                "</td></tr>" +
 
-                "<h2 style='color:#222;'>Ordine ricevuto con successo!</h2>" +
-
-                "<p>Ciao <strong>" + nomeUtente + "</strong>,</p>" +
-
-                "<p>Grazie per aver scelto FitExtreme.</p>" +
-
-                "<p>Abbiamo ricevuto correttamente il tuo ordine <strong>#"
-                + ordine.getIdOrdine()
-                + "</strong> e il pagamento è stato registrato.</p>" +
-
-                "<p>Il nostro team inizierà a preparare la spedizione nel più breve tempo possibile.</p>" +
-
-                "<p>Riceverai ulteriori aggiornamenti non appena l'ordine verrà elaborato e spedito.</p>" +
-
-                "<hr style='margin:30px 0; border:none; border-top:1px solid #dddddd;'/>" +
-
-                riepilogoOrdine +
-
-                "<hr style='margin:30px 0; border:none; border-top:1px solid #dddddd;'/>" +
-
-                "<p style='font-size:14px; color:#666666;'>" +
-                "Per qualsiasi informazione o assistenza puoi rispondere a questa email." +
-                "</p>" +
-
-                "<p style='font-size:14px; color:#666666;'>" +
-                "Grazie per aver acquistato su FitExtreme." +
-                "</p>" +
-
-                "</td>" +
-                "</tr>" +
-
-                "<tr>" +
-                "<td style='background:#f3f3f3; padding:20px; text-align:center; font-size:12px; color:#777777;'>" +
+                "<tr><td style='background:#f3f3f3; padding:15px; text-align:center; font-size:12px; color:#777;'>" +
                 "© FitExtreme - Tutti i diritti riservati" +
-                "</td>" +
-                "</tr>" +
+                "</td></tr>" +
 
                 "</table>" +
+                "</td></tr></table>" +
 
-                "</td>" +
-                "</tr>" +
-                "</table>" +
-
-                "</body>" +
-                "</html>";
+                "</body></html>";
 
         Message msg = new MimeMessage(session);
-
         msg.setFrom(new InternetAddress(USERNAME, "FitExtreme"));
-
-        msg.setRecipient(
-                Message.RecipientType.TO,
-                new InternetAddress(utente.getEmail()));
-
-        msg.setSubject(
-                "Conferma ordine #" + ordine.getIdOrdine() + " - FitExtreme");
-
+        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(utente.getEmail()));
+        msg.setSubject("Conferma ordine #" + ordine.getIdOrdine());
         msg.setSentDate(new Date());
-
         msg.setContent(corpoMail, "text/html; charset=UTF-8");
 
         Transport.send(msg);

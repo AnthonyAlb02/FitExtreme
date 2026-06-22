@@ -13,11 +13,10 @@ import model.DAO.OrdineDAO;
 import model.beans.DettaglioOrdine;
 import model.beans.Ordine;
 import model.beans.Utente;
-import utilities.InvoiceService;
+
 
 @WebServlet("/ordineCompletato")
 public class ordineCompletatoServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,45 +27,11 @@ public class ordineCompletatoServlet extends HttpServlet {
             return;
         }
 
-        int idOrdine = Integer.parseInt(id);
-
-        // Recupero dati ordine
-        OrdineDAO ordineDAO = new OrdineDAO();
-        DettaglioOrdineDAO dettaglioDAO = new DettaglioOrdineDAO();
-
-        Ordine ordine = null;
-		try {
-			ordine = ordineDAO.doRetrieveByKey(idOrdine);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        List<DettaglioOrdine> dettagli = null;
-		try {
-			dettagli = dettaglioDAO.doRetrieveByOrdine(idOrdine);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-        Utente utente = (Utente) request.getSession().getAttribute("utente");
-
-        // ⭐ GENERAZIONE FATTURA QUI (punto giusto)
-     // ⭐ CHIAMO LA SERVLET CHE GENERA LA FATTURA
-        request.setAttribute("ordine", ordine);
-        request.setAttribute("dettagli", dettagli);
-        request.setAttribute("utente", utente);
-
-        // Chiamata interna alla servlet generaFattura
-        request.getRequestDispatcher("/generaFattura?idOrdine=" + idOrdine)
-               .include(request, response);
-
-
-        request.setAttribute("idOrdine", idOrdine);
+        // Passa solo l'id alla JSP, nient'altro
+        request.setAttribute("idOrdine", id);
 
         RequestDispatcher dispatcher =
                 getServletContext().getRequestDispatcher("/ordineCompletato.jsp");
         dispatcher.forward(request, response);
     }
 }
-

@@ -2,7 +2,10 @@ package controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +24,6 @@ import model.beans.Ordine;
 import model.beans.DettaglioOrdine;
 import model.beans.Utente;
 import utilities.MailSender;
-import utilities.InvoiceTemplateBuilder;
-
 
 @WebServlet("/confermaOrdine")
 public class confermaOrdineServlet extends HttpServlet {
@@ -42,16 +43,14 @@ public class confermaOrdineServlet extends HttpServlet {
 
         HttpSession sessione = request.getSession(false);
 
-        // Utente non loggato
         if (sessione == null || sessione.getAttribute("utente") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        Utente utente  = (Utente) sessione.getAttribute("utente");
-        int    idUtente = utente.getIdUtente();
+        Utente utente = (Utente) sessione.getAttribute("utente");
+        int idUtente = utente.getIdUtente();
 
-        // Carrello vuoto
         Map<Integer, Integer> carrello =
                 (Map<Integer, Integer>) sessione.getAttribute("carrello");
 
@@ -60,7 +59,7 @@ public class confermaOrdineServlet extends HttpServlet {
             return;
         }
 
-        // Validazione dati carta
+        // Validazione carta
         String nomeCarta   = request.getParameter("nomeCarta");
         String numeroCarta = request.getParameter("numeroCarta");
         String scadenza    = request.getParameter("scadenza");
@@ -76,18 +75,27 @@ public class confermaOrdineServlet extends HttpServlet {
         }
 
         try {
-            ArticoloDAO      articoloDAO  = new ArticoloDAO();
-            OrdineDAO        ordineDAO    = new OrdineDAO();
+            ArticoloDAO articoloDAO = new ArticoloDAO();
+            OrdineDAO ordineDAO = new OrdineDAO();
             DettaglioOrdineDAO dettaglioDAO = new DettaglioOrdineDAO();
 
             // Calcolo totale
             BigDecimal totale = BigDecimal.ZERO;
 
             for (Map.Entry<Integer, Integer> entry : carrello.entrySet()) {
-                Articolo a  = articoloDAO.doRetrieveByKey(entry.getKey());
-                int      qta = entry.getValue();
+                Articolo a = articoloDAO.doRetrieveByKey(entry.getKey());
+                int qta = entry.getValue();
                 totale = totale.add(a.getPrezzoListino().multiply(new BigDecimal(qta)));
             }
+
+            // Calcolo imponibile e IVA
+            BigDecimal iva = totale.multiply(new BigDecimal("22"))
+                                   .divide(new BigDecimal("122"), 2, RoundingMode.HALF_UP);
+
+            BigDecimal imponibile = totale.subtract(iva);
+
+            // Data formattata
+            String dataFormattata = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
             // Salvo ordine
             Ordine ordine = new Ordine();
@@ -98,12 +106,13 @@ public class confermaOrdineServlet extends HttpServlet {
             ordine.setImportoTotale(totale);
 
             int idOrdine = ordineDAO.doSaveAndReturnKey(ordine);
+            ordine.setIdOrdine(idOrdine);
 
             // Salvo dettagli e aggiorno quantità
             for (Map.Entry<Integer, Integer> entry : carrello.entrySet()) {
-                int      idArticolo = entry.getKey();
-                int      qta        = entry.getValue();
-                Articolo a          = articoloDAO.doRetrieveByKey(idArticolo);
+                int idArticolo = entry.getKey();
+                int qta = entry.getValue();
+                Articolo a = articoloDAO.doRetrieveByKey(idArticolo);
 
                 DettaglioOrdine dett = new DettaglioOrdine();
                 dett.setIdOrdine(idOrdine);
@@ -124,22 +133,27 @@ public class confermaOrdineServlet extends HttpServlet {
             sessione.removeAttribute("carrello");
             sessione.setAttribute("cartCount", 0);
 
-            // Invio email di conferma (fallisce in silenzio)
-         // Invio email di conferma (fallisce in silenzio)
+            // Recupero dettagli ordine per la mail
+            List<DettaglioOrdine> dettagliMail = dettaglioDAO.doRetrieveByOrdine(idOrdine);
+
+            // 🔥 PASSO TUTTO ALLA REQUEST PER LA JSP EMAIL
+            request.setAttribute("ordine", ordine);
+            request.setAttribute("utente", utente);
+            request.setAttribute("dettagli", dettagliMail);
+
+            request.setAttribute("totale", totale);
+            request.setAttribute("iva", iva);
+            request.setAttribute("imponibile", imponibile);
+            request.setAttribute("dataFormattata", dataFormattata);
+
+            // Invio email
             try {
-                // Recupero dettagli ordine appena salvati
-                List<DettaglioOrdine> dettagliMail = dettaglioDAO.doRetrieveByOrdine(idOrdine);
-
-                // Ricostruisco l'oggetto ordine con l'ID generato
-                ordine.setIdOrdine(idOrdine);
-
-                MailSender.inviaConfermaOrdine(utente, ordine, dettagliMail);
-
+                MailSender.inviaConfermaOrdine(request, response, utente, ordine, dettagliMail);
             } catch (Exception mailEx) {
                 mailEx.printStackTrace();
             }
 
-            // Redirect alla pagina di conferma
+            // Redirect finale
             response.sendRedirect(request.getContextPath() + "/ordineCompletato?id=" + idOrdine);
 
         } catch (Exception e) {

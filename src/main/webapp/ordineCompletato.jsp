@@ -63,8 +63,12 @@
 		<p>La ricevuta è stata inviata alla tua email.</p>
 
 		<!-- ⭐ BOTTONE PER GENERARE E VISUALIZZARE LA FATTURA -->
-		<button id="btnFattura" class="btn-primary">Visualizza
-			fattura</button>
+		<!-- Sostituisci il button e tutto lo script del btnFattura con questo -->
+<a href="<%= request.getContextPath() %>/generaFattura?idOrdine=<%= request.getAttribute("idOrdine") %>"
+   target="_blank"
+   class="btn-primary">
+    Visualizza fattura
+</a>
 
 		<br>
 		<br> <a href="<%= request.getContextPath() %>/catalogo"
@@ -73,28 +77,7 @@
 
 	<jsp:include page="/footer.jsp" />
 
-	<script>
-document.getElementById("btnFattura").addEventListener("click", async () => {
 
-    const idOrdine = "<%= request.getAttribute("idOrdine") %>";
-
-    const res = await fetch("<%= request.getContextPath() %>/generaFattura", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "idOrdine=" + idOrdine
-    });
-
-    if (!res.ok) {
-        alert("Errore durante la generazione della fattura.");
-        return;
-    }
-
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-
-    window.open(url, "_blank");
-});
-</script>
 	<script>
 document.addEventListener("DOMContentLoaded", () => {
     const badge = document.getElementById("cart-count");

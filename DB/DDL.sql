@@ -101,18 +101,9 @@ CREATE TABLE Dettaglio_Ordine (
     FOREIGN KEY (ID_Articolo) REFERENCES Articolo(ID_Articolo) ON DELETE SET NULL
 );
 
--- ============================================================
--- TABELLA FATTURA
--- ============================================================
 
-CREATE TABLE Fattura (
-    ID_Fattura     INT AUTO_INCREMENT PRIMARY KEY,
-    ID_Ordine      INT         NOT NULL UNIQUE,
-    Numero_Fattura VARCHAR(50) NOT NULL UNIQUE,
-    Data_Emissione DATE        NOT NULL,
 
-    FOREIGN KEY (ID_Ordine) REFERENCES Ordine(ID_Ordine) ON DELETE CASCADE
-);
+
 
 -- ============================================================
 -- TABELLA PAGAMENTO

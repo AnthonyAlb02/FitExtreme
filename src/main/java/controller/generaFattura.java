@@ -1,78 +1,94 @@
 package controller;
 
+import model.DAO.OrdineDAO;
+import model.DAO.DettaglioOrdineDAO;
+import model.DAO.UtenteDAO;
+import model.beans.Ordine;
+import model.beans.DettaglioOrdine;
+import model.beans.Utente;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
-
-import model.DAO.DettaglioOrdineDAO;
-import model.DAO.OrdineDAO;
-import model.DAO.UtenteDAO;
-import model.beans.DettaglioOrdine;
-import model.beans.Ordine;
-import model.beans.Utente;
-import utilities.InvoiceService;
-
 @WebServlet("/generaFattura")
 public class generaFattura extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        String id = request.getParameter("idOrdine");
-        System.out.println("ID ORDINE RICEVUTO = " + id);
+        HttpSession session = request.getSession(false);
 
-        if (id == null) {
-            System.out.println("ERRORE: idOrdine è null");
-            response.setStatus(400);
+        // Controllo sessione
+        if (session == null || session.getAttribute("utente") == null) {
+            response.sendRedirect("login");
             return;
         }
 
-        int idOrdine = Integer.parseInt(id);
+        // Recupero idOrdine dal parametro o dalla sessione
+        String idOrdineParam = request.getParameter("idOrdine");
 
-        OrdineDAO ordineDAO = new OrdineDAO();
-        DettaglioOrdineDAO dettaglioDAO = new DettaglioOrdineDAO();
-        UtenteDAO utenteDAO = new UtenteDAO();
+        if (idOrdineParam == null) {
+            Object last = session.getAttribute("lastOrderId");
+            if (last != null) {
+                idOrdineParam = String.valueOf(last);
+            } else {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                return;
+            }
+        }
 
         try {
+            int idOrdine = Integer.parseInt(idOrdineParam);
+
+            // Salvo l'ultimo ordine per permettere il refresh
+            session.setAttribute("lastOrderId", idOrdine);
+
+            OrdineDAO ordineDAO = new OrdineDAO();
+            DettaglioOrdineDAO dettaglioDAO = new DettaglioOrdineDAO();
+            UtenteDAO utenteDAO = new UtenteDAO();
+
             Ordine ordine = ordineDAO.doRetrieveByKey(idOrdine);
-            System.out.println("ORDINE = " + ordine);
-
             List<DettaglioOrdine> dettagli = dettaglioDAO.doRetrieveByOrdine(idOrdine);
-            System.out.println("DETTAGLI = " + dettagli);
+            Utente utente = (Utente) session.getAttribute("utente");
 
-            // Recupero utente
-            Utente utente = (Utente) request.getSession().getAttribute("utente");
-            if (utente == null) {
-                utente = utenteDAO.doRetrieveByKey(ordine.getIdUtente());
+            // Calcolo totali
+            BigDecimal totale = BigDecimal.ZERO;
+            for (DettaglioOrdine d : dettagli) {
+                totale = totale.add(d.getSubtotale());
             }
 
-            // ⭐ Calcolo IVA scorporata dal totale
-            BigDecimal totale = ordine.getImportoTotale();
             BigDecimal iva = totale
                     .multiply(new BigDecimal("22"))
                     .divide(new BigDecimal("122"), 2, RoundingMode.HALF_UP);
 
-            // ⭐ Passo l’IVA alla JSP della fattura
+            BigDecimal imponibile = totale.subtract(iva);
+
+            // Passo i dati alla JSP
+            request.setAttribute("ordine", ordine);
+            request.setAttribute("dettagli", dettagli);
+            request.setAttribute("utente", utente);
+            request.setAttribute("totale", totale);
             request.setAttribute("iva", iva);
+            request.setAttribute("imponibile", imponibile);
 
-            // Genero PDF
-            byte[] pdfBytes = InvoiceService.generateInvoicePDFBytes(ordine, dettagli, utente);
-            System.out.println("PDF GENERATO, SIZE = " + pdfBytes.length);
-
-            response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "inline; filename=fattura_" + idOrdine + ".pdf");
-            response.getOutputStream().write(pdfBytes);
+            RequestDispatcher rd = request.getRequestDispatcher("fattura.jsp");
+            rd.forward(request, response);
 
         } catch (Exception e) {
-            System.out.println("ERRORE DURANTE GENERAZIONE FATTURA:");
             e.printStackTrace();
-            response.setStatus(500);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
     }
 }

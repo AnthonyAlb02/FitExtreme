@@ -132,13 +132,8 @@ VALUES
 (2, 7, 1, 29.99, 29.99);
 
 
--- ===================== FATTURE =====================
 
-INSERT INTO Fattura
-(ID_Ordine, Numero_Fattura, Data_Emissione)
-VALUES
-(1, 'FT-2026-001', CURDATE()),
-(2, 'FT-2026-002', CURDATE());
+
 
 
 -- ===================== PAGAMENTI =====================
