@@ -1,17 +1,60 @@
-// Controllo password live
-const pass = document.getElementById("password");
-const confirm = document.getElementById("confirm");
-const passCheck = document.getElementById("pass-check");
+(function() {
+  var pwd = document.getElementById('password');
+  var conf = document.getElementById('confirm');
+  var passCheck = document.getElementById('pass-check');
 
-confirm.addEventListener("input", () => {
-    if (pass.value !== confirm.value) {
-        passCheck.textContent = "Le password non coincidono";
-        passCheck.style.color = "red";
-    } else {
-        passCheck.textContent = "Password ok";
-        passCheck.style.color = "green";
+  var pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
+
+  function updatePasswordValidity() {
+    var value = pwd.value || '';
+    var confValue = conf.value || '';
+
+    if (value.length === 0 && confValue.length === 0) {
+      passCheck.textContent = '';
+      pwd.setCustomValidity('');
+      return false;
     }
-});
+
+    if (!pwdRegex.test(value)) {
+      passCheck.textContent = "La password deve avere almeno 8 caratteri, una maiuscola, una minuscola, un numero e un carattere speciale.";
+      passCheck.style.color = "red";
+      pwd.setCustomValidity("Password non valida");
+      return false;
+    }
+
+    if (confValue.length > 0 && value !== confValue) {
+      passCheck.textContent = "Le password non corrispondono.";
+      passCheck.style.color = "red";
+      pwd.setCustomValidity("Le password non corrispondono");
+      return false;
+    }
+
+    passCheck.textContent = "Password valida.";
+    passCheck.style.color = "green";
+    pwd.setCustomValidity('');
+    return true;
+  }
+
+  pwd.addEventListener('input', updatePasswordValidity);
+  conf.addEventListener('input', updatePasswordValidity);
+
+  pwd.addEventListener('blur', updatePasswordValidity);
+  conf.addEventListener('blur', updatePasswordValidity);
+
+  var form = document.querySelector('form.auth-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      var ok = updatePasswordValidity();
+      if (!ok) {
+        e.preventDefault();
+        pwd.focus();
+        if (typeof pwd.reportValidity === 'function') pwd.reportValidity();
+      }
+    });
+  }
+})();
+
+
 
 // Controllo email AJAX
 const email = document.getElementById("email");

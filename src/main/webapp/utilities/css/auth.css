@@ -1,125 +1,121 @@
-/* ============================
-   CONTAINER PRINCIPALE
-============================ */
 .auth-container {
-	width: 420px;
-	margin: 60px auto;
-	padding: 40px 35px;
-	background: #ffffff;
-	border-radius: 18px;
-	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-	animation: fadeIn 0.4s ease-out;
-	text-align: center;
+    width: 420px;
+    margin: 60px auto;
+    padding: 40px 35px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.4s ease-out;
+    text-align: center;
 }
 
 .auth-container h1 {
-	font-size: 28px;
-	font-weight: 700;
-	margin-bottom: 25px;
-	color: #222;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #222;
 }
 
-/* ============================
-   FORM
-============================ */
 .auth-form {
-	display: flex;
-	flex-direction: column;
-	gap: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
 }
 
 .auth-form label {
-	text-align: left;
-	font-weight: 600;
-	color: #333;
-	margin-bottom: -10px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
 }
 
 .auth-form input {
-	padding: 12px 14px;
-	border: 2px solid #e6e6e6;
-	border-radius: 10px;
-	font-size: 15px;
-	transition: all 0.25s ease;
-	background: #fafafa;
+    padding: 12px 14px;
+    border: 2px solid #e6e6e6;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.25s ease;
+    background: #fafafa;
+    box-sizing: border-box;
 }
 
 .auth-form input:focus {
-	border-color: #FFC266;
-	box-shadow: 0 0 0 3px rgba(255, 194, 102, 0.35);
-	outline: none;
-	background: #fff;
+    border-color: #FFC266;
+    box-shadow: 0 0 0 3px rgba(255, 194, 102, 0.35);
+    outline: none;
+    background: #fff;
 }
 
-/* ============================
-   MESSAGGI DI ERRORE / CHECK
-============================ */
 .auth-error {
-	background: #ffe0e0;
-	color: #b30000;
-	padding: 10px 15px;
-	border-radius: 8px;
-	margin-bottom: 15px;
-	font-weight: 600;
+    background: #ffe0e0;
+    color: #b30000;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: 600;
 }
 
 .auth-check {
-	font-size: 14px;
-	margin-top: -10px;
-	text-align: left;
-	height: 18px;
+    font-size: 14px;
+    margin-top: 6px;
+    text-align: left;
+    min-height: 18px;
+    display: block;
+    line-height: 1.2;
 }
 
-/* ============================
-   BOTTONE
-============================ */
 .auth-btn {
-	margin-top: 10px;
-	padding: 12px;
-	background: #FFC266; /* Colore primario */
-	border: none;
-	border-radius: 10px;
-	color: #111; /* Testo scuro per contrasto */
-	font-size: 17px;
-	font-weight: 700;
-	cursor: pointer;
-	transition: 0.25s ease;
+    margin-top: 10px;
+    padding: 12px;
+    background: #FFC266;
+    border: none;
+    border-radius: 10px;
+    color: #111;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s ease;
 }
 
 .auth-btn:hover {
-	background: #e6a957; /* versione più scura */
-	transform: translateY(-2px);
-	box-shadow: 0 6px 18px rgba(255, 194, 102, 0.35);
+    background: #e6a957;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 194, 102, 0.35);
 }
 
-/* ============================
-   LINK CAMBIO PAGINA
-============================ */
 .auth-switch {
-	margin-top: 20px;
-	font-size: 15px;
+    margin-top: 20px;
+    font-size: 15px;
 }
 
 .auth-switch a {
-	color: #FFC266;
-	font-weight: 600;
-	text-decoration: none;
+    color: #FFC266;
+    font-weight: 600;
+    text-decoration: none;
 }
 
 .auth-switch a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
-/* ============================
-   ANIMAZIONE
-============================ */
-@
-keyframes fadeIn {from { opacity:0;
-	transform: translateY(10px);
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-to {
-	opacity: 1;
-	transform: translateY(0);
-}
+@media (max-width: 480px) {
+    .auth-container {
+        width: calc(100% - 40px);
+        margin: 30px auto;
+        padding: 28px 20px;
+    }
+    .auth-check {
+        margin-bottom: 14px;
+    }
 }

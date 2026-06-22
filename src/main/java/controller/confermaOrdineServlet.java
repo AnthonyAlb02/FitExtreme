@@ -2,8 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -20,6 +20,9 @@ import model.beans.Articolo;
 import model.beans.Ordine;
 import model.beans.DettaglioOrdine;
 import model.beans.Utente;
+import utilities.MailSender;
+import utilities.InvoiceTemplateBuilder;
+
 
 @WebServlet("/confermaOrdine")
 public class confermaOrdineServlet extends HttpServlet {
@@ -45,11 +48,10 @@ public class confermaOrdineServlet extends HttpServlet {
             return;
         }
 
-        // Recupero utente e ID corretto
-        Utente utente = (Utente) sessione.getAttribute("utente");
-        int idUtente = utente.getIdUtente();   // ⭐ ID corretto
+        Utente utente  = (Utente) sessione.getAttribute("utente");
+        int    idUtente = utente.getIdUtente();
 
-        // Recupero carrello
+        // Carrello vuoto
         Map<Integer, Integer> carrello =
                 (Map<Integer, Integer>) sessione.getAttribute("carrello");
 
@@ -59,37 +61,35 @@ public class confermaOrdineServlet extends HttpServlet {
         }
 
         // Validazione dati carta
-        String nomeCarta = request.getParameter("nomeCarta");
+        String nomeCarta   = request.getParameter("nomeCarta");
         String numeroCarta = request.getParameter("numeroCarta");
-        String scadenza = request.getParameter("scadenza");
-        String cvv = request.getParameter("cvv");
+        String scadenza    = request.getParameter("scadenza");
+        String cvv         = request.getParameter("cvv");
 
-        if (nomeCarta == null || nomeCarta.isBlank() ||
-            numeroCarta == null || !numeroCarta.matches("[0-9]{16}") ||
-            scadenza == null || !scadenza.matches("(0[1-9]|1[0-2])/[0-9]{2}") ||
-            cvv == null || !cvv.matches("[0-9]{3}")) {
+        if (nomeCarta   == null || nomeCarta.isBlank()                        ||
+            numeroCarta == null || !numeroCarta.matches("[0-9]{16}")           ||
+            scadenza    == null || !scadenza.matches("(0[1-9]|1[0-2])/[0-9]{2}") ||
+            cvv         == null || !cvv.matches("[0-9]{3}")) {
 
             response.sendRedirect(request.getContextPath() + "/confermaOrdine?errore=campi");
             return;
         }
 
         try {
-            ArticoloDAO articoloDAO = new ArticoloDAO();
-            OrdineDAO ordineDAO = new OrdineDAO();
+            ArticoloDAO      articoloDAO  = new ArticoloDAO();
+            OrdineDAO        ordineDAO    = new OrdineDAO();
             DettaglioOrdineDAO dettaglioDAO = new DettaglioOrdineDAO();
 
-            // Calcolo totale ordine
+            // Calcolo totale
             BigDecimal totale = BigDecimal.ZERO;
 
             for (Map.Entry<Integer, Integer> entry : carrello.entrySet()) {
-                Articolo a = articoloDAO.doRetrieveByKey(entry.getKey());
-                int qta = entry.getValue();
-
-                BigDecimal subtotale = a.getPrezzoListino().multiply(new BigDecimal(qta));
-                totale = totale.add(subtotale);
+                Articolo a  = articoloDAO.doRetrieveByKey(entry.getKey());
+                int      qta = entry.getValue();
+                totale = totale.add(a.getPrezzoListino().multiply(new BigDecimal(qta)));
             }
 
-            // Creo ordine
+            // Salvo ordine
             Ordine ordine = new Ordine();
             ordine.setIdUtente(idUtente);
             ordine.setIdAmministratore(null);
@@ -99,12 +99,11 @@ public class confermaOrdineServlet extends HttpServlet {
 
             int idOrdine = ordineDAO.doSaveAndReturnKey(ordine);
 
-            // Creo dettagli ordine
+            // Salvo dettagli e aggiorno quantità
             for (Map.Entry<Integer, Integer> entry : carrello.entrySet()) {
-                int idArticolo = entry.getKey();
-                int qta = entry.getValue();
-
-                Articolo a = articoloDAO.doRetrieveByKey(idArticolo);
+                int      idArticolo = entry.getKey();
+                int      qta        = entry.getValue();
+                Articolo a          = articoloDAO.doRetrieveByKey(idArticolo);
 
                 DettaglioOrdine dett = new DettaglioOrdine();
                 dett.setIdOrdine(idOrdine);
@@ -117,7 +116,6 @@ public class confermaOrdineServlet extends HttpServlet {
 
                 dettaglioDAO.doSave(dett);
 
-                // Aggiorno quantità disponibile
                 a.setQtaDisponibile(a.getQtaDisponibile() - qta);
                 articoloDAO.doUpdate(a);
             }
@@ -126,15 +124,27 @@ public class confermaOrdineServlet extends HttpServlet {
             sessione.removeAttribute("carrello");
             sessione.setAttribute("cartCount", 0);
 
-            // Redirect finale
+            // Invio email di conferma (fallisce in silenzio)
+         // Invio email di conferma (fallisce in silenzio)
+            try {
+                // Recupero dettagli ordine appena salvati
+                List<DettaglioOrdine> dettagliMail = dettaglioDAO.doRetrieveByOrdine(idOrdine);
+
+                // Ricostruisco l'oggetto ordine con l'ID generato
+                ordine.setIdOrdine(idOrdine);
+
+                MailSender.inviaConfermaOrdine(utente, ordine, dettagliMail);
+
+            } catch (Exception mailEx) {
+                mailEx.printStackTrace();
+            }
+
+            // Redirect alla pagina di conferma
             response.sendRedirect(request.getContextPath() + "/ordineCompletato?id=" + idOrdine);
 
-        }catch (Exception e) {
-
+        } catch (Exception e) {
             e.printStackTrace();
-
             response.setContentType("text/plain");
-
             response.getWriter().println("ERRORE:");
             response.getWriter().println(e.getClass().getName());
             response.getWriter().println(e.getMessage());
