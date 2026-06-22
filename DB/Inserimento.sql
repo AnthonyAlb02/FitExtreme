@@ -16,12 +16,13 @@ INSERT INTO Utente
  Indirizzo_Spedizione, Session_ID, IP_Address, Livello_Accesso,
  Area_Competenza, Ruolo)
 VALUES
+
 ('mario.rossi@example.com', CURDATE(),
- 'c9f0f895fb98ab9159f51fd0297e236d', 'Mario', 'Rossi', '3331234567',
+ SHA2('password123', 256), 'Mario', 'Rossi', '3331234567',
  'Via Roma 10, Napoli', NULL, NULL, NULL, NULL, 'registrato'),
 
 ('luca.bianchi@example.com', CURDATE(),
- 'hash456', 'Luca', 'Bianchi', '3339876543',
+ SHA2('password456', 256), 'Luca', 'Bianchi', '3339876543',
  'Via Milano 22, Salerno', NULL, NULL, NULL, NULL, 'registrato'),
 
 ('guest1@example.com', CURDATE(),
@@ -29,8 +30,12 @@ VALUES
  NULL, 'SESSION123', '192.168.1.10', NULL, NULL, 'guest'),
 
 ('admin@example.com', CURDATE(),
- '0f3f2f4f4c6f4d2f8b8c3f3d9b5e4c6a', 'Admin', 'Master', '3330001111',
- 'Via Università 1, Fisciano', NULL, NULL, 10, 'Gestione Sistema', 'admin');
+ SHA2('AdminMaster1234_', 256), 'Admin', 'Master', '3330001111',
+ 'Via Università 1, Fisciano', NULL, NULL, 10, 'Gestione Sistema', 'admin'),
+
+('admin.master@fitextreme.it', CURDATE(),
+ SHA2('AdminMaster1234_', 256), 'Admin', 'Master', '0000000000',
+ 'Sistema', NULL, NULL, 10, 'Gestione Sistema', 'admin');
 
 
 -- ===================== ARTICOLI =====================
