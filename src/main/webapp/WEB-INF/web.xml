@@ -16,7 +16,7 @@
 
     <!-- Pagina iniziale -->
     <welcome-file-list>
-        <welcome-file>home</welcome-file>
+        <welcome-file>home.jsp</welcome-file>
     </welcome-file-list>
 
     <!-- Error pages -->
