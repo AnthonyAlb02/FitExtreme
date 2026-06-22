@@ -47,6 +47,26 @@ VALUES
 ('Manubri 5kg',                  'Coppia di manubri da 5kg',                29.99, 25, 3, '5chili.png'),
 ('Elastici Fitness Set',         'Set di elastici con diverse resistenze',  22.99, 50, 3, 'elastici.png'),
 ('Tappetino Yoga',               'Tappetino antiscivolo 180x60cm',          19.99, 40, 3, 'tappetino.png');
+('Proteine idrolizzate (cocco)', 'Proteine idrolizzate gusto cocco',          69.99, 40, 4, 'cocco.png');
+('Barretta proteica ai cereali',  'Barretta proteica multicereali',          0.99, 40, 4, 'barretta.png');
+
+('Corde per Saltare Professionali', 'Corda speed rope con cuscinetti a sfera', 12.99, 65, 2, 'corde.png'),
+('Foam Roller 45cm', 'Rullo in schiuma ad alta densità per recupero muscolare', 24.99, 35, 3, 'foam.png'),
+('Shaker Proteine 600ml', 'Shaker BPA-free con scomporto pillole', 8.99, 100, 2, 'shaker.png'),
+('Ginocchiere Compressione', 'Ginocchiere elastiche rinforzate coppia', 19.99, 55, 1, 'ginocchiere.png'),
+('Polsiere Sollevamento', 'Polsiere imbottite con chiusura velcro', 11.99, 70, 1, 'polsiere.png'),
+('Kettlebell 8kg', 'Kettlebell in ghisa con rivestimento in gomma', 34.99, 20, 3, 'kettlebell.png'),
+('Zaino Sportivo 30L', 'Zaino impermeabile con scomparto scarpe', 39.99, 45, 2, 'zaino.png'),
+('Fasce Sudore Testa', 'Set 3 fasce elastiche assorbenti', 7.99, 90, 2, 'fasce.png'),
+('Palla Medica 5kg', 'Palla medica in pelle sintetica antiscivolo', 27.99, 30, 3, 'palla.png'),
+('Calze Compressione Sport', 'Calze tecniche compressive coppia', 15.99, 75, 1, 'calze.png'),
+('Smartwatch Fitness Tracker', 'Smartwatch con cardiofrequenzimetro e GPS', 89.99, 25, 2, 'smartwatch.png'),
+('Tappetino Meditazione', 'Tappetino extra spesso 183x61cm', 29.99, 35, 3, 'meditazione.png'),
+('BCAA Aminoacidi', 'Integratore aminoacidi ramificati gusto limone', 24.99, 60, 4, 'bcaa.png'),
+('Pre-Workout Energy', 'Integratore pre-workout gusto frutta tropicale', 32.99, 45, 4, 'preworkout.png');
+
+
+
 
 
 -- ===================== RECENSIONI =====================
