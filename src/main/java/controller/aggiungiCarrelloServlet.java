@@ -53,7 +53,7 @@ public class aggiungiCarrelloServlet extends HttpServlet {
                 return;
             }
 
-            // ✔ Aggiunta consentita
+            // Aggiunta consentita
             carrello.put(idArticolo, qtaNelCarrello + 1);
 
             int totale = carrello.values().stream().mapToInt(Integer::intValue).sum();
