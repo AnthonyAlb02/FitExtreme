@@ -1,3 +1,5 @@
+/* ===================== PAYMENT PAGE ===================== */
+
 .payment-container {
     max-width: 1100px;
     margin: 40px auto;
@@ -13,56 +15,72 @@
     color: #222;
 }
 
+/* ── GRID ── */
 .payment-box {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
 }
 
-/* BOX GENERICI (coerenti con il resto del sito) */
-.payment-summary,
-.payment-form {
-    background: #ffffff;
+/* ── CARD BASE ── */
+.payment-form,
+.payment-summary {
+    background: #fff;
     padding: 25px;
     border-radius: 14px;
     border: 1px solid #e6e6e6;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-    transition: 0.25s;
+    transition: box-shadow 0.25s;
 }
 
-.payment-summary:hover,
-.payment-form:hover {
+.payment-form:hover,
+.payment-summary:hover {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
 }
 
-/* TITOLI BOX */
-.payment-summary h2,
-.payment-form h2 {
-    margin-bottom: 15px;
+.payment-form h2,
+.payment-summary h2 {
     font-size: 22px;
     font-weight: 700;
     color: #222;
+    margin-bottom: 20px;
 }
 
-/* RIEPILOGO */
-.summary-row {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 18px;
-    font-size: 18px;
+/* ── SEZIONI FORM ── */
+.form-section {
+    margin-bottom: 24px;
 }
 
-.totale {
+.section-title {
+    font-size: 15px;
     font-weight: 700;
-    color: #FFC266;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #f0f0f0;
 }
 
-/* FORM */
+/* ── CAMPI ── */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
 .payment-form label {
     font-weight: 600;
-    margin-top: 12px;
-    display: block;
+    font-size: 14px;
     color: #333;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    display: block;
 }
 
 .payment-form input {
@@ -70,9 +88,9 @@
     padding: 12px;
     border: 2px solid #e6e6e6;
     border-radius: 10px;
-    margin-top: 6px;
-    font-size: 16px;
-    transition: 0.25s;
+    font-size: 15px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    box-sizing: border-box;
 }
 
 .payment-form input:focus {
@@ -81,12 +99,72 @@
     outline: none;
 }
 
-.row {
+/* ── RIEPILOGO PRODOTTI ── */
+.summary-items {
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 4px;
 }
 
-/* BOTTONI COERENTI */
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 15px;
+}
+
+.summary-item-name {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    color: #333;
+}
+
+.summary-qty {
+    font-size: 13px;
+    color: #999;
+}
+
+.summary-item-price {
+    font-weight: 600;
+    white-space: nowrap;
+    color: #222;
+}
+
+/* ── TOTALI ── */
+.summary-totals {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    color: #444;
+}
+
+.summary-row.totale {
+    font-size: 18px;
+    font-weight: 700;
+    color: #FFC266;
+}
+
+.free-shipping {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+/* ── DIVISORI ── */
+.summary-divider {
+    border: none;
+    border-top: 1px solid #e6e6e6;
+    margin: 14px 0;
+}
+
+/* ── BOTTONE ── */
 .btn-primary {
     background: #FFC266;
     color: #000;
@@ -95,7 +173,9 @@
     font-weight: 700;
     border: none;
     cursor: pointer;
-    transition: 0.25s;
+    transition: background 0.25s;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .btn-primary:hover {
@@ -105,19 +185,35 @@
 .btn-large {
     width: 100%;
     font-size: 18px;
-    margin-top:15px;
+    margin-top: 20px;
+    text-align: center;
 }
 
+/* ── ERRORE ── */
+.error-box {
+    background: #fff0f0;
+    border: 1px solid #f5c6c6;
+    color: #c0392b;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
 
-/* RESPONSIVE */
+/* ── RESPONSIVE ── */
 @media (max-width: 768px) {
     .payment-box {
         grid-template-columns: 1fr;
     }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
 }
 
-/* ANIMAZIONE */
+/* ── ANIMAZIONE ── */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
 }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +20,7 @@ import model.beans.Articolo;
 
 @WebServlet("/checkout")
 public class checkoutServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     public checkoutServlet() {
@@ -41,76 +41,66 @@ public class checkoutServlet extends HttpServlet {
         HttpSession sessione = request.getSession(false);
 
         // Utente non loggato
-       
         if (sessione == null || sessione.getAttribute("utente") == null) {
-            
             sessione = request.getSession(true);
-
-            
-            String redirectUrl = request.getContextPath() + "/checkout";
-            sessione.setAttribute("redirectAfterLogin", redirectUrl);
-
-            
+            sessione.setAttribute("redirectAfterLogin", request.getContextPath() + "/checkout");
             sessione.setAttribute("infoMessage", "Effettua il login per completare il pagamento");
-
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
-        //  Carrello vuoto
+
+        // Carrello vuoto
         Map<Integer, Integer> carrello =
                 (Map<Integer, Integer>) sessione.getAttribute("carrello");
 
         if (carrello == null || carrello.isEmpty()) {
             request.setAttribute("prodotti", new ArrayList<Articolo>());
             request.setAttribute("totale", BigDecimal.ZERO);
-
-            RequestDispatcher dispatcher =
-                    getServletContext().getRequestDispatcher("/viewCart.jsp");
-            dispatcher.forward(request, response);
+            getServletContext()
+                    .getRequestDispatcher("/viewCart.jsp")
+                    .forward(request, response);
             return;
         }
 
         try {
-            ArticoloDAO model = new ArticoloDAO();
+            ArticoloDAO dao = new ArticoloDAO();
             List<Articolo> prodotti = new ArrayList<>();
-            BigDecimal totale = BigDecimal.ZERO;
+            BigDecimal totaleIvaInclusa = BigDecimal.ZERO;
 
-            //  Calcolo totale prodotti
             for (Map.Entry<Integer, Integer> entry : carrello.entrySet()) {
-                int idArticolo = entry.getKey();
-                int qta = entry.getValue();
-
-                Articolo a = model.doRetrieveByKey(idArticolo);
+                Articolo a = dao.doRetrieveByKey(entry.getKey());
                 if (a != null) {
                     prodotti.add(a);
-
-                    BigDecimal subtotale =
-                            a.getPrezzoListino().multiply(new BigDecimal(qta));
-                    totale = totale.add(subtotale);
+                    totaleIvaInclusa = totaleIvaInclusa.add(
+                        a.getPrezzoListino().multiply(new BigDecimal(entry.getValue()))
+                    );
                 }
             }
 
-           
-            BigDecimal iva = totale
-                    .multiply(new BigDecimal("0.22"))
+            
+            BigDecimal imponibile = totaleIvaInclusa
+                    .divide(new BigDecimal("1.22"), 2, RoundingMode.HALF_UP);
+
+            BigDecimal iva = totaleIvaInclusa
+                    .subtract(imponibile)
                     .setScale(2, RoundingMode.HALF_UP);
 
-            
-            BigDecimal totaleConIva = totale; // il totale resta lo stesso
-
-
-           
+         
+         // Attributi request → checkout.jsp
             request.setAttribute("prodotti", prodotti);
             request.setAttribute("quantita", carrello);
-            request.setAttribute("totale", totale);
-            sessione.setAttribute("totalePagamento", totale);
-
+            request.setAttribute("totale", imponibile);          
             request.setAttribute("iva", iva);
-            request.setAttribute("totaleConIva", totaleConIva);
+            request.setAttribute("totaleConIva", totaleIvaInclusa.setScale(2, RoundingMode.HALF_UP));  // era "totaleIvaInclusa"
 
-            RequestDispatcher dispatcher =
-                    getServletContext().getRequestDispatcher("/checkout.jsp");
-            dispatcher.forward(request, response);
+           
+            sessione.setAttribute("totalePagamento", totaleIvaInclusa.setScale(2, RoundingMode.HALF_UP));
+            sessione.setAttribute("prodottiPagamento", prodotti);
+            sessione.setAttribute("quantitaPagamento", carrello);
+
+            getServletContext()
+                    .getRequestDispatcher("/checkout.jsp")
+                    .forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();
