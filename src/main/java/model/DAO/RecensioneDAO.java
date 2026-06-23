@@ -111,7 +111,7 @@ public class RecensioneDAO implements DaoInterface<Recensione, Integer> {
         }
     }
 
-    // ⭐ NUOVO: tutte le recensioni di un articolo
+    //  tutte le recensioni di un articolo
     public List<Recensione> doRetrieveByArticolo(int idArticolo) throws SQLException {
         String sql = "SELECT * FROM Recensione WHERE ID_Articolo=? ORDER BY Data_Recensione DESC";
 
@@ -131,7 +131,7 @@ public class RecensioneDAO implements DaoInterface<Recensione, Integer> {
         return lista;
     }
 
-    // ⭐ NUOVO: controlla se un utente ha già recensito
+    //  controlla se un utente ha già recensito
     public boolean hasUserReviewed(int idUtente, int idArticolo) throws SQLException {
         String sql = "SELECT COUNT(*) FROM Recensione WHERE ID_Utente=? AND ID_Articolo=?";
 

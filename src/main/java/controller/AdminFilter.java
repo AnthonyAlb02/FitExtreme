@@ -19,7 +19,7 @@ public class AdminFilter implements Filter {
 
         HttpSession session = req.getSession(false);
 
-        // 1) Utente non loggato → login
+        // 1) Utente non loggato 
         if (session == null || session.getAttribute("utente") == null) {
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
@@ -33,7 +33,7 @@ public class AdminFilter implements Filter {
             return;
         }
 
-        // 3) Utente admin → continua
+        // 3) Utente admi continua
         chain.doFilter(request, response);
     }
 

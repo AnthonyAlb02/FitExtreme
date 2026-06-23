@@ -62,22 +62,71 @@ function initObservers() {
     });
 }
 
-// ===== CAROUSEL CATEGORIE =====
-document.addEventListener("DOMContentLoaded", () => {
-    const carousel = document.getElementById("cat-carousel");
-    const btnLeft = document.getElementById("cat-left");
-    const btnRight = document.getElementById("cat-right");
+// ===== CAROUSEL CATEGORIE (CIRCOLARE) =====
+document.addEventListener("DOMContentLoaded", function() {
+    var carousel = document.getElementById("cat-carousel");
+    var btnLeft = document.getElementById("cat-left");
+    var btnRight = document.getElementById("cat-right");
+    var cards = Array.from(carousel.children);
+    var totalCards = cards.length;
 
-    const scrollAmount = 300; // distanza di scorrimento
+    function getCardWidth() {
+        return carousel.children[0].offsetWidth + 20;
+    }
 
-    btnLeft.addEventListener("click", () => {
-        carousel.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    // Clona solo una volta: 1 gruppo prima e 1 dopo
+    for (var i = 0; i < totalCards; i++) {
+        carousel.appendChild(cards[i].cloneNode(true));
+    }
+    for (var j = totalCards - 1; j >= 0; j--) {
+        carousel.insertBefore(cards[j].cloneNode(true), carousel.firstChild);
+    }
+
+    var cardWidth = getCardWidth();
+    var groupWidth = cardWidth * totalCards;
+
+    // Posiziona sul gruppo centrale (quello vero)
+    carousel.style.scrollBehavior = "auto";
+    carousel.scrollLeft = groupWidth;
+
+    var scrolling = false;
+
+    function reposition() {
+        var left = carousel.scrollLeft;
+        // Se supera il gruppo finale, torna al gruppo centrale
+        if (left >= groupWidth * 2) {
+            carousel.style.scrollBehavior = "auto";
+            carousel.scrollLeft -= groupWidth;
+        }
+        // Se torna prima del gruppo iniziale, salta al gruppo centrale
+        if (left <= 0) {
+            carousel.style.scrollBehavior = "auto";
+            carousel.scrollLeft += groupWidth;
+        }
+        setTimeout(function() {
+            carousel.style.scrollBehavior = "smooth";
+            scrolling = false;
+        }, 20);
+    }
+
+    carousel.addEventListener("scroll", function() {
+        if (scrolling) return;
+        scrolling = true;
+        setTimeout(reposition, 200);
     });
 
-    btnRight.addEventListener("click", () => {
-        carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    btnRight.addEventListener("click", function() {
+        carousel.style.scrollBehavior = "smooth";
+        carousel.scrollLeft += getCardWidth();
+    });
+
+    btnLeft.addEventListener("click", function() {
+        carousel.style.scrollBehavior = "smooth";
+        carousel.scrollLeft -= getCardWidth();
     });
 });
+
+
 
 
 
@@ -111,14 +160,12 @@ function initSmoothScroll() {
 }
 
 
-// ===============================
-// (OPZIONALE) RIDUZIONE MOTION
-// ===============================
+
 function prefersReducedMotion() {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-// Se vuoi disattivare animazioni per accessibilità
+
 if (prefersReducedMotion()) {
     document.documentElement.classList.add("no-animations");
 }

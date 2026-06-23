@@ -63,7 +63,7 @@ main.page-container .contact-form {
 }
 
 /* Label */
-m/* Fix definitivo per le label del form contatti */
+/* Fix definitivo per le label del form contatti */
 main.page-container .contact-form label {
     font-weight: 600 !important;
     color: #111 !important;
@@ -91,7 +91,7 @@ main.page-container .contact-form textarea {
 /* Focus */
 main.page-container .contact-form input:focus,
 main.page-container .contact-form textarea:focus {
-    border-color: #8C5A2B;
+    border-color:#FFC266;
     background: #fff;
     outline: none;
 }
@@ -102,14 +102,32 @@ main.page-container .contact-form textarea {
     min-height: 140px;
 }
 
+
 /* Pulsante */
 main.page-container .contact-form button {
-    margin-top: 10px;
+    background: #FFC266;
+    color:#8C5A2B;
+    border: none;
     padding: 14px 22px;
     border-radius: 8px;
     font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.25s ease, transform 0.2s ease;
 }
+
+/* Hover */
+main.page-container .contact-form button:hover {
+    background: #E6A957;
+    transform: translateY(-2px);
+}
+
+/* Active (click) */
+main.page-container .contact-form button:active {
+    background: #D99645;
+    transform: translateY(0);
+}
+
 
 /* Responsive */
 @media (max-width: 768px) {

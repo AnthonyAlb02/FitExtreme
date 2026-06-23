@@ -22,8 +22,7 @@ public class adminDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Il filtro AdminFilter ha già verificato sessione e ruolo,
-        // qui non serve ricontrollare
+      
 
         ArticoloDAO articoloDAO = new ArticoloDAO();
 		OrdineDAO ordineDAO    = new OrdineDAO();

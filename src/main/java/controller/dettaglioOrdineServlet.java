@@ -58,7 +58,7 @@ public class dettaglioOrdineServlet extends HttpServlet {
                 return;
             }
 
-            // Recupero dettagli ordine (già gestisce articoli eliminati)
+            // Recupero dettagli ordine 
             List<DettaglioOrdine> dettagli = dettaglioDAO.doRetrieveByOrdine(idOrdine);
 
             // Calcolo totale

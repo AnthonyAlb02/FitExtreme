@@ -38,7 +38,7 @@ public class ordiniAdminServlet extends HttpServlet {
 
             Collection<Ordine> ordini = ordineDAO.doRetrieveAll("id_asc");
 
-            // Mappa idUtente → nome completo
+            // Mappa idUtente = nome completo
             Map<Integer, String> nomiUtenti = new HashMap<>();
             Collection<Utente> utenti = utenteDAO.doRetrieveAll(null);
             for (Utente u : utenti) {

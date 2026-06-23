@@ -37,7 +37,7 @@ public class UtenteDAO implements DaoInterface<Utente, Integer> {
                 return extractUtente(rs); // mappo il ResultSet nel bean Utente
             }
         }
-        return null; // se non trovo nulla ritorno null
+        return null; 
     }
     public Utente doRetrieveByEmail(String email) throws SQLException {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE Email=?";

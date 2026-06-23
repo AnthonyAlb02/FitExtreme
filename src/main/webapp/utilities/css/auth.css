@@ -70,7 +70,7 @@
     background: #FFC266;
     border: none;
     border-radius: 10px;
-    color: #111;
+    color: #8C5A2B;
     font-size: 17px;
     font-weight: 700;
     cursor: pointer;
@@ -78,7 +78,7 @@
 }
 
 .auth-btn:hover {
-    background: #e6a957;
+    background:#E6A957;
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(255, 194, 102, 0.35);
 }

@@ -61,7 +61,7 @@ public class carrelloServlet extends HttpServlet {
             List<Articolo> prodotti = new ArrayList<>();
             BigDecimal totale = BigDecimal.ZERO;
 
-            // Recupero dettagli articoli + calcolo totale
+            // Recupero dettagli articoli 
             for (Map.Entry<Integer, Integer> entry : carrello.entrySet()) {
                 int idArticolo = entry.getKey();
                 int qta = entry.getValue();

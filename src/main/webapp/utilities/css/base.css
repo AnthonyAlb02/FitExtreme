@@ -130,36 +130,52 @@ a:hover {
     min-height: 140px;
 }
 
-/* ===========================
-   BOTTONI GLOBALI
-=========================== */
+
+/* ============================================================
+   BOTTONI GLOBALI FITEXTREME
+============================================================ */
 .btn {
     display: inline-block;
     padding: 12px 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
-    transition: 0.2s ease;
     border: none;
+    text-align: center;
+    transition: background 0.25s ease, transform 0.2s ease;
 }
 
+/* PRIMARIO */
 .btn-primary {
-    background-color: #FFC266;
-    color: #111111;
+    background: var(--fx-orange);
+    color: var(--fx-brown);
 }
 
 .btn-primary:hover {
-    background-color: #e6ad59;
+    background: var(--fx-hower);
+    transform: translateY(-2px);
 }
 
+/* SECONDARIO */
 .btn-secondary {
-    background-color: #8C5A2B;
-    color: #FFFFFF;
+    background: var(--fx-light);
+    color: var(--fx-brown);
+    border: 1px solid var(--fx-brown);
 }
 
 .btn-secondary:hover {
-    background-color: #734820;
+    background: var(--fx-orange);
+    color: var(--fx-brown);
+    transform: translateY(-2px);
 }
+
+/* ACTIVE */
+.btn:active {
+    transform: translateY(0);
+    filter: brightness(0.95);
+}
+
+
 
 /* ===========================
    CARD PRODOTTO
@@ -221,8 +237,8 @@ a:hover {
     padding: 12px 14px 16px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;                              /* occupa lo spazio rimanente */
-    min-height: 0;                             /* fix firefox flex overflow */
+    flex-grow: 1;                            
+    min-height: 0;                            
 }
 
 /* TITOLO: massimo 2 righe, poi ellissi */
@@ -230,7 +246,7 @@ a:hover {
     font-size: 15px;
     font-weight: 600;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+   
     -webkit-box-orient: vertical;
     overflow: hidden;
     min-height: 38px;

@@ -1,17 +1,12 @@
-/* ============================================================
-   PALETTE FITEXTREME
-============================================================ */
 :root {
     --fx-orange: #FFC266;
-    --fx-brown:  #8C5A2B;
-    --fx-light:  #F5F5F5;
-    --fx-dark:   #111111;
-    --fx-white:  #FFFFFF;
+    --fx-brown: #8C5A2B;
+    --fx-light: #F5F5F5;
+    --fx-dark: #111111;
+    --fx-white: #FFFFFF;
+    --fx-hower: #E6A957;
 }
 
-/* ============================================================
-   HERO
-============================================================ */
 .catalogo-hero {
     text-align: center;
     padding: 40px 0;
@@ -19,9 +14,6 @@
     border-bottom: 2px solid #e0e0e0;
 }
 
-/* ============================================================
-   GRIGLIA PRODOTTI
-============================================================ */
 .prodotti-container {
     padding: 40px;
     display: grid !important;
@@ -30,39 +22,29 @@
     align-items: stretch;
 }
 
-/* ============================================================
-   CARD WRAPPER
-============================================================ */
 .card-wrapper {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-/* ============================================================
-   CARD PRODOTTO — stesso stile home
-============================================================ */
 .card {
     height: 100%;
     display: flex;
     flex-direction: column;
     background: var(--fx-white);
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     position: relative;
-    padding: 0;                 /* nessun padding: gestito da card-img e card-body */
 }
 
 .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.15);
 }
 
-/* ============================================================
-   IMMAGINE
-============================================================ */
 .card-img-link {
     display: block;
     text-decoration: none;
@@ -70,7 +52,6 @@
 
 .card-img {
     height: 200px;
-    flex-shrink: 0;
     overflow: hidden;
 }
 
@@ -78,19 +59,15 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+    transition: transform 0.35s ease;
 }
 
 .card:hover .card-img img {
-    transform: scale(1.04);
+    transform: scale(1.06);
 }
 
-/* ============================================================
-   BODY
-============================================================ */
 .card-body {
-    padding: 12px 14px 16px;
+    padding: 14px 16px 18px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -109,7 +86,6 @@
     text-overflow: ellipsis;
     min-height: 38px;
     text-align: center;
-    /* Troncamento max 2 righe senza webkit */
     display: block;
     max-height: 44px;
     line-height: 1.4;
@@ -124,21 +100,17 @@
     text-align: center;
 }
 
-/* ============================================================
-   BOTTONE AGGIUNGI AL CARRELLO
-   Sempre visibile nel body, sotto il prezzo
-============================================================ */
 .card-btn {
     width: 100%;
     margin-top: 10px;
     padding: 10px;
     background: var(--fx-orange);
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    color: var(--fx-dark);
+    color: var(--fx-brown);
     opacity: 0;
     transform: translateY(6px);
     transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
@@ -152,13 +124,9 @@
 }
 
 .card-btn:hover {
-    background: var(--fx-brown);
-    color: #fff;
+    background: #E6A957;
 }
 
-/* ============================================================
-   BADGE ESAURITO
-============================================================ */
 .soldout-badge {
     position: absolute;
     top: 12px;
@@ -172,79 +140,84 @@
     z-index: 10;
 }
 
-/* ============================================================
-   BARRA FILTRI ORIZZONTALE
-============================================================ */
 .fx-filters {
     display: flex;
     align-items: flex-end;
     gap: 25px;
-    padding: 20px 25px;
-    background: var(--fx-white);
-    border-radius: 12px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-    margin: 20px auto;
+    padding: 22px 28px;
+    background: #FFFFFF;
+    border-radius: 14px;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.06);
+    margin: 25px auto;
     width: 95%;
+    border: 1px solid #F0F0F0;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.fx-filters:hover {
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
 }
 
 .fx-filter {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
 .fx-filter label {
     font-size: 14px;
     font-weight: 600;
-    color: var(--fx-dark);
+    color: #111111;
 }
 
 .fx-filter select,
 .fx-price input {
-    padding: 10px 14px;
+    padding: 12px 14px;
     border-radius: 10px;
-    border: 1px solid #ccc;
-    background: var(--fx-light);
-    transition: border-color 0.2s;
+    border: 1px solid #D9D9D9;
+    background: #F5F5F5;
     font-size: 14px;
-}
-.fx-filter select:focus,
-.fx-price input:focus {
-    outline: none;
-    border-color: var(--fx-orange);
-    box-shadow: 0 0 0 3px rgba(255, 194, 102, 0.3);
+    transition: all 0.25s ease;
 }
 
 .fx-filter select:hover,
 .fx-price input:hover {
-    border-color: var(--fx-orange);
+    border-color: #FFC266;
+}
+
+.fx-filter select:focus,
+.fx-price input:focus {
+    outline: none;
+    border-color: #FFC266;
+    box-shadow: 0 0 0 3px rgba(255, 194, 102, 0.35);
+    background: #FFFFFF;
 }
 
 .fx-price {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .fx-btn {
     padding: 12px 22px;
-    background: var(--fx-orange);
-    color: var(--fx-dark);
+    background: #FFC266;
+    color: #8C5A2B;
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    transition: background 0.2s;
     font-weight: 600;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(255, 194, 102, 0.3);
 }
 
 .fx-btn:hover {
-    background: var(--fx-brown);
-    color: #fff;
+    background: #E6A957;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 194, 102, 0.4);
 }
 
-/* ============================================================
-   BADGE FILTRI ATTIVI
-============================================================ */
 .fx-active-filters {
     margin: 15px 0 25px;
     display: flex;
@@ -253,37 +226,43 @@
 }
 
 .fx-badge {
-    background: var(--fx-light);
-    padding: 6px 12px;
+    background: #F5F5F5;
+    padding: 6px 14px;
     border-radius: 20px;
     font-size: 13px;
     display: flex;
     align-items: center;
-    gap: 6px;
-    border: 1px solid #ddd;
+    gap: 8px;
+    border: 1px solid #D9D9D9;
+    transition: all 0.2s ease;
+}
+
+.fx-badge:hover {
+    background: #FFC266;
+    border-color: #E6A957;
+    color: #8C5A2B;
 }
 
 .fx-badge span {
     cursor: pointer;
     font-weight: bold;
-    color: var(--fx-brown);
+    color: #8C5A2B;
+    transition: 0.2s;
 }
 
-/* ============================================================
-   ANIMAZIONE FADE
-============================================================ */
+.fx-badge span:hover {
+    color: #5A3A1A;
+}
+
 @keyframes fade {
     from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .fade-in {
     animation: fade 0.4s ease;
 }
 
-/* ============================================================
-   RESPONSIVE
-============================================================ */
 @media (max-width: 768px) {
     .fx-filters {
         flex-wrap: wrap;

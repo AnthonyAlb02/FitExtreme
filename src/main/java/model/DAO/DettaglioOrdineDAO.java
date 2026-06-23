@@ -109,7 +109,7 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
             while (rs.next()) {
                 DettaglioOrdine d = extractDettaglio(rs);
 
-                // ⭐ Recupero articolo completo
+                //  Recupero articolo completo
                 Articolo art = articoloDAO.doRetrieveByKey(d.getIdArticolo());
 
                 if (art != null) {
@@ -163,7 +163,7 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
         }
     }
 
-    // ⭐ Mappa il ResultSet → DettaglioOrdine
+    //  Mappa il ResultSet → DettaglioOrdine
     private DettaglioOrdine extractDettaglio(ResultSet rs) throws SQLException {
         DettaglioOrdine d = new DettaglioOrdine();
 
@@ -174,7 +174,7 @@ public class DettaglioOrdineDAO implements DaoInterface<DettaglioOrdine, Integer
         d.setPrezzoAcquisto(rs.getBigDecimal("Prezzo_Acquisto"));
         d.setSubtotale(rs.getBigDecimal("Subtotale"));
 
-        // ⭐ Dati salvati nel dettaglio ordine
+        //  Dati salvati nel dettaglio ordine
         d.setNomeArticolo(rs.getString("Nome_Articolo"));
         d.setImmagine(rs.getString("Immagine"));
 

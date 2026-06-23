@@ -36,7 +36,7 @@ public class DettaglioProdottoServlet extends HttpServlet {
         dispatcher = getServletContext().getRequestDispatcher("/jsp/prodotti/dettaglio.jsp");
 
         try {
-            // 1) Leggo l'ID del prodotto
+            //  Leggo l'ID del prodotto
             String idParam = request.getParameter("id");
 
             if (idParam == null || idParam.isEmpty()) {
@@ -46,18 +46,18 @@ public class DettaglioProdottoServlet extends HttpServlet {
 
             int id = Integer.parseInt(idParam);
 
-            // 2) Recupero il prodotto dal DB
+            //  Recupero il prodotto dal DB
             ArticoloDAO model = new ArticoloDAO();
             Articolo prodotto = model.doRetrieveByKey(id);
 
-            // 3) Se non esiste → torno al catalogo
+            // 3) Se non esiste  torno al catalogo
             if (prodotto == null) {
                 dispatcher = getServletContext().getRequestDispatcher("/catalogo");
                 dispatcher.forward(request, response);
                 return;
             }
 
-            // ⭐ 4) Calcolo IVA scorporata
+            //  Calcolo IVA scorporata
             BigDecimal prezzo = prodotto.getPrezzoListino();
 
             BigDecimal iva = prezzo
@@ -66,12 +66,12 @@ public class DettaglioProdottoServlet extends HttpServlet {
 
             BigDecimal imponibile = prezzo.subtract(iva);
 
-            // ⭐ 5) Metto tutto nella request
+            //  Metto tutto nella request
             request.setAttribute("prodotto", prodotto);
             request.setAttribute("iva", iva);
             request.setAttribute("imponibile", imponibile);
 
-            // 6) Forward alla JSP
+            // Forward alla JSP
             dispatcher.forward(request, response);
 
         } catch (SQLException | NumberFormatException e) {

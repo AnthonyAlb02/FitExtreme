@@ -9,17 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const id = btn.dataset.id;
             let taglia = null;
 
-            // Se il prodotto richiede taglia
-            if (btn.dataset.size === "true") {
-                const select = document.getElementById("taglia");
-
-                if (!select || !select.value) {
-                    alert("Seleziona una taglia prima di aggiungere al carrello.");
-                    return;
-                }
-
-                taglia = select.value;
-            }
+         
 
             // Prepara il body della richiesta
             let body = "id=" + id;
@@ -45,14 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                // ✔ Aggiorna badge carrello
+                //  Aggiorna badge carrello
                 const badge = document.getElementById("cart-count");
                 badge.textContent = data.cartCount;
 
                 badge.classList.add("cart-pulse");
                 setTimeout(() => badge.classList.remove("cart-pulse"), 400);
 
-                // ✔ Effetto bottone
+                //  Effetto bottone
                 btn.classList.add("added");
                 const originalText = btn.textContent;
                 btn.textContent = "Aggiunto ✓";

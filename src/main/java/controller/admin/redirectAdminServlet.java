@@ -37,13 +37,13 @@ public class redirectAdminServlet extends HttpServlet {
         // Controllo che l'utente sia admin
         String ruolo = (String) sessione.getAttribute("ruolo");
 
-        // Se non è admin → lo mando alla pagina errore permessi
+        // Se non è admin = lo mando alla pagina errore permessi
         if (ruolo == null || !ruolo.equals("admin")) {
             response.sendRedirect("../errorePermessi");
             return;
         }
 
-        // Se è admin → lo mando alla dashboard
+        // Se è admin = lo mando alla dashboard
         response.sendRedirect("dashboard");
     }
 }

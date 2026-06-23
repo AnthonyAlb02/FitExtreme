@@ -41,11 +41,16 @@
 	padding: 12px 20px;
 	border-radius: 8px;
 	text-decoration: none;
-	color: #111;
+	color: #8C5A2B;
 	font-weight: 700;
 	cursor: pointer;
 	display: inline-block;
 	margin-top: 15px;
+}
+
+.btn-primary:hover {
+    background: #E6A957;
+    transform: translateY(-2px);
 }
 </style>
 </head>

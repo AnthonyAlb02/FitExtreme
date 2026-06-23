@@ -61,10 +61,14 @@
                 <li><a href="mailto:assistenza@fitextreme.it">assistenza@fitextreme.it</a></li>
                 <li><a href="tel:+393393786329">+39 339 373 9632</a></li>
             </ul>
+        
         </div>
 
     </div>
 
-    <div class="footer-bottom">© 2026 FitExtreme — Tutti i diritti riservati</div>
+    <div class="footer-bottom">
+     <p style=color:white;>P.IVA: 12345678901</p>
+    
+    © 2026 FitExtreme — Tutti i diritti riservati</div>	
 
 </footer>

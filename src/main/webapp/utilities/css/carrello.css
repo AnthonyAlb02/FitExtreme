@@ -182,8 +182,8 @@
 /* BOTTONE ACQUISTA */
 .btn-acquista {
 	padding: 14px 32px;
-	background: linear-gradient(135deg, #FFC266 0%, #FFB347 100%);
-	color: #111 !important;
+	background: #FFC266;;
+	color: #8C5A2B;
 	font-weight: 700;
 	border-radius: 10px;
 	text-decoration: none;
@@ -199,7 +199,7 @@
 .btn-acquista:hover {
 	transform: translateY(-3px);
 	box-shadow: 0 6px 20px rgba(255, 194, 102, 0.4);
-	background: linear-gradient(135deg, #FFB347 0%, #FFA500 100%);
+	background: #E6A957;
 }
 
 .btn-acquista:active {

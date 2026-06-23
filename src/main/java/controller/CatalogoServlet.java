@@ -42,7 +42,7 @@ public class CatalogoServlet extends HttpServlet {
 
             Collection<Articolo> prodotti;
 
-            // ⭐ 3) Se c'è una ricerca → PRIORITÀ
+            // ⭐ 3) PRIORITÀ
             if (q != null && !q.trim().isEmpty()) {
 
                 prodotti = articoloDAO.doSearch(q.trim());
@@ -51,7 +51,7 @@ public class CatalogoServlet extends HttpServlet {
                 request.setAttribute("searchQuery", q);
 
             }
-            // ⭐ 4) Se c'è una categoria → filtro per categoria
+            // ⭐  filtro per categoria
             else if (idParam != null && !idParam.isEmpty()) {
 
                 int idCategoria = Integer.parseInt(idParam);
@@ -61,7 +61,7 @@ public class CatalogoServlet extends HttpServlet {
                 request.setAttribute("categoriaSelezionata", idCategoria);
 
             }
-            // ⭐ 5) Nessun filtro → mostra tutto
+            // ⭐ 5) Nessun filtro = mostra tutto
             else {
 
                 prodotti = articoloDAO.doRetrieveAll("Nome_Articolo");

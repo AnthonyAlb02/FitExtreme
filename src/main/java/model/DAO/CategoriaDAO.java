@@ -37,10 +37,10 @@ public class CategoriaDAO implements DaoInterface<Categoria, Integer> {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return extractCategoria(rs); // mappo il ResultSet nel bean Categoria
+                return extractCategoria(rs); // mappatura del  ResultSet nel bean Categoria
             }
         }
-        return null; // se non trovo nulla ritorno null
+        return null; 
     }
 
     @Override

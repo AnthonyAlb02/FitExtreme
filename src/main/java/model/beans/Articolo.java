@@ -11,7 +11,7 @@ public class Articolo {
     private int qtaDisponibile;
 
     private Integer idCategoria; 
-    private String immagine;   // ⭐ NUOVO CAMPO
+    private String immagine;   
 
     public Articolo() {}
 
@@ -69,7 +69,6 @@ public class Articolo {
         this.idCategoria = idCategoria;
     }
 
-    // ⭐ GETTER E SETTER PER L’IMMAGINE
     public String getImmagine() {
         return immagine;
     }

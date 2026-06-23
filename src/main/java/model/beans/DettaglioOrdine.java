@@ -11,9 +11,9 @@ public class DettaglioOrdine {
     private BigDecimal prezzoAcquisto;
     private BigDecimal subtotale;
 
-    // ➕ Campi NON presenti nel DB, utili per JSP e ricevute
+   
     private String nomeArticolo;
-    private String immagine;   // ⭐ NUOVO CAMPO
+    private String immagine;  
 
     public DettaglioOrdine() {}
 
@@ -25,30 +25,69 @@ public class DettaglioOrdine {
     }
 
     public int getIdDettaglio() { return idDettaglio; }
-    public void setIdDettaglio(int idDettaglio) { this.idDettaglio = idDettaglio; }
+    public void setIdDettaglio(int idDettaglio) {
+    	this.idDettaglio = idDettaglio; 
+    	}
 
-    public int getIdOrdine() { return idOrdine; }
-    public void setIdOrdine(int idOrdine) { this.idOrdine = idOrdine; }
+    public int getIdOrdine() {
+    	return idOrdine; 
+    	}
+    
+    public void setIdOrdine(int idOrdine) {
+    	this.idOrdine = idOrdine; 
+    	}
 
-    public int getIdArticolo() { return idArticolo; }
-    public void setIdArticolo(int idArticolo) { this.idArticolo = idArticolo; }
+    public int getIdArticolo() {
+    	return idArticolo; 
+    	}
+    
+    public void setIdArticolo(int idArticolo) {
+    	this.idArticolo = idArticolo; 
+    	}
+    
 
-    public int getQuantita() { return quantita; }
-    public void setQuantita(int quantita) { this.quantita = quantita; }
+    public int getQuantita() {
+    	return quantita; 
+    	}
+    
+    public void setQuantita(int quantita) {
+    	this.quantita = quantita; 
+    	}
 
-    public BigDecimal getPrezzoAcquisto() { return prezzoAcquisto; }
-    public void setPrezzoAcquisto(BigDecimal prezzoAcquisto) { this.prezzoAcquisto = prezzoAcquisto; }
+    public BigDecimal getPrezzoAcquisto() {
+    	return prezzoAcquisto; 
+    	}
+    
+    public void setPrezzoAcquisto(BigDecimal prezzoAcquisto) {
+    	this.prezzoAcquisto = prezzoAcquisto; 
+    	}
+    
 
-    public BigDecimal getSubtotale() { return subtotale; }
-    public void setSubtotale(BigDecimal subtotale) { this.subtotale = subtotale; }
+    public BigDecimal getSubtotale() {
+    	return subtotale; 
+    	}
+    
+    public void setSubtotale(BigDecimal subtotale) {
+    	this.subtotale = subtotale; 
+    	}
+    
 
-    // ➕ Getter/Setter per nome articolo
-    public String getNomeArticolo() { return nomeArticolo; }
+   
+    public String getNomeArticolo() {
+    	return nomeArticolo; 
+    	}
+    
     public void setNomeArticolo(String nomeArticolo) { this.nomeArticolo = nomeArticolo; }
 
-    // ⭐ Getter/Setter per immagine articolo
-    public String getImmagine() { return immagine; }
-    public void setImmagine(String immagine) { this.immagine = immagine; }
+    // Getter/Setter per immagine articolo
+    public String getImmagine() {
+    	return immagine; 
+    	}
+    
+    public void setImmagine(String immagine) {
+    	this.immagine = immagine; 
+    	}
+    
 
     @Override
     public String toString() {

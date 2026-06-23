@@ -30,7 +30,7 @@ public class dettaglioOrdineAdminServlet extends HttpServlet {
 
             Ordine ordine = ordineDAO.doRetrieveByKey(idOrdine);
 
-            // SE L’ORDINE NON ESISTE → TORNA ALLA LISTA
+            // SE L’ORDINE NON ESISTE = TORNA ALLA LISTA
             if (ordine == null) {
                 response.sendRedirect(request.getContextPath() + "/admin/ordini");
                 return;

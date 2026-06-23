@@ -59,7 +59,7 @@ public class eliminaProdottoServlet extends HttpServlet {
 
             ArticoloDAO dao = new ArticoloDAO();
 
-            // ⭐ Eliminazione reale → grazie a ON DELETE SET NULL gli ordini restano intatti
+            // Eliminazione reale = ON DELETE SET NULL gli ordini restano intatti
             boolean eliminato = dao.doDelete(id);
 
             if (eliminato) {

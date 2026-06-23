@@ -28,6 +28,8 @@
 </head>
 
 <body>
+<script src="<%= request.getContextPath() %>/utilities/js/pagamento.js"></script>
+
 
 <jsp:include page="/header.jsp" />
 
@@ -204,20 +206,24 @@
 
 </div>
 
+
+
 <jsp:include page="/footer.jsp" />
 
-<script>
-    document.getElementById('paymentForm').addEventListener('submit', function (e) {
-        if (!this.checkValidity()) {
-            e.preventDefault();
-            var first = this.querySelector(':invalid');
-            if (first) {
-                first.focus();
-                if (typeof first.reportValidity === 'function') first.reportValidity();
-            }
-        }
-    });
-</script>
+<div id="confirmPopup" class="confirm-popup hidden">
+    <div class="confirm-box">
+        <h3>Conferma ordine</h3>
+        <p>Vuoi procedere all'acquisto?</p>
+
+        <div class="confirm-buttons">
+            <button id="confirmYes" class="btn-primary">Sì, procedi</button>
+            <button id="confirmNo" class="btn-secondary">Annulla</button>
+        </div>
+    </div>
+</div>
+
+
+
 
 </body>
 </html>

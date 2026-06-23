@@ -29,7 +29,7 @@ public class OrdiniUtenteServlet extends HttpServlet {
 
         HttpSession sessione = request.getSession(false);
 
-        // Utente non loggato → redirect login
+        // Utente non loggato = redirect login
         if (sessione == null || sessione.getAttribute("utente") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
@@ -41,7 +41,7 @@ public class OrdiniUtenteServlet extends HttpServlet {
         OrdineDAO ordineDAO = new OrdineDAO();
 
         try {
-            // 🔥 Recupero SOLO gli ordini dell’utente loggato
+            // Recupero SOLO gli ordini dell’utente loggato
             List<Ordine> ordini = (List<Ordine>) ordineDAO.doRetrieveByUser(idUtente);
 
             // Passo la lista alla JSP

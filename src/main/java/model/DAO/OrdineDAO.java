@@ -22,9 +22,9 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         }
     }
 
-    // -------------------------------
-    //   METODO DI ESTRAZIONE COMPLETO
-    // -------------------------------
+  
+    //   METODO DI ESTRAZIONE 
+    
     private Ordine extractOrdine(ResultSet rs) throws SQLException {
         Ordine o = new Ordine();
 
@@ -38,7 +38,7 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         return o;
     }
 
-    // ⭐ Estrae ordine + nome utente (o "Utente eliminato")
+    //  Estrae ordine + nome utente 
     private Ordine extractOrdineWithUser(ResultSet rs) throws SQLException {
         Ordine o = extractOrdine(rs);
 
@@ -54,9 +54,8 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         return o;
     }
 
-    // ---------------------------------------
     //   RECUPERA ORDINI PER UTENTE + DATA
-    // ---------------------------------------
+
     public List<Ordine> doRetrieveByUserAndDate(int idUtente, LocalDate data) throws SQLException {
 
         String query =
@@ -92,17 +91,16 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         return lista;
     }
 
-    // -------------------------------
     //   RECUPERA ORDINE PER PK
-    // -------------------------------
+
     @Override
     public Ordine doRetrieveByKey(Integer pk) throws SQLException {
 
         String query =
                 "SELECT o.*, u.nome, u.cognome " +
                 "FROM Ordine o " +
-                "LEFT JOIN Utente u ON o.ID_Utente = u.ID_Utente " +   // <--- spazio aggiunto
-                "WHERE o.ID_Ordine=?";                                 // <--- ora è valido
+                "LEFT JOIN Utente u ON o.ID_Utente = u.ID_Utente " +   
+                "WHERE o.ID_Ordine=?";                                 
 
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -117,9 +115,8 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         return null;
     }
 
-    // -------------------------------
     //   CONTA ORDINI
-    // -------------------------------
+
     public int countOrders() {
         String query = "SELECT COUNT(*) FROM Ordine";
 
@@ -138,9 +135,7 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         return 0;
     }
 
-    // -------------------------------
     //   SALVA ORDINE + RITORNA PK
-    // -------------------------------
     public int doSaveAndReturnKey(Ordine o) throws SQLException {
 
         String query = "INSERT INTO " + TABLE_NAME +
@@ -169,9 +164,7 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         return generatedKey;
     }
 
-    // -------------------------------
     //   RECUPERA TUTTI GLI ORDINI
-    // -------------------------------
     @Override
     public Collection<Ordine> doRetrieveAll(String order) throws SQLException {
 
@@ -214,9 +207,7 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         return lista;
     }
 
-    // -------------------------------
     //   RECUPERA ORDINI PER UTENTE
-    // -------------------------------
     public List<Ordine> doRetrieveByUser(int idUtente) throws SQLException {
 
         String query =
@@ -242,9 +233,7 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         return lista;
     }
 
-    // -------------------------------
     //   SALVA ORDINE
-    // -------------------------------
     @Override
     public void doSave(Ordine o) throws SQLException {
 
@@ -265,9 +254,7 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         }
     }
 
-    // -------------------------------
     //   UPDATE ORDINE
-    // -------------------------------
     @Override
     public void doUpdate(Ordine o) throws SQLException {
 
@@ -289,9 +276,7 @@ public class OrdineDAO implements DaoInterface<Ordine, Integer> {
         }
     }
 
-    // -------------------------------
     //   DELETE ORDINE
-    // -------------------------------
     @Override
     public boolean doDelete(Integer pk) throws SQLException {
 

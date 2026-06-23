@@ -47,12 +47,13 @@
         <h2>Informazioni di contatto</h2>
 
         <address>
-            <p><strong>Email:</strong> support@fitExtreme.it</p>
-            <p><strong>Telefono:</strong> +39 339 37 8632</p>
+            <p><strong>Email:</strong> assistenza@fitextreme.it</p>
+            <p><strong>Telefono:</strong> +39 339 373 9632</p>
             <p><strong>Indirizzo:</strong><br>
-                FitExtreme HQ<br>
-                Via MegaFit 22<br>
+                FitExtreme S.r.l.<br>
+               Via dello Sport, 1<br>
                 80100 – Italia
+                P.IVA: 12345678901
             </p>
         </address>
     </section>

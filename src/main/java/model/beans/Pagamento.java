@@ -19,20 +19,65 @@ public class Pagamento {
         this.importoSaldato = importoSaldato;
     }
 
-    public int getIdPagamento() { return idPagamento; }
-    public void setIdPagamento(int idPagamento) { this.idPagamento = idPagamento; }
+    public int getIdPagamento() {
+    	return idPagamento; 
+    	
+    }
+    
+    
+    public void setIdPagamento(int idPagamento) {
+    	
+    	this.idPagamento = idPagamento; 
+    	
+    }
+    
 
-    public int getIdOrdine() { return idOrdine; }
-    public void setIdOrdine(int idOrdine) { this.idOrdine = idOrdine; }
+    public int getIdOrdine() {
+    	return idOrdine; 
+    	
+    }
+    
+    
+    public void setIdOrdine(int idOrdine) {
+    	
+    	this.idOrdine = idOrdine; 
+    	
+    }
+    
 
-    public LocalDate getDataTransazione() { return dataTransazione; }
-    public void setDataTransazione(LocalDate dataTransazione) { this.dataTransazione = dataTransazione; }
+    public LocalDate getDataTransazione() {
+    	return dataTransazione; 
+    	
+    }
+    
+    
+    public void setDataTransazione(LocalDate dataTransazione) {
+    	this.dataTransazione = dataTransazione; 
+    	
+    }
+    
 
-    public String getMetodoPagamento() { return metodoPagamento; }
-    public void setMetodoPagamento(String metodoPagamento) { this.metodoPagamento = metodoPagamento; }
+    public String getMetodoPagamento() {
+    	return metodoPagamento; 
+    	
+    }
+    
+    public void setMetodoPagamento(String metodoPagamento) {
+    	
+    	this.metodoPagamento = metodoPagamento; 
+    	
+    }
+    
 
-    public BigDecimal getImportoSaldato() { return importoSaldato; }
-    public void setImportoSaldato(BigDecimal importoSaldato) { this.importoSaldato = importoSaldato; }
+    public BigDecimal getImportoSaldato() { 
+    	return importoSaldato; 
+    	
+    }
+    public void setImportoSaldato(BigDecimal importoSaldato) {
+    	this.importoSaldato = importoSaldato; 
+    	
+    
+    }
 
 
 }

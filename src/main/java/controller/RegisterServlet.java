@@ -58,7 +58,7 @@ public class RegisterServlet extends HttpServlet {
             email = email.trim().toLowerCase();
             password = password.trim();
 
-            // 2) Controllo se l’email è già registrata
+            //  Controllo se l’email è già registrata
             Utente esistente = model.doRetrieveByEmail(email);
             if (esistente != null) {
                 request.setAttribute("errore", "Email già registrata");
@@ -66,7 +66,7 @@ public class RegisterServlet extends HttpServlet {
                 return;
             }
 
-            // 3) Creo nuovo utente
+            //  Creo nuovo utente
             Utente nuovo = new Utente();
             nuovo.setEmail(email);
             nuovo.setPasswordHash(hashPassword(password));
@@ -77,10 +77,10 @@ public class RegisterServlet extends HttpServlet {
             nuovo.setDataRegistrazione(LocalDate.now());
             nuovo.setRuolo("registrato");
 
-            // 4) Salvo nel DB
+            //  Salvo nel DB
             model.doSave(nuovo);
 
-            // 5) LOGIN AUTOMATICO
+            //  LOGIN AUTOMATICO
             HttpSession sessione = request.getSession();
             sessione.setAttribute("utente", nuovo);
             sessione.setAttribute("id", nuovo.getIdUtente());
@@ -89,7 +89,7 @@ public class RegisterServlet extends HttpServlet {
             // Messaggio di benvenuto
             sessione.setAttribute("successo", "Registrazione completata! Benvenuto su FitExtreme.");
 
-            // 6) Redirect alla home (PRG)
+            //  Redirect alla home (PRG)
             response.sendRedirect(request.getContextPath() + "/home");
 
         } catch (SQLException e) {

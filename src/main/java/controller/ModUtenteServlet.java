@@ -36,7 +36,7 @@ public class ModUtenteServlet extends HttpServlet {
         HttpSession sessione = request.getSession(false);
         dispatcher = getServletContext().getRequestDispatcher("/jsp/utente/profilo.jsp");
 
-        // 1) Controllo sessione
+        //  Controllo sessione
         if (sessione == null || sessione.getAttribute("id") == null) {
             dispatcher = getServletContext().getRequestDispatcher("/jsp/utente/login.jsp");
             dispatcher.forward(request, response);
@@ -44,10 +44,10 @@ public class ModUtenteServlet extends HttpServlet {
         }
 
         try {
-            // 2) Recupero ID utente dalla sessione
+            //  Recupero ID utente dalla sessione
             int idUtente = (int) sessione.getAttribute("id");
 
-            // 3) Recupero utente dal DB
+            // Recupero utente dal DB
             UtenteDAO model = new UtenteDAO();
             Utente utente = model.doRetrieveByKey(idUtente);
 
@@ -56,22 +56,22 @@ public class ModUtenteServlet extends HttpServlet {
                 return;
             }
 
-            // 4) Leggo i nuovi dati dal form
+            //  Leggo i nuovi dati dal form
             String nome = request.getParameter("nome");
             String cognome = request.getParameter("cognome");
             String telefono = request.getParameter("telefono");
             String indirizzo = request.getParameter("indirizzo");
 
-            // 5) Aggiorno i campi
+            // Aggiorno i campi
             utente.setNome(nome);
             utente.setCognome(cognome);
             utente.setTelefono(telefono);
             utente.setIndirizzoSpedizione(indirizzo);
 
-            // 6) Salvo nel DB
+            // Salvo nel DB
             model.doUpdate(utente);
 
-            // 7) Aggiorno la request
+            // Aggiorno la request
             request.setAttribute("utente", utente);
             request.setAttribute("successo", "Dati aggiornati correttamente");
 

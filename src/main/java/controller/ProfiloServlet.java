@@ -35,7 +35,7 @@ public class ProfiloServlet extends HttpServlet {
         HttpSession sessione = request.getSession(false);
         dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
 
-        // 1) Se non c’è sessione → login
+        //  Se non c’è sessione = login
         if (sessione == null || sessione.getAttribute("id") == null) {
             dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
@@ -43,17 +43,17 @@ public class ProfiloServlet extends HttpServlet {
         }
 
         try {
-            // 2) Recupero ID utente dalla sessione
+            // Recupero ID utente dalla sessione
             int idUtente = (int) sessione.getAttribute("id");
 
-            // 3) Recupero utente aggiornato dal DB
+            // Recupero utente aggiornato dal DB
             UtenteDAO model = new UtenteDAO();
             Utente utente = model.doRetrieveByKey(idUtente);
 
-            // 4) Metto l’utente nella request
+            //  Metto l’utente nella request
             request.setAttribute("utente", utente);
 
-            // 5) Forward alla JSP del profilo
+            //  Forward alla JSP del profilo
             dispatcher.forward(request, response);
 
         } catch (SQLException e) {

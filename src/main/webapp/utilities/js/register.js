@@ -1,20 +1,23 @@
 (function() {
-  var pwd = document.getElementById('password');
-  var conf = document.getElementById('confirm');
-  var passCheck = document.getElementById('pass-check');
+  const pwd = document.getElementById('password');
+  const conf = document.getElementById('confirm');
+  const passCheck = document.getElementById('pass-check');
 
-  var pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
+  // Regex password (coerente con HTML)
+  const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
 
   function updatePasswordValidity() {
-    var value = pwd.value || '';
-    var confValue = conf.value || '';
+    const value = pwd.value.trim();
+    const confValue = conf.value.trim();
 
-    if (value.length === 0 && confValue.length === 0) {
+    // Nessun input → reset
+    if (!value && !confValue) {
       passCheck.textContent = '';
       pwd.setCustomValidity('');
       return false;
     }
 
+    // Regex non rispettata
     if (!pwdRegex.test(value)) {
       passCheck.textContent = "La password deve avere almeno 8 caratteri, una maiuscola, una minuscola, un numero e un carattere speciale.";
       passCheck.style.color = "red";
@@ -22,13 +25,15 @@
       return false;
     }
 
-    if (confValue.length > 0 && value !== confValue) {
+    // Password diverse
+    if (confValue && value !== confValue) {
       passCheck.textContent = "Le password non corrispondono.";
       passCheck.style.color = "red";
       pwd.setCustomValidity("Le password non corrispondono");
       return false;
     }
 
+    // Tutto ok
     passCheck.textContent = "Password valida.";
     passCheck.style.color = "green";
     pwd.setCustomValidity('');
@@ -37,35 +42,52 @@
 
   pwd.addEventListener('input', updatePasswordValidity);
   conf.addEventListener('input', updatePasswordValidity);
-
   pwd.addEventListener('blur', updatePasswordValidity);
   conf.addEventListener('blur', updatePasswordValidity);
 
-  var form = document.querySelector('form.auth-form');
+  // Validazione finale al submit
+  const form = document.querySelector('form.auth-form');
   if (form) {
     form.addEventListener('submit', function(e) {
-      var ok = updatePasswordValidity();
-      if (!ok) {
+      if (!updatePasswordValidity()) {
         e.preventDefault();
         pwd.focus();
-        if (typeof pwd.reportValidity === 'function') pwd.reportValidity();
+        if (typeof pwd.reportValidity === "function") {
+          pwd.reportValidity();
+        }
       }
     });
   }
-})();
+  })();
 
 
 
-// Controllo email AJAX
+// ===============================
+//   CONTROLLO EMAIL AJAX
+// ===============================
+
 const email = document.getElementById("email");
 const emailCheck = document.getElementById("email-check");
 
+// Regex email lato JS (coerente con HTML)
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 email.addEventListener("blur", () => {
 
+    const value = email.value.trim();
+
+    // Se email non valida → non chiamare AJAX
+    if (!emailRegex.test(value)) {
+        emailCheck.textContent = "Formato email non valido";
+        emailCheck.style.color = "red";
+        return;
+    }
+
+    // Controllo AJAX
     fetch("checkEmail", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "email=" + encodeURIComponent(email.value)
+        body: "email=" + encodeURIComponent(value)
     })
     .then(res => res.json())
     .then(data => {
@@ -76,5 +98,9 @@ email.addEventListener("blur", () => {
             emailCheck.textContent = "Email disponibile";
             emailCheck.style.color = "green";
         }
+    })
+    .catch(() => {
+        emailCheck.textContent = "Errore di connessione";
+        emailCheck.style.color = "red";
     });
 });

@@ -75,8 +75,9 @@ body {
 /* BOTTONI */
 .btn-primary {
 	display: inline-block;
-	background: #FFC266;
-	color: #111;
+	background-color:#FFC266;
+	color:#8C5A2B;
+	
 	padding: 10px 16px;
 	border-radius: 8px;
 	font-weight: 700;
@@ -86,7 +87,8 @@ body {
 }
 
 .btn-primary:hover {
-	background: #e6a957;
+    background: #E6A957;
+    transform: translateY(-2px);
 }
 
 .btn-small {

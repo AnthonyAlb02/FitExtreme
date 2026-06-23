@@ -11,6 +11,7 @@
     --radius:         12px;
     --shadow-soft:    0 4px 12px rgba(0,0,0,0.1);
     --shadow-strong:  0 6px 16px rgba(0,0,0,0.15);
+    --recolor: #E6A957;
 }
 
 /* ========================================================= */
@@ -98,21 +99,24 @@
 .btn-add-cart {
     width: 100%;
     padding: 14px 22px;
-    background: var(--primary);
+    background: #FFC266;
     border: none;
-    border-radius: var(--radius);
+    border-radius: 10px;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    color: var(--text-main);
-    transition: 0.2s ease;
+    color: #8C5A2B;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 194, 102, 0.3);
 }
 
+
 .btn-add-cart:hover {
-    background: var(--secondary);
-    color: #fff;
-    transform: translateY(-1px);
+    background: #E6A957;
+    transform: translateY(-3px); 
+    box-shadow: 0 6px 20px rgba(255, 194, 102, 0.4); 
 }
+
 
 .btn-back {
     display: block;
@@ -126,6 +130,7 @@
     color: var(--text-main);
     text-decoration: none;
     transition: 0.2s ease;
+    
 }
 
 .btn-back:hover {

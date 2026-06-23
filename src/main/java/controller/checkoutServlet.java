@@ -86,7 +86,7 @@ public class checkoutServlet extends HttpServlet {
                     .setScale(2, RoundingMode.HALF_UP);
 
          
-         // Attributi request → checkout.jsp
+         // Attributi request 
             request.setAttribute("prodotti", prodotti);
             request.setAttribute("quantita", carrello);
             request.setAttribute("totale", imponibile);          

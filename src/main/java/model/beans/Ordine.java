@@ -7,7 +7,7 @@ public class Ordine {
 
     private int idOrdine;
     private int idUtente;
-    private Integer idAmministratore; // può essere null
+    private Integer idAmministratore;
     private LocalDate dataOrdine;
     private String statoAvanzamento;
     private BigDecimal importoTotale;
@@ -25,26 +25,85 @@ public class Ordine {
     }
 
     public int getIdOrdine() { return idOrdine; }
-    public void setIdOrdine(int idOrdine) { this.idOrdine = idOrdine; }
+    public void setIdOrdine(int idOrdine) {
+    	this.idOrdine = idOrdine; 
+    	
+    }
+    
 
-    public int getIdUtente() { return idUtente; }
-    public void setIdUtente(int idUtente) { this.idUtente = idUtente; }
+    public int getIdUtente() {
+    	return idUtente; 
+    	
+    }
+    
+    
+    public void setIdUtente(int idUtente) {
+    	this.idUtente = idUtente; 
+    	
+    }
 
-    public Integer getIdAmministratore() { return idAmministratore; }
-    public void setIdAmministratore(Integer idAmministratore) { this.idAmministratore = idAmministratore; }
+    
+    
+    public Integer getIdAmministratore() {
+    	return idAmministratore; 
+    	
+    }
+    
+    
+    public void setIdAmministratore(Integer idAmministratore) {
+    	this.idAmministratore = idAmministratore; 
+    	
+    }
 
-    public LocalDate getDataOrdine() { return dataOrdine; }
-    public void setDataOrdine(LocalDate dataOrdine) { this.dataOrdine = dataOrdine; }
+    public LocalDate getDataOrdine() { 
+    	return dataOrdine; 
+    	
+    }
+    
+    
+    public void setDataOrdine(LocalDate dataOrdine) {
+    	this.dataOrdine = dataOrdine; 
+    	
+    }
+    
+    
 
-    public String getStatoAvanzamento() { return statoAvanzamento; }
-    public void setStatoAvanzamento(String statoAvanzamento) { this.statoAvanzamento = statoAvanzamento; }
+    public String getStatoAvanzamento() {
+    	return statoAvanzamento; 
+    	
+    }
+    
+    public void setStatoAvanzamento(String statoAvanzamento) { 
+    	this.statoAvanzamento = statoAvanzamento; 
+    	
+    }
+    
+    
 
-    public BigDecimal getImportoTotale() { return importoTotale; }
-    public void setImportoTotale(BigDecimal importoTotale) { this.importoTotale = importoTotale; }
+    public BigDecimal getImportoTotale() { 
+    	return importoTotale; 
+    	
+    }
+    
+    
+    public void setImportoTotale(BigDecimal importoTotale) {
+    	this.importoTotale = importoTotale; 
+    	
+    }
 
-    // ⭐ Getter/Setter aggiunti
-    public String getNomeUtente() { return nomeUtente; }
-    public void setNomeUtente(String nomeUtente) { this.nomeUtente = nomeUtente; }
+   
+    public String getNomeUtente() {
+    	return nomeUtente;
+    	
+    }
+    
+    
+    public void setNomeUtente(String nomeUtente) {
+    	
+    	this.nomeUtente = nomeUtente; 
+    	
+    }
+    
 
     @Override
     public String toString() {

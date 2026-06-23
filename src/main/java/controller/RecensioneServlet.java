@@ -19,7 +19,7 @@ public class RecensioneServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        // 1) Controllo login
+        //  Controllo login
         Utente utente = (session != null) ? (Utente) session.getAttribute("utente") : null;
         if (utente == null) {
             session = request.getSession();
@@ -29,21 +29,21 @@ public class RecensioneServlet extends HttpServlet {
         }
 
         try {
-            // 2) Leggo parametri
+            //  Leggo parametri
             int idArticolo = Integer.parseInt(request.getParameter("idArticolo"));
             int voto = Integer.parseInt(request.getParameter("voto"));
             String commento = request.getParameter("commento");
 
             RecensioneDAO dao = new RecensioneDAO();
 
-            // 3) Controllo se l’utente ha già recensito questo articolo
+            //  Controllo se l’utente ha già recensito questo articolo
             if (dao.hasUserReviewed(utente.getIdUtente(), idArticolo)) {
                 session.setAttribute("errore", "Hai già recensito questo prodotto.");
                 response.sendRedirect(request.getContextPath() + "/prodotto?id=" + idArticolo);
                 return;
             }
 
-            // 4) Creo la recensione
+            //  Creo la recensione
             Recensione r = new Recensione();
             r.setIdUtente(utente.getIdUtente());
             r.setIdArticolo(idArticolo);
@@ -51,13 +51,13 @@ public class RecensioneServlet extends HttpServlet {
             r.setCommento(commento);
             r.setDataRecensione(LocalDate.now());
 
-            // 5) Salvo nel DB
+            // Salvo nel DB
             dao.doSave(r);
 
-            // 6) Messaggio di successo
+            //  Messaggio di successo
             session.setAttribute("successo", "Recensione aggiunta con successo!");
 
-            // 7) Redirect alla pagina prodotto
+            // Redirect alla pagina prodotto
             response.sendRedirect(request.getContextPath() + "/prodotto?id=" + idArticolo);
 
         } catch (Exception e) {

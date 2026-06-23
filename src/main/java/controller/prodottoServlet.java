@@ -48,12 +48,12 @@ public class prodottoServlet extends HttpServlet {
                 return;
             }
 
-            // ⭐⭐⭐ AGGIUNTA RECENSIONI (UNICA COSA CHE MANCAVA)
+            //  AGGIUNTA RECENSIONI (UNICA COSA CHE MANCAVA)
             RecensioneDAO rdao = new RecensioneDAO();
             List<Recensione> recensioni = rdao.doRetrieveByArticolo(idProdotto);
             request.setAttribute("recensioni", recensioni);
 
-            // ⭐ PASSO 1 — QUI!
+            
             // Passiamo alla JSP la lista completa dei prodotti
             request.setAttribute("tuttiProdotti", articoloDAO.doRetrieveAll(null));
 
