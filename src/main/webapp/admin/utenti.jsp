@@ -27,6 +27,11 @@
 
 <body>
 
+<%
+    Utente logged = (Utente) session.getAttribute("utente");
+%>
+
+
 <div class="admin-wrapper">
 
     <!-- SIDEBAR -->
@@ -80,27 +85,36 @@
                     </span>
                 </td>
 
-                <td class="azioni-cell">
+      <td class="azioni-cell">
 
-                    <% if (!ruolo.equals("admin")) { %>
-                    <form action="${pageContext.request.contextPath}/admin/promuovi-utente"
-                          method="post"
-                          data-nome="<%= nome + " " + cognome %>"
-                          onsubmit="apriPopupPromuovi(this.dataset.nome, this); return false;">
-                        <input type="hidden" name="id" value="<%= u.getIdUtente() %>">
-                        <button class="btn btn-secondary" type="submit">Rendi Admin</button>
-                    </form>
-                    <% } %>
+    <% if (logged != null && logged.getIdUtente() == u.getIdUtente()) { %>
 
-                    <form action="${pageContext.request.contextPath}/admin/elimina-utente"
-                          method="post"
-                          data-nome="<%= nome + " " + cognome %>"
-                          onsubmit="apriPopupElimina(this.dataset.nome, this); return false;">
-                        <input type="hidden" name="id" value="<%= u.getIdUtente() %>">
-                        <button class="btn btn-primary" type="submit">Elimina</button>
-                    </form>
+       
 
-                </td>
+    <% } else { %>
+
+        <% if (!ruolo.equals("admin")) { %>
+        <form action="${pageContext.request.contextPath}/admin/promuovi-utente"
+              method="post"
+              data-nome="<%= nome + " " + cognome %>"
+              onsubmit="apriPopupPromuovi(this.dataset.nome, this); return false;">
+            <input type="hidden" name="id" value="<%= u.getIdUtente() %>">
+            <button class="btn btn-secondary" type="submit">Rendi Admin</button>
+        </form>
+        <% } %>
+
+        <form action="${pageContext.request.contextPath}/admin/elimina-utente"
+              method="post"
+              data-nome="<%= nome + " " + cognome %>"
+              onsubmit="apriPopupElimina(this.dataset.nome, this); return false;">
+            <input type="hidden" name="id" value="<%= u.getIdUtente() %>">
+            <button class="btn btn-primary" type="submit">Elimina</button>
+        </form>
+
+    <% } %>
+
+</td>
+
             </tr>
 
             <%
