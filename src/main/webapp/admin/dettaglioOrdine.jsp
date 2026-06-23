@@ -24,12 +24,7 @@
 
 <div class="admin-content">
 
-    <a href="${pageContext.request.contextPath}/admin/ordini"
-       class="btn btn-secondary"
-       style="display:inline-block; margin-bottom: 24px;">
-       ← Torna agli ordini
-    </a>
-
+ 
     <h1 class="admin-title">Dettaglio Ordine #<%= ordine.getIdOrdine() %></h1>
 
     <!-- INFO ORDINE -->
@@ -111,6 +106,12 @@
     </table>
 
 </div>
+   <a href="${pageContext.request.contextPath}/admin/ordini"
+       class="btn btn btn-secondary btn-small"
+       style=" margin-bottom: 24px;">
+       	Torna agli ordini
+    </a>
+
 
 </body>
 </html>
