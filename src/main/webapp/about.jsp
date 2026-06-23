@@ -9,10 +9,11 @@
     
 
     <!-- Stessi stylesheet delle altre pagine -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/base.css">
+    
     <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/header.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/footer.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/aboutus.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/utilities/css/base.css">
 </head>
 
 <body>

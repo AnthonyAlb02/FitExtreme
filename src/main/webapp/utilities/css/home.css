@@ -1,3 +1,6 @@
+/* ============================
+   HERO
+============================ */
 .hero {
     position: relative;
     background: url("../immagini/hero.png") center/cover no-repeat;
@@ -59,6 +62,9 @@
     transform: translateY(-2px);
 }
 
+/* ============================
+   SECTIONS
+============================ */
 .section {
     padding: 50px 0;
 }
@@ -70,12 +76,15 @@
     color: #111111;
 }
 
+/* ============================
+   CATEGORIES CAROUSEL
+============================ */
 .categories {
     padding: 50px 0 25px 0;
 }
 
 .carousel-wrapper {
-	width:55%;
+    width: 55%;
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
@@ -113,7 +122,6 @@
 
 .cat-card .img-wrapper {
     height: 200px;
-    flex-shrink: 0;
     overflow: hidden;
 }
 
@@ -121,7 +129,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
     transition: transform 0.35s ease;
 }
 
@@ -143,6 +150,7 @@
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
+/* BOTTONI CAROUSEL (DESKTOP) */
 .carousel-btn {
     position: absolute;
     top: 50%;
@@ -158,14 +166,17 @@
     transition: 0.25s;
 }
 
+.carousel-btn.left  { left: 0; }
+.carousel-btn.right { right: 0; }
+
 .carousel-btn:hover {
     background: rgba(0, 0, 0, 0.85);
     transform: translateY(-50%) scale(1.12);
 }
 
-.carousel-btn.left  { left: 0; }
-.carousel-btn.right { right: 0; }
-
+/* ============================
+   PROMO BANNER
+============================ */
 .promo-banner {
     margin: 35px auto;
     max-width: 1200px;
@@ -178,41 +189,28 @@
     border-radius: 12px;
 }
 
+/* ============================
+   GRID PRODOTTI
+============================ */
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 26px;
-    align-items: stretch;
-}
-
-.grid .card-link {
-    display: block;
-    height: 100%;
-    text-decoration: none;
-    color: inherit;
 }
 
 .grid .card {
-    height: 100%;
-    width: 100%;
+    height: 320px;
     display: flex;
     flex-direction: column;
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    padding: 0;
-}
-
-.grid .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    transition: 0.25s ease;
 }
 
 .grid .card-img {
     height: 210px;
-    flex-shrink: 0;
     overflow: hidden;
 }
 
@@ -220,8 +218,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    transition: transform 0.35s ease;
+    transition: 0.35s ease;
 }
 
 .grid .card:hover .card-img img {
@@ -232,28 +229,26 @@
     padding: 14px 16px 18px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+      justify-content: space-between;
 }
 
-.grid .card .title {
+.grid .title {
     font-size: 15px;
     font-weight: 600;
-    color: #111;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
     min-height: 40px;
     text-align: center;
 }
 
-.grid .card .price {
+.grid .price {
     font-size: 18px;
     font-weight: 700;
     color: #FFC266;
     margin-top: auto;
-    padding-top: 10px;
 }
 
+/* ============================
+   TRUST SECTION
+============================ */
 .trust {
     padding: 45px 0 55px;
     background: #fff7e6;
@@ -278,40 +273,160 @@
     font-weight: 500;
 }
 
-@media (max-width: 992px) {
+/* ============================
+   MOBILE (ANDROID)
+============================ */
+@media (max-width: 600px) {
+
+    /* HERO */
     .hero {
         padding: 0 20px;
         text-align: center;
         justify-content: center;
-        height: 260px;
+        height: 220px;
     }
+
+    .hero-content h1 { font-size: 30px; }
+    .hero-content p { font-size: 15px; }
+
+    /* CAROUSEL → 2 CARD + NO BUTTONS */
+    .carousel-wrapper { width: 100% !important; }
+    .carousel-btn { display: none !important; }
+
+    .carousel {
+        gap: 14px !important;
+        padding: 10px 6px !important;
+    }
+
+    .cat-card {
+        flex: 0 0 calc(50% - 14px) !important;
+        width: calc(50% - 14px) !important;
+        height: 220px !important;
+    }
+
+    .cat-card .img-wrapper {
+        height: 140px !important;
+    }
+
+    .cat-card span {
+        font-size: 14px !important;
+        padding: 10px !important;
+    }
+
+    /* GRID PRODOTTI → 2 CARD */
     .grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    .grid .card {
+        height: 280px !important;
+    }
+
+    .grid .card-img {
+        height: 150px !important;
+    }
+
+    .grid .title {
+        font-size: 14px !important;
+        min-height: 34px !important;
+    }
+
+    .grid .price {
+        font-size: 16px !important;
+    }
+
+    /* TRUST SEMPRE 3 */
+    .trust-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 14px !important;
+    }
+
+    .trust-item img {
+        height: 32px !important;
+    }
+
+    .trust-item p {
+        font-size: 13px !important;
+    }
+}
+
+   
+ 
+@media (max-width: 600px) {
+
+    .cat-card .img-wrapper {
+        width: 100%;
+        height: 120px !important;   
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f2f2f2;
+    }
+
+    .cat-card .img-wrapper img {
+        width: 100% !important;     
+        height: 120px !important;   
+        object-fit: cover !important; 
+        object-position: center center !important;
+        display: block;
     }
 }
 
 @media (max-width: 600px) {
-    .hero {
-        height: 220px;
-    }
-    .hero-content h1 {
-        font-size: 30px;
-    }
-    .hero-content p {
-        font-size: 15px;
-    }
+
     .grid {
-        grid-template-columns: 1fr;
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
     }
-    .trust-grid {
-        grid-template-columns: 1fr;
+
+    .grid .card {
+        height: 390px !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 0 !important;
     }
-    .cat-card {
-        flex: 0 0 200px;
-        width: 200px;
-        height: 250px;
+
+    .grid .card-img {
+        height: 230px !important;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f8f8;
     }
-    .cat-card .img-wrapper {
-        height: 170px;
+
+    .grid .card-img img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center;
+    }
+
+    .grid .title {
+        font-size: 15px !important;
+        min-height: 40px !important;
+        max-height: 40px !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+        margin-bottom: 6px !important;
+    }
+
+    .grid .price {
+        text-align: center !important;
+        margin-top: auto !important;
+        padding-bottom: 8px !important;
+        font-size: 17px !important;
     }
 }
+
+
+
+

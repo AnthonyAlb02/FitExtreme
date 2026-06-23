@@ -1,300 +1,481 @@
-/* ===========================
-   RESET & BASE
-=========================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+	/* ===========================
+	   RESET & BASE
+	=========================== */
+	* {
+	    margin: 0;
+	    padding: 0;
+	    box-sizing: border-box;
+	}
+	
+	html {
+	    scroll-behavior: smooth;
+	}
+	
+	body {
+	    font-family: "Poppins", sans-serif;
+	    background-color: #FFFFFF;
+	    color: #111111;
+	    line-height: 1.6;
+	}
+	
+	/* ===========================
+	   TIPOGRAFIA
+	=========================== */
+	h1, h2, h3, h4, h5 {
+	    font-weight: 600;
+	    color: #111111;
+	    letter-spacing: -0.5px;
+	}
+	
+	h1 {
+	    font-size: 2.4rem;
+	    margin-bottom: 20px;
+	}
+	
+	h2 {
+	    font-size: 1.7rem;
+	    margin-bottom: 16px;
+	}
+	
+	p, span, li {
+	    color: #111111;
+	    font-size: 1rem;
+	}
+	
+	.text-secondary,
+	.note {
+	    color: #6E6E6E;
+	}
+	
+	/* ===========================
+	   LINK
+	=========================== */
+	a {
+	    color: #8C5A2B;
+	    text-decoration: none;
+	    transition: opacity 0.2s ease, color 0.2s ease;
+	    font-weight: 500;
+	}
+	
+	a:hover {
+	    opacity: 0.7;
+	}
+	
+	/* ===========================
+	   CONTAINER
+	=========================== */
+	.container {
+	    width: min(90%, 1200px);
+	    margin: 0 auto;
+	    padding: 20px 0;
+	}
+	
+	/* ===========================
+	   SEZIONI PAGINA UNIFICATE
+	=========================== */
+	.page-container,
+	.about-container {
+	    width: min(90%, 900px);
+	    margin: 50px auto;
+	    padding: 40px 50px;
+	    background: #FFFFFF;
+	    border-radius: 16px;
+	    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+	}
+	
+	/* ===========================
+	   FORM GLOBALI
+	=========================== */
+	.contact-form,
+	.generic-form {
+	    display: flex;
+	    flex-direction: column;
+	    gap: 18px;
+	}
+	
+	.contact-form label,
+	.generic-form label {
+	    font-weight: 600;
+	    color: #111;
+	    font-size: 1rem;
+	    margin-bottom: 4px;
+	}
+	
+	.contact-form input,
+	.contact-form textarea,
+	.generic-form input,
+	.generic-form textarea {
+	    width: 100%;
+	    padding: 14px 16px;
+	    border: 1px solid #d0d0d0;
+	    border-radius: 8px;
+	    font-size: 1rem;
+	    font-family: "Poppins", sans-serif;
+	    background: #fafafa;
+	    transition: border-color 0.2s ease, background 0.2s ease;
+	}
+	
+	.contact-form input:focus,
+	.contact-form textarea:focus,
+	.generic-form input:focus,
+	.generic-form textarea:focus {
+	    border-color: #8C5A2B;
+	    background: #fff;
+	    outline: none;
+	}
+	
+	.contact-form textarea,
+	.generic-form textarea {
+	    resize: vertical;
+	    min-height: 140px;
+	}
+	
+	
+	/* ============================================================
+	   BOTTONI GLOBALI FITEXTREME
+	============================================================ */
+	.btn {
+	    display: inline-block;
+	    padding: 12px 20px;
+	    border-radius: 10px;
+	    font-weight: 600;
+	    cursor: pointer;
+	    border: none;
+	    text-align: center;
+	    transition: background 0.25s ease, transform 0.2s ease;
+	}
+	
+	/* PRIMARIO */
+	.btn-primary {
+	    background: var(--fx-orange);
+	    color: var(--fx-brown);
+	}
+	
+	.btn-primary:hover {
+	    background: var(--fx-hower);
+	    transform: translateY(-2px);
+	}
+	
+	/* SECONDARIO */
+	.btn-secondary {
+	    background: var(--fx-light);
+	    color: var(--fx-brown);
+	    border: 1px solid var(--fx-brown);
+	}
+	
+	.btn-secondary:hover {
+	    background: var(--fx-orange);
+	    color: var(--fx-brown);
+	    transform: translateY(-2px);
+	}
+	
+	/* ACTIVE */
+	.btn:active {
+	    transform: translateY(0);
+	    filter: brightness(0.95);
+	}
+	
+	
+	
+	/* ===========================
+	   CARD PRODOTTO
+	   Unica definizione valida per
+	   home, catalogo e ogni altra pagina.
+	   NON usare padding diretto su .card:
+	   il layout è immagine + body separati.
+	=========================== */
+	.card-link {
+	    text-decoration: none;
+	    color: inherit;
+	    display: block;
+	    height: 100%;
+	}
+	
+	.card {
+	    /* dimensioni fisse: tutte le card sono identiche */
+	    width: 100%;
+	    height: 340px;
+	
+	    display: flex;
+	    flex-direction: column;
+	
+	    background: #FFFFFF;
+	    border-radius: 10px;
+	    overflow: hidden;                          /* taglia l'immagine ai bordi */
+	    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	    transition: transform 0.2s ease, box-shadow 0.2s ease;
+	
+	    /* nessun padding qui: ci pensano .card-img e .card-body */
+	}
+	
+	.card:hover {
+	    transform: translateY(-4px);
+	    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+	}
+	
+	/* IMMAGINE — altezza fissa, mai compressa né stirata */
+	.card-img {
+	    height: 200px;
+	    flex-shrink: 0;                            /* non si restringe mai */
+	    overflow: hidden;
+	}
+	
+	.card-img img {
+	    width: 100%;
+	    height: 100%;
+	    object-fit: cover;
+	    display: block;
+	    transition: transform 0.3s ease;
+	}
+	
+	.card:hover .card-img img {
+	    transform: scale(1.04);
+	}
+	
+	/* CONTENUTO */
+	.card-body {
+	    padding: 12px 14px 16px;
+	    display: flex;
+	    flex-direction: column;
+	    flex-grow: 1;                            
+	    min-height: 0;                            
+	}
+	
+	/* TITOLO: massimo 2 righe, poi ellissi */
+	.card .title {
+	    font-size: 15px;
+	    font-weight: 600;
+	    display: -webkit-box;
+	   
+	    -webkit-box-orient: vertical;
+	    overflow: hidden;
+	    min-height: 38px;
+	    color: #111;
+	}
+	
+	/* PREZZO: sempre in fondo alla card */
+	.card .price {
+	    font-size: 18px;
+	    font-weight: 700;
+	    color: #FFC266;
+	    margin-top: auto;
+	    padding-top: 8px;
+	}
+	
+	/* ===========================
+	   SFONDI GLOBALI
+	=========================== */
+	.bg-light {
+	    background-color: #F5F5F5;
+	}
+	
+	.bg-dark {
+	    background-color: #111111;
+	    color: #FFFFFF;
+	}
+	
+	/* ===========================
+	   RESPONSIVE BASE
+	=========================== */
+	@media (max-width: 600px) {
 
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: "Poppins", sans-serif;
-    background-color: #FFFFFF;
-    color: #111111;
-    line-height: 1.6;
-}
-
-/* ===========================
-   TIPOGRAFIA
-=========================== */
-h1, h2, h3, h4, h5 {
-    font-weight: 600;
-    color: #111111;
-    letter-spacing: -0.5px;
-}
-
-h1 {
-    font-size: 2.4rem;
-    margin-bottom: 20px;
-}
-
-h2 {
-    font-size: 1.7rem;
-    margin-bottom: 16px;
-}
-
-p, span, li {
-    color: #111111;
-    font-size: 1rem;
-}
-
-.text-secondary,
-.note {
-    color: #6E6E6E;
-}
-
-/* ===========================
-   LINK
-=========================== */
-a {
-    color: #8C5A2B;
-    text-decoration: none;
-    transition: opacity 0.2s ease, color 0.2s ease;
-    font-weight: 500;
-}
-
-a:hover {
-    opacity: 0.7;
-}
-
-/* ===========================
-   CONTAINER
-=========================== */
-.container {
-    width: min(90%, 1200px);
-    margin: 0 auto;
-    padding: 20px 0;
-}
-
-/* ===========================
-   SEZIONI PAGINA UNIFICATE
-=========================== */
-.page-container,
-.about-container {
-    width: min(90%, 900px);
-    margin: 50px auto;
-    padding: 40px 50px;
-    background: #FFFFFF;
-    border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-}
-
-/* ===========================
-   FORM GLOBALI
-=========================== */
-.contact-form,
-.generic-form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-
-.contact-form label,
-.generic-form label {
-    font-weight: 600;
-    color: #111;
-    font-size: 1rem;
-    margin-bottom: 4px;
-}
-
-.contact-form input,
-.contact-form textarea,
-.generic-form input,
-.generic-form textarea {
-    width: 100%;
-    padding: 14px 16px;
-    border: 1px solid #d0d0d0;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-family: "Poppins", sans-serif;
-    background: #fafafa;
-    transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus,
-.generic-form input:focus,
-.generic-form textarea:focus {
-    border-color: #8C5A2B;
-    background: #fff;
-    outline: none;
-}
-
-.contact-form textarea,
-.generic-form textarea {
-    resize: vertical;
-    min-height: 140px;
-}
-
-
-/* ============================================================
-   BOTTONI GLOBALI FITEXTREME
-============================================================ */
-.btn {
-    display: inline-block;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    text-align: center;
-    transition: background 0.25s ease, transform 0.2s ease;
-}
-
-/* PRIMARIO */
-.btn-primary {
-    background: var(--fx-orange);
-    color: var(--fx-brown);
-}
-
-.btn-primary:hover {
-    background: var(--fx-hower);
-    transform: translateY(-2px);
-}
-
-/* SECONDARIO */
-.btn-secondary {
-    background: var(--fx-light);
-    color: var(--fx-brown);
-    border: 1px solid var(--fx-brown);
-}
-
-.btn-secondary:hover {
-    background: var(--fx-orange);
-    color: var(--fx-brown);
-    transform: translateY(-2px);
-}
-
-/* ACTIVE */
-.btn:active {
-    transform: translateY(0);
-    filter: brightness(0.95);
-}
-
-
-
-/* ===========================
-   CARD PRODOTTO
-   Unica definizione valida per
-   home, catalogo e ogni altra pagina.
-   NON usare padding diretto su .card:
-   il layout è immagine + body separati.
-=========================== */
-.card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    height: 100%;
-}
-
-.card {
-    /* dimensioni fisse: tutte le card sono identiche */
-    width: 100%;
-    height: 340px;
-
-    display: flex;
-    flex-direction: column;
-
-    background: #FFFFFF;
-    border-radius: 10px;
-    overflow: hidden;                          /* taglia l'immagine ai bordi */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-    /* nessun padding qui: ci pensano .card-img e .card-body */
-}
-
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
-}
-
-/* IMMAGINE — altezza fissa, mai compressa né stirata */
-.card-img {
-    height: 200px;
-    flex-shrink: 0;                            /* non si restringe mai */
-    overflow: hidden;
-}
-
-.card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.card:hover .card-img img {
-    transform: scale(1.04);
-}
-
-/* CONTENUTO */
-.card-body {
-    padding: 12px 14px 16px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;                            
-    min-height: 0;                            
-}
-
-/* TITOLO: massimo 2 righe, poi ellissi */
-.card .title {
-    font-size: 15px;
-    font-weight: 600;
-    display: -webkit-box;
-   
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    min-height: 38px;
-    color: #111;
-}
-
-/* PREZZO: sempre in fondo alla card */
-.card .price {
-    font-size: 18px;
-    font-weight: 700;
-    color: #FFC266;
-    margin-top: auto;
-    padding-top: 8px;
-}
-
-/* ===========================
-   SFONDI GLOBALI
-=========================== */
-.bg-light {
-    background-color: #F5F5F5;
-}
-
-.bg-dark {
-    background-color: #111111;
-    color: #FFFFFF;
-}
-
-/* ===========================
-   RESPONSIVE BASE
-=========================== */
-@media (max-width: 768px) {
-
-    h1 {
-        font-size: 2rem;
+    html, body {
+        overflow-x: hidden !important;
+        font-size: 15px !important;
+        line-height: 1.45 !important;
     }
 
-    h2 {
-        font-size: 1.4rem;
-    }
+    h1 { font-size: 1.9rem !important; }
+    h2 { font-size: 1.45rem !important; }
+    h3 { font-size: 1.25rem !important; }
 
-    .container {
-        width: 92%;
-    }
-
+    header,
+    main,
+    footer,
+    section,
+    .container,
     .page-container,
     .about-container {
-        width: 92%;
-        padding: 25px 20px;
-        margin: 30px auto;
+        width: 100% !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    button,
+    .btn,
+    input[type="submit"],
+    input[type="button"] {
+        width: 100% !important;
+        padding: 14px !important;
+        font-size: 1rem !important;
+        border-radius: 10px !important;
+    }
+
+    form,
+    .contact-form,
+    .generic-form {
+        width: 100% !important;
+        padding: 0 !important;
+        gap: 14px !important;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100% !important;
+        font-size: 1rem !important;
+        padding: 12px 14px !important;
+    }
+
+    ul, ol {
+        padding-left: 18px !important;
+    }
+
+    .card,
+    .card-link,
+    .card-body {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .card-img {
+        height: auto !important;
+        max-height: 220px !important;
+    }
+
+    .card-img img {
+        object-fit: cover !important;
+    }
+
+    .top-bar {
+        flex-direction: column !important;
+        gap: 12px !important;
+        padding: 10px 20px !important;
+    }
+
+    .logo img {
+        height: 55px !important;
+    }
+
+    .search-container {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .header-icons {
+        justify-content: center !important;
+    }
+
+    .navbar {
+        flex-wrap: wrap !important;
+        gap: 16px !important;
+        padding: 10px 16px !important;
+    }
+
+    #cookie-banner .cookie-content {
+        flex-direction: column !important;
+        text-align: center !important;
+    }
+
+    #cookie-banner .cookie-buttons {
+        justify-content: center !important;
     }
 }
+@media (max-width: 600px) {
+
+    /* Spaziatura globale uniforme */
+    section,
+    .section,
+    .content,
+    .wrapper,
+    .page-container,
+    .about-container,
+    .container {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Titoli uniformati */
+    h1, h2, h3 {
+        margin-bottom: 14px !important;
+        text-align: left !important;
+    }
+
+    /* Card generiche */
+    .card,
+    .item,
+    .box,
+    .product {
+        width: 100% !important;
+        margin: 0 auto 18px auto !important;
+        border-radius: 12px !important;
+    }
+
+    /* Immagini generiche */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        border-radius: 10px !important;
+    }
+
+    /* Pulsanti uniformati */
+    button,
+    .btn,
+    input[type="submit"],
+    input[type="button"] {
+        width: 100% !important;
+        padding: 14px !important;
+        font-size: 1rem !important;
+        border-radius: 10px !important;
+        margin-top: 6px !important;
+    }
+
+    /* Form uniformati */
+    form,
+    .form,
+    .form-wrapper {
+        width: 100% !important;
+        padding: 0 !important;
+        gap: 14px !important;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100% !important;
+        padding: 12px 14px !important;
+        font-size: 1rem !important;
+    }
+
+    /* Tabelle (carrello, admin) */
+    table {
+        width: 100% !important;
+        display: block !important;
+        overflow-x: auto !important;
+        border-spacing: 0 !important;
+    }
+
+    /* Header uniformato */
+    header,
+    .main-header {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
+    /* Footer uniforme */
+    footer {
+        padding: 20px 16px !important;
+        text-align: center !important;
+    }
+}
+

@@ -1,6 +1,3 @@
-/* ============================
-   HEADER STICKY + OMBRA
-============================ */
 .main-header {
     width: 100%;
     background: #FFC266;
@@ -17,17 +14,10 @@
     bottom: -8px;
     width: 100%;
     height: 12px;
-    background: linear-gradient(
-        rgba(0, 0, 0, 0.18),
-        rgba(0, 0, 0, 0.05),
-        rgba(0, 0, 0, 0)
-    );
+    background: linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0));
     pointer-events: none;
 }
 
-/* ============================
-   TOP BAR LAYOUT
-============================ */
 .top-bar {
     display: flex;
     align-items: center;
@@ -58,34 +48,23 @@
     gap: 22px;
 }
 
-/* ============================
-   SEARCH CONTAINER
-   FIX: position:relative qui,
-   overflow:visible obbligatorio
-   così il dropdown non viene tagliato
-============================ */
 .search-container {
-    position: relative;    /* ancora per il dropdown assoluto */
+    position: relative;
     flex: 2;
     max-width: 550px;
     margin: 0 auto;
-    overflow: visible;     /* FIX: mai hidden, altrimenti taglia il dropdown */
+    overflow: visible;
 }
 
-/* ============================
-   SEARCH BAR
-   FIX: overflow RIMOSSO (era hidden)
-   Il border-radius si ottiene sul wrapper
-   tramite clip-path invece
-============================ */
 .search-bar {
     display: flex;
     align-items: center;
     background: white;
     border-radius: 10px;
-    /* overflow: hidden  <-- RIMOSSO: tagliava il .suggestions-box */
     border: 2px solid rgba(140, 90, 43, 0.13);
     width: 100%;
+    box-sizing: border-box;      /* AGGIUNTA */
+    overflow: hidden;            /* AGGIUNTA */
 }
 
 .search-bar input {
@@ -94,34 +73,29 @@
     border: none;
     outline: none;
     font-size: 16px;
-    border-radius: 10px 0 0 10px;
     background: transparent;
+    min-width: 0;                /* AGGIUNTA: evita sovrapposizioni col bottone */
 }
 
 .search-bar button {
-    width: 48px;
-    height: 48px;
+    width: 48px !important;
+    height: 48px !important;
     background-image: url('../immagini/search.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 22px 22px;
+    background-size: 22px 22px !important;
     background-color: transparent;
     border: none;
     cursor: pointer;
     transition: background-color 0.2s;
     border-radius: 0 8px 8px 0;
     flex-shrink: 0;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
 }
 
-.search-bar button:hover {
-    background-color: #ffe0b3;
-}
-
-/* ============================
-   SUGGERIMENTI AJAX
-   FIX: z-index > z-index del main-header (999)
-   FIX: position:absolute relativo a .search-container
-============================ */
 .suggestions-box {
     position: absolute;
     top: calc(100% + 6px);
@@ -131,10 +105,10 @@
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    z-index: 100000;       /* FIX: deve battere z-index:999 dello sticky header */
+    z-index: 100000;
     max-height: 260px;
     overflow-y: auto;
-    display: none;         /* mostrato via JS */
+    display: none;
 }
 
 .suggestion-item {
@@ -176,9 +150,6 @@
     padding: 14px;
 }
 
-/* ============================
-   ICONS HEADER
-============================ */
 .icon-btn {
     position: relative;
     cursor: pointer;
@@ -200,7 +171,6 @@
     filter: brightness(0.8);
 }
 
-/* CARRELLO BADGE */
 .cart-badge {
     position: absolute;
     top: -6px;
@@ -216,9 +186,6 @@
     text-align: center;
 }
 
-/* ============================
-   USER MENU DROPDOWN
-============================ */
 .user-menu {
     position: relative;
 }
@@ -271,15 +238,11 @@
     opacity: 0.75;
 }
 
-/* Apri dropdown su hover */
 .user-menu:hover .user-dropdown,
 .user-menu:focus-within .user-dropdown {
     display: flex;
 }
 
-/* ============================
-   NAVBAR
-============================ */
 .navbar {
     display: flex;
     justify-content: center;
@@ -291,7 +254,7 @@
 .navbar a {
     text-decoration: none;
     color: #111;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     transition: color 0.15s;
 }
@@ -300,9 +263,6 @@
     color: #8C5A2B;
 }
 
-/* ============================
-   COOKIE BANNER
-============================ */
 #cookie-banner {
     position: fixed;
     bottom: 0;
@@ -365,132 +325,148 @@
     background: #d4d4d4;
 }
 
-/* ============================
-   MOBILE
-============================ */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
 
     .top-bar {
-        flex-direction: column;
-        gap: 12px;
-        padding: 10px 20px;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 14px !important;
+        gap: 10px !important;
     }
 
     .logo img {
-        height: 55px;
+        height: 45px !important;
     }
 
     .search-container {
-        width: 100%;
-        max-width: 100%;
+        order: 3 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-top: 8px !important;
+    }
+
+    .search-bar {
+        height: 42px !important;
+        border-radius: 8px !important;
+    }
+
+    .search-bar input {
+        font-size: 14px !important;
+        padding: 8px 10px !important;
+        min-width: 0 !important;   /* ribadito anche in mobile */
+    }
+
+    .search-bar button {
+        width: 42px !important;
+        height: 42px !important;
+        background-size: 18px 18px !important;
     }
 
     .header-icons {
-        justify-content: center;
+        flex: 0 0 auto !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        gap: 14px !important;
+    }
+
+    .icon-img {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    .cart-badge {
+        font-size: 10px !important;
+        min-width: 16px !important;
+        padding: 1px 4px !important;
+        top: -4px !important;
+        right: -6px !important;
     }
 
     .navbar {
         flex-wrap: wrap;
-        gap: 16px;
-        padding: 10px 16px;
+        gap: 12px;
+        padding: 8px 10px;
     }
 
-    .cookie-content {
-        flex-direction: column;
-        text-align: center;
+    .navbar a {
+        font-size: 14px;
+        padding: 4px 0;
     }
-
-    .cookie-buttons {
-        justify-content: center;
-    }
-}
-
-/* ============================
-   HIDE ON SCROLL
-============================ */
-.main-header {
-    transition: transform 0.3s ease;
 }
 
 .main-header.header-hidden {
     transform: translateY(-100%);
 }
 
-/* ============================
-   ADMIN MODE - HEADER
-============================ */
-.admin-header {
-    background: #1f1f1f !important;
-    box-shadow: 0 2px 10px rgba(255, 68, 68, 0.25);
-    border-bottom: 3px solid #ff4444;
-}
+@media (max-width: 600px) {
 
-/* Banner admin */
-.admin-banner {
-    background: linear-gradient(90deg, #ff4444, #cc0000);
-    color: white;
-    padding: 10px;
-    text-align: center;
-    font-weight: 700;
-    letter-spacing: 1px;
-    font-size: 15px;
-    text-transform: uppercase;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-}
+    .top-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 14px;
+    }
 
-/* Navbar admin */
-.admin-header .navbar {
-    background: #111 !important;
-    border-top: 1px solid #333;
-}
+    .logo {
+        flex: 0 0 auto;
+    }
 
-.admin-header .navbar a {
-    color: #ddd !important;
-    font-weight: 600;
-    transition: color 0.2s, transform 0.2s;
-}
+    .header-icons {
+        flex: 0 0 auto;
+        margin-left: auto;
+    }
 
-.admin-header .navbar a:hover {
-    color: #ff4444 !important;
-    transform: translateY(-2px);
-}
+    .search-container {
+        order: 99;
+        flex-basis: 100%;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 10px;
+    }
 
-/* Icon glow */
-.admin-header .icon-img {
-    filter: drop-shadow(0 0 4px rgba(255, 68, 68, 0.6));
-}
+    .search-bar {
+        display: flex;
+        width: 100%;
+    }
 
-/* Dropdown admin */
-.admin-header .user-dropdown {
-    background: #1f1f1f;
-    border: 1px solid #333;
-}
+    .search-bar input {
+        flex: 1 1 auto;
+        width: auto;
+        min-width: 0;
+    }
 
-.admin-header .user-dropdown a {
-    color: #eee;
+    .search-bar button {
+        flex: 0 0 42px;
+    }
 }
+   
 
-.admin-header .user-dropdown a:hover {
-    background: #2a2a2a;
-}
+    /* NAVBAR PIÙ PICCOLA */
+    .navbar {
+        gap: 10px !important;
+        padding: 6px 8px !important;
+    }
 
-.admin-header .dropdown-user {
-    color: #ffb3b3;
-    border-bottom: 1px solid #333;
-}
+    .navbar a {
+        font-size: 12px !important;
+        padding: 3px 0 !important;
+    }
+    
+    /* NAVBAR DESKTOP PIÙ GRANDE */
+@media (min-width: 601px) {
+    .navbar a {
+        font-size: 18px !important;   
+        font-weight: 700 !important;  
+        letter-spacing: 0.5px;        
+    }
 
-/* Dashboard highlight */
-.admin-header .user-dropdown a[href*="dashboard"] {
-    color: #ff4444 !important;
-    font-weight: 700;
+    .navbar {
+        gap: 50px !important;         
+        padding: 14px 0 !important;  
+    }
 }
+    
 
-.admin-header .user-dropdown a[href*="dashboard"]:hover {
-    background: #2a2a2a;
-}
-
-/* Smooth transitions */
-.admin-header,
-.admin-header * {
-    transition: all 0.25s ease;
-}

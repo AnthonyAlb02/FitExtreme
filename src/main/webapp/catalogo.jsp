@@ -5,6 +5,7 @@
 	<html lang="it">
 	<head>
 	<meta charset="UTF-8">
+	
 	<title>Catalogo | FitExtreme</title>
 	 <jsp:include page="/head.jsp" />
 	
