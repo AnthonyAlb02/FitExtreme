@@ -33,7 +33,7 @@ function updateCart(id, action) {
     .then(res => res.json())
     .then(data => {
 
-        // ❗ SE STOCK ESAURITO
+        // SE STOCK ESAURITO
         if (data.error === "stock_esaurito") {
 
             const row = document.getElementById("row-" + id);
@@ -41,10 +41,10 @@ function updateCart(id, action) {
 
             setTimeout(() => row.classList.remove("shake"), 500);
 
-            return; // ❗ BLOCCA AGGIORNAMENTO
+            return; //  BLOCCA AGGIORNAMENTO
         }
 
-        // ❗ SE L'ARTICOLO È STATO RIMOSSO
+        //  SE L'ARTICOLO È STATO RIMOSSO
         if (data.removed === true || data.removed === "true") {
             const row = document.getElementById("row-" + id);
             if (row) row.remove();
