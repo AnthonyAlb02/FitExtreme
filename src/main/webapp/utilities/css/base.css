@@ -179,10 +179,6 @@
 	
 	/* ===========================
 	   CARD PRODOTTO
-	   Unica definizione valida per
-	   home, catalogo e ogni altra pagina.
-	   NON usare padding diretto su .card:
-	   il layout è immagine + body separati.
 	=========================== */
 	.card-link {
 	    text-decoration: none;
@@ -213,10 +209,10 @@
 	    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
 	}
 	
-	/* IMMAGINE — altezza fissa, mai compressa né stirata */
+	/* IMMAGINE */
 	.card-img {
 	    height: 200px;
-	    flex-shrink: 0;                            /* non si restringe mai */
+	    flex-shrink: 0;                         
 	    overflow: hidden;
 	}
 	
@@ -241,7 +237,7 @@
 	    min-height: 0;                            
 	}
 	
-	/* TITOLO: massimo 2 righe, poi ellissi */
+	/* TITOLO */
 	.card .title {
 	    font-size: 15px;
 	    font-weight: 600;
@@ -253,7 +249,7 @@
 	    color: #111;
 	}
 	
-	/* PREZZO: sempre in fondo alla card */
+	/* PREZZO */
 	.card .price {
 	    font-size: 18px;
 	    font-weight: 700;
