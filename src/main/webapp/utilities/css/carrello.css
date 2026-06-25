@@ -36,7 +36,7 @@
 	vertical-align: middle;
 }
 
-/* CORREZIONE: Forza il centro nella colonna Quantità (3a colonna) */
+
 .cart-table td:nth-child(3) {
 	text-align: center !important;
 }
@@ -104,8 +104,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	line-height: 1; /* Assicura che + e - siano centrati verticalmente */
-	padding: 0; /* Rimuove padding per evitare spostamenti */
+	line-height: 1;
+	padding: 0; 
 }
 
 .qty-btn:hover {
@@ -118,7 +118,6 @@
 	min-width: 30px;
 	text-align: center;
 	font-size: 16px;
-	/* Allinea il numero all'altezza esatta dei bottoni */
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -189,11 +188,11 @@
 	text-decoration: none;
 	font-size: 16px;
 	transition: all 0.3s;
-	display: inline-block; /* Fondamentale per la visibilità */
+	display: inline-block; 
 	border: none;
 	cursor: pointer;
 	box-shadow: 0 4px 12px rgba(255, 194, 102, 0.3);
-	opacity: 1; /* Visibilità garantita */
+	opacity: 1; 
 }
 
 .btn-acquista:hover {
@@ -256,11 +255,11 @@
 		text-align: center;
 	}
 	.cart-table td {
-		height: 70px; /* stessa altezza dell’immagine */
+		height: 70px;
 		vertical-align: middle;
 	}
 
-	/* Allinea perfettamente i bottoni */
+	/* Allineamento i bottoni */
 	.qty-controls {
 		display: flex;
 		align-items: center;
