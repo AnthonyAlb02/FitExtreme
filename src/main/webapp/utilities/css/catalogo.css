@@ -279,15 +279,9 @@
         grid-template-columns: 1fr;
     }
 }
-/* ============================================
-   CARD UNIFORMI — SOLO ANDROID
-=============================================== */
-/* ============================================
-   VERSIONE ANDROID — 2 CARD PER RIGA SEMPRE
-=============================================== */
+
 @media (max-width: 600px) {
 
-    /* 2 card per riga */
     .prodotti-container {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
@@ -295,7 +289,6 @@
         padding: 10px !important;
     }
 
-    /* Card tutte della stessa altezza */
     .card {
         height: 330px !important;
         display: flex;
@@ -303,7 +296,6 @@
         justify-content: space-between;
     }
 
-    /* Immagine con altezza standard */
     .card-img {
         height: 160px !important;
         overflow: hidden;
@@ -341,7 +333,6 @@
         font-size: 16px !important;
     }
 
-    /* Bottone sempre visibile */
     .card-btn {
         opacity: 1 !important;
         transform: translateY(0) !important;
