@@ -12,7 +12,6 @@
 
 <body>
 
-<jsp:include page="/header.jsp" />
 
 <main class="page-container">
 
@@ -47,7 +46,7 @@
 
 </main>
 
-<jsp:include page="/footer.jsp" />
+
 
 </body>
 </html>
