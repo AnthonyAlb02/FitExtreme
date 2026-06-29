@@ -25,9 +25,6 @@ VALUES
  SHA2('password456', 256), 'Luca', 'Bianchi', '3339876543',
  'Via Milano 22, Salerno', NULL, NULL, NULL, NULL, 'registrato'),
 
-('guest1@example.com', CURDATE(),
- NULL, NULL, NULL, NULL,
- NULL, 'SESSION123', '192.168.1.10', NULL, NULL, 'guest'),
 
 ('admin@example.com', CURDATE(),
  SHA2('AdminMaster1234_', 256), 'Admin', 'Master', '3330001111',

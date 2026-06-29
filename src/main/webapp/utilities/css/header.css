@@ -63,8 +63,8 @@
     border-radius: 10px;
     border: 2px solid rgba(140, 90, 43, 0.13);
     width: 100%;
-    box-sizing: border-box;      /* AGGIUNTA */
-    overflow: hidden;            /* AGGIUNTA */
+    box-sizing: border-box;      
+    overflow: hidden;            
 }
 
 .search-bar input {
@@ -74,7 +74,7 @@
     outline: none;
     font-size: 16px;
     background: transparent;
-    min-width: 0;                /* AGGIUNTA: evita sovrapposizioni col bottone */
+    min-width: 0;                
 }
 
 .search-bar button {
@@ -354,7 +354,7 @@
     .search-bar input {
         font-size: 14px !important;
         padding: 8px 10px !important;
-        min-width: 0 !important;   /* ribadito anche in mobile */
+        min-width: 0 !important;   
     }
 
     .search-bar button {
@@ -442,6 +442,43 @@
         flex: 0 0 42px;
     }
 }
+
+.admin-banner {
+    width: 100%;
+    background: linear-gradient(90deg, #ff4d4d, #b30000);
+    color: #fff;
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    border-bottom: 2px solid rgba(255,255,255,0.25);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+
+    animation: adminFade 0.6s ease-out;
+}
+
+.admin-icon {
+    font-size: 1.4rem;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes adminFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
    
 
     /* NAVBAR PIÙ PICCOLA */

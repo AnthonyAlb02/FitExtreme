@@ -30,10 +30,12 @@ Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
 
 
     <% if (adminMode) { %>
-        <div class="admin-banner">
-            Modalità Amministratore Attiva
-        </div>
-    <% } %>
+    <div class="admin-banner">
+        <div class="admin-icon">🛠️</div>
+        <span>Modalità Amministratore Attiva</span>
+    </div>
+<% } %>
+
 
     <!-- TOP BAR -->
     <div class="top-bar">
