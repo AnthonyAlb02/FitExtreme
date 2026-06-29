@@ -2,6 +2,7 @@
 <%@ page import="model.beans.Articolo, java.util.*"%>
 <%@ page import="model.beans.Recensione" %>
 <%@ page import="model.beans.Utente" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%
     Articolo p = (Articolo) request.getAttribute("prodotto");
     List<Articolo> tutti = (List<Articolo>) request.getAttribute("tuttiProdotti");
@@ -144,8 +145,9 @@
                     <div class="review-card">
                         <div class="review-rating">Voto: <%= r.getVoto() %>/5 ⭐</div>
                         <p class="review-comment"><%= r.getCommento() %></p>
-                        <small class="review-date"><%= r.getDataRecensione() %></small>
-                    </div>
+                       <small class="review-date">
+						    <%= new SimpleDateFormat("dd/MM/yyyy").format(r.getDataRecensione()) %>
+						</small>
                 <% } %>
             <% } %>
         </div>
