@@ -145,9 +145,16 @@
                     <div class="review-card">
                         <div class="review-rating">Voto: <%= r.getVoto() %>/5 ⭐</div>
                         <p class="review-comment"><%= r.getCommento() %></p>
-                       <small class="review-date">
-						    <%= new SimpleDateFormat("dd/MM/yyyy").format(r.getDataRecensione()) %>
-						</small>
+                    <small class="review-date">
+						<%
+						    try {
+						        java.util.Date d = new SimpleDateFormat("yyyy-MM-dd").parse(r.getDataRecensione().toString());
+						        out.print(new SimpleDateFormat("dd/MM/yyyy").format(d));
+						    } catch (Exception ex) {
+						        out.print(r.getDataRecensione());
+						    }
+						%>
+					</small>
                 <% } %>
             <% } %>
         </div>
