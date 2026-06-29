@@ -222,31 +222,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", () => {
-
-    const form = document.getElementById("paymentForm");
-    const popup = document.getElementById("confirmPopup");
-    const yesBtn = document.getElementById("confirmYes");
-    const noBtn = document.getElementById("confirmNo");
-
-    // BLOCCA invio form e mostra popup
-    form.addEventListener("submit", function(e) {
-        e.preventDefault(); 
-        popup.classList.remove("hidden");
-    });
-
-    // Se clicca SI → invia davvero il form
-    yesBtn.addEventListener("click", () => {
-        popup.classList.add("hidden");
-        form.submit();  // invio reale
-    });
-
-    // Se clicca NO → chiudi popup
-    noBtn.addEventListener("click", () => {
-        popup.classList.add("hidden");
-    });
-});</script>
+<
 
 
 
