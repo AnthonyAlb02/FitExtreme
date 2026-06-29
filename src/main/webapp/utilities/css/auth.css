@@ -109,6 +109,35 @@
     }
 }
 
+.input-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon-wrapper input {
+    width: 100%;
+    padding-right: 2.8rem;
+    box-sizing: border-box;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+    color: #FFC266;
+}
+
 @media (max-width: 480px) {
     .auth-container {
         width: calc(100% - 40px);
