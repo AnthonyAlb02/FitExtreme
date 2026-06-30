@@ -19,7 +19,7 @@ function initHideHeader() {
     if (!header) return;
 
     var lastScroll = 0;
-    var threshold = 60; // px da scorrere prima di nascondere
+    var threshold = 60;
 
     window.addEventListener("scroll", function() {
 
@@ -144,44 +144,50 @@ if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
 
 
 
-
 function setCookie(name, value, days) {
-  var expires = "";
+  let expires = "";
   if (days) {
-    var d = new Date();
+    const d = new Date();
     d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
     expires = "; expires=" + d.toUTCString();
   }
-  document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/; SameSite=Lax; Secure";
+  document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/; SameSite=Lax";
 }
+
 function getCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i].trim();
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    const c = ca[i].trim();
     if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length));
   }
   return null;
 }
+
 function deleteCookie(name) {
-  document.cookie = name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax; Secure";
+  document.cookie = name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
 }
+
 document.addEventListener('DOMContentLoaded', function() {
-  var banner = document.getElementById('cookie-banner');
-  var acceptBtn = document.getElementById('acceptCookies');
-  var rejectBtn = document.getElementById('rejectCookies');
+  const banner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('acceptCookies');
+  const rejectBtn = document.getElementById('rejectCookies');
+
   if (!banner || !acceptBtn || !rejectBtn) return;
-  if (getCookie('cookieConsent') === 'accepted') {
-    banner.style.display = 'none';
-  } else if (getCookie('cookieConsent') === 'rejected') {
+
+  const consent = getCookie('cookieConsent');
+
+  if (consent === 'accepted' || consent === 'rejected') {
     banner.style.display = 'none';
   } else {
     banner.style.display = 'block';
   }
+
   acceptBtn.addEventListener('click', function() {
     setCookie('cookieConsent', 'accepted', 365);
     banner.style.display = 'none';
   });
+
   rejectBtn.addEventListener('click', function() {
     setCookie('cookieConsent', 'rejected', 365);
     banner.style.display = 'none';

@@ -12,10 +12,10 @@ Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
     Cookie[] cookies = request.getCookies();
     if (cookies != null) {
         for (Cookie c : cookies) {
-            if ("cookieConsent".equals(c.getName())) {
-                cookieAccepted = true;
-                break;
-            }
+        	if ("cookieConsent".equals(c.getName()) && "true".equals(c.getValue())) {
+        	    cookieAccepted = true;
+        	}
+
         }
     }
 %>
@@ -151,8 +151,8 @@ Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
 </header>
 
 <!-- COOKIE BANNER -->
-<% if (!cookieAccepted) { %>
-<div id="cookie-banner" role="dialog" aria-label="Consenso cookie">
+<!-- COOKIE BANNER -->
+<div id="cookie-banner" role="dialog" aria-label="Consenso cookie" style="display:none;">
     <div class="cookie-content">
         <p>
             Questo sito utilizza cookie tecnici e, previo consenso, cookie di profilazione.
@@ -168,7 +168,8 @@ Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
         </div>
     </div>
 </div>
-<% } %>
+
+
 
 <script>
     const contextPath = "<%= request.getContextPath() %>";
