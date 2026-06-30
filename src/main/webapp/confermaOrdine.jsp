@@ -55,7 +55,7 @@
 
                     <div class="form-group">
                         <label>Nome sulla carta</label>
-                        <input type="text" name="nomeCarta" placeholder="Mario Rossi" required
+                        <input type="text" name="nomeCarta" placeholder="Nome e Cognome" required
                                oninvalid="this.setCustomValidity('Inserisci il nome esattamente come appare sulla carta')"
                                oninput="this.setCustomValidity('')">
                     </div>
@@ -127,7 +127,7 @@
                         <div class="form-group">
                             <label>Provincia</label>
                             <input type="text" name="provincia" placeholder="TO" required
-                                   pattern="[A-Za-zÀ-ÿ'\\- ]{2,50}"
+                                   pattern="[A-Za-zÀ-ÿ'\\- ]{2}"
                                    oninvalid="this.setCustomValidity('Inserisci la provincia')"
                                    oninput="this.setCustomValidity('')">
                         </div>

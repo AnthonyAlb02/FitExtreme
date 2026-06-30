@@ -59,13 +59,49 @@ document.addEventListener("DOMContentLoaded", () => {
         clearError(cvv);
         return true;
     }
+	
+	const cap = form.querySelector("input[name='cap']");
+	const provincia = form.querySelector("input[name='provincia']");
 
-    function validateAll() {
-        const okScadenza = validateScadenza();
-        const okCarta    = validateNumeroCarta();
-        const okCvv      = validateCvv();
-        return okScadenza && okCarta && okCvv;
-    }
+	function validateCap() {
+	    const value = cap.value.trim();
+	    if (!/^\d{5}$/.test(value)) {
+	        showError(cap, "Il CAP deve contenere esattamente 5 cifre");
+	        return false;
+	    }
+	    clearError(cap);
+	    return true;
+	}
+
+	function validateProvincia() {
+	    const value = provincia.value.trim();
+	    if (!/^[A-Za-zÀ-ÿ]{2}$/.test(value)) {
+	        showError(provincia, "Inserisci la sigla della provincia (es. TO)");
+	        return false;
+	    }
+	    clearError(provincia);
+	    return true;
+	}
+
+	cap.addEventListener("input", function () {
+	    this.value = this.value.replace(/\D/g, "").substring(0, 5);
+	    clearError(this);
+	});
+	cap.addEventListener("blur", validateCap);
+
+	provincia.addEventListener("input", function () {
+	    this.value = this.value.replace(/[^A-Za-zÀ-ÿ]/g, "").substring(0, 2).toUpperCase();
+	    clearError(this);
+	});
+	provincia.addEventListener("blur", validateProvincia);
+	function validateAll() {
+	    const okScadenza    = validateScadenza();
+	    const okCarta       = validateNumeroCarta();
+	    const okCvv         = validateCvv();
+	    const okCap         = validateCap();
+	    const okProvincia   = validateProvincia();
+	    return okScadenza && okCarta && okCvv && okCap && okProvincia;
+	}
 
     scadenza.addEventListener("input", function () {
         let v = this.value.replace(/[^0-9]/g, "");
