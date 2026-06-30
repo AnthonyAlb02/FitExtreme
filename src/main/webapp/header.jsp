@@ -8,16 +8,7 @@
 Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
     boolean adminMode = (isAdmin != null && isAdmin);
 
-    boolean cookieAccepted = false;
-    Cookie[] cookies = request.getCookies();
-    if (cookies != null) {
-        for (Cookie c : cookies) {
-        	if ("cookieConsent".equals(c.getName()) && "true".equals(c.getValue())) {
-        	    cookieAccepted = true;
-        	}
-
-        }
-    }
+   
 %>
 
 
@@ -149,8 +140,6 @@ Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
     <% } %>
 
 </header>
-
-<!-- COOKIE BANNER -->
 <!-- COOKIE BANNER -->
 <div id="cookie-banner" role="dialog" aria-label="Consenso cookie" style="display:none;">
     <div class="cookie-content">

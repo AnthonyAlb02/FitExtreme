@@ -137,11 +137,7 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(rememberCookie);
             }
 
-            // Cookie consenso
-            Cookie consent = new Cookie("cookieConsent", "true");
-            consent.setMaxAge(60 * 60 * 24 * 365);
-            consent.setPath("/");
-            response.addCookie(consent);
+            
 
             // Redirect dopo login (se l’utente era stato reindirizzato)
             if (redirect != null) {

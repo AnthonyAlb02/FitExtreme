@@ -74,7 +74,7 @@
                 </a>
             <% } %>
 
-            <p class="shipping-info">🚚 Spedizione gratuita sopra i 50€</p>
+            
             <p class="shipping-info">↩️ Reso facile entro 30 giorni</p>
 
         </div>

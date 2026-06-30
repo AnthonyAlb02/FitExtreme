@@ -164,10 +164,6 @@ function getCookie(name) {
   return null;
 }
 
-function deleteCookie(name) {
-  document.cookie = name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
-}
-
 document.addEventListener('DOMContentLoaded', function() {
   const banner = document.getElementById('cookie-banner');
   const acceptBtn = document.getElementById('acceptCookies');
